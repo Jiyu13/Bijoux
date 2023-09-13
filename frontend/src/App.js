@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
 import axios from "axios";
+import {TopHeader} from "./top-header/TopHeader";
+import {NavBar} from "./navbar/NavBar";
 
 function App() {
     const [products, setProduct] = useState(null)
@@ -13,7 +15,9 @@ function App() {
     console.log(products)
     return (
         <div className="App">
-          <h1>Hello World!</h1>
+            {/*<div className=""*/}
+            <TopHeader />
+            <NavBar />
 
         </div>
       );

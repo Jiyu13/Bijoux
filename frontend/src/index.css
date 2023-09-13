@@ -5,6 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  background-color: #dfe4ea;
+}
+
+.App {
+  width: 80%;
+  margin: 0 auto;
 }
 
 code {
