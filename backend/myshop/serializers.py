@@ -7,7 +7,7 @@ from .models import Product, ProductImage
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ["id", "title", "description", "price"]
+        fields = ["id", "title", "description", "price", "image"]
         # fields = '__all__'
 
 

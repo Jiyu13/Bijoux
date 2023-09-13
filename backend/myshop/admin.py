@@ -5,7 +5,7 @@ from .models import *
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("title", "description", "price")
+    list_display = ("title", "description", "price", "image")
 
 
 class ProductImageAdmin(admin.ModelAdmin):

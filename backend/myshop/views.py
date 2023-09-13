@@ -33,3 +33,4 @@ class ProductDetailView(APIView):
             response = {"error": "product not found"}
 
         return Response(response)
+
