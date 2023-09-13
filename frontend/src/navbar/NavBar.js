@@ -26,6 +26,7 @@ const NavBarContainer = styled.div`
   white-space: nowrap;
   align-items: center;
   width: 100%;
+  margin: 12px 0;
 `
 const LogoSection = styled.div``
 const Logo = styled.div`

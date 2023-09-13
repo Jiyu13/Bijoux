@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios";
 import {TopHeader} from "./top-header/TopHeader";
 import {NavBar} from "./navbar/NavBar";
+import {MainPoster} from "./main-poster/js/MainPoster";
 
 function App() {
     const [products, setProduct] = useState(null)
@@ -18,7 +19,7 @@ function App() {
             {/*<div className=""*/}
             <TopHeader />
             <NavBar />
-
+            <MainPoster />
         </div>
       );
 }

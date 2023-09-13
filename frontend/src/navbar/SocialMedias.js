@@ -38,8 +38,8 @@ const SocialMediasWrapper = styled.div`
   justify-content: end; 
 `
 const SocialMediaButton = styled.button`
-  width: 40px;
-  margin: 0 4px;
+  width: 32px;
+  margin: 0;
   background-color: transparent;
   border: none;
 `
