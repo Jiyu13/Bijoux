@@ -1,0 +1,31 @@
+.top-header {
+    padding: 0 15px;
+}
+
+/* mobile devices*/
+@media only screen and (max-width: 640px) {
+    .top-header {
+       /*margin: 0 50px;*/
+    }
+}
+
+/* ipads & tablets */
+@media only screen and (max-width: 768px) {
+    .top-header {
+       /*margin: 0 50px;*/
+    }
+}
+
+/* laptops */
+@media only screen and (max-width: 1024px) {
+    .top-header {
+       /*margin: 0 100px;*/
+    }
+}
+
+/* desktops */
+@media only screen and (max-width: 1280px) {
+    .top-header {
+       /*margin: 0 150px;*/
+    }
+}

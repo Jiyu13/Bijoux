@@ -1,0 +1,23 @@
+
+.product-item {
+    margin: 12px 0 24px;
+    box-sizing: border-box;
+    float: left;
+}
+
+/*@media only screen and (max-width: 480px) {*/
+/*    .product-item {*/
+/*        width: 45%;*/
+/*    }*/
+/*}*/
+
+/*@media only screen and (max-width: 768px) {*/
+/*    .product-item {*/
+/*        width: 33.333333%;*/
+/*    }*/
+/*}*/
+/*@media only screen and (max-width: 1024px) {*/
+/*    .product-item {*/
+/*        width: 40%;*/
+/*    }*/
+/*}*/

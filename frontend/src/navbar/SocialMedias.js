@@ -8,41 +8,51 @@ import ticktok_icon from './icons/tiktok.svg'
 export function SocialMedias() {
     return (
         <SocialMediasContainer>
-            <SocialMediasWrapper>
-                <SocialMediaButton>
+            {/*<SocialMediasWrapper>*/}
+                <SocialMediaItem>
                     <Link>
                         <Img src={instagram_icon} alt="share on instagram"/>
                     </Link>
-                </SocialMediaButton>
+                </SocialMediaItem>
 
-                <SocialMediaButton>
+                <SocialMediaItem>
                         <Link>
                             <Img src={ticktok_icon} alt="share on ticktok"/>
                         </Link>
-                </SocialMediaButton>
-                <SocialMediaButton>
+                </SocialMediaItem>
+                <SocialMediaItem>
                     <Link>
                         <Img src={facebook_icon} alt="share on facebook"/>
                     </Link>
-                </SocialMediaButton>
-            </SocialMediasWrapper>
+                </SocialMediaItem>
+            {/*</SocialMediasWrapper>*/}
         </SocialMediasContainer>
     )
 }
 
-const SocialMediasContainer = styled.div`
-    width: 100%;
+const SocialMediasContainer = styled.ul`
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
+  float: right;
+
 `
 const SocialMediasWrapper = styled.div`
-  display: flex;
-  justify-content: end; 
+
 `
-const SocialMediaButton = styled.button`
-  width: 32px;
-  margin: 0;
+const SocialMediaItem = styled.li`
+  width: 24px;
+  margin: 0 4px;
   background-color: transparent;
   border: none;
 `
 
-const Link = styled.a``
-const Img = styled.img``
+const Link = styled.a`
+`
+const Img = styled.img`
+  transition: all .2s ease-in-out;
+  &:hover {
+    transform: scale(1.2);
+  }
+`

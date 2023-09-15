@@ -1,22 +1,29 @@
 import styled from "styled-components"
+import {useContext} from "react";
+import {UserContext} from "../user-context/UserContext"
+// import "./top-header.css"
 
 import {SearchBar} from "../search-bar/SearchBar"
 import {Accessibility} from "../accessibility/Accessibility"
 export function TopHeader() {
+
+    const {isMobile, isTablet} = useContext(UserContext)
+
     return (
-        <TopHeaderContainer>
+        <TopHeaderContainer className="top-header">
             <SearchBar />
-            <Accessibility />
+            {isMobile || isTablet ?  "" : <Accessibility />}
         </TopHeaderContainer>
     )
 }
 
 const TopHeaderContainer = styled.div`
   width: 100%;
-  height: 40px;
-  margin-top: 24px;
+  height: 50px;
+  margin-top: 36px;
   margin-bottom: 24px;
   background-color: white;
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 2.5fr 1fr;
+  box-sizing: border-box;
 `
