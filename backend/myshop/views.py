@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .serializers import ProductSerializer, ProductImageSerializer
-from .models import Product, ProductImage
+from .serializers import ProductSerializer, ProductImageSerializer, CarouselSerializer
+from .models import Product, ProductImage, Carousel
 # from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -34,3 +34,16 @@ class ProductDetailView(APIView):
 
         return Response(response)
 
+
+class CarouselListView(APIView):
+    def get(self, request):
+        carousels = Carousel.objects.all()
+        serializer = CarouselSerializer(carousels, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CarouselSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

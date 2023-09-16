@@ -21,3 +21,10 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return self.image_name
+
+
+class Carousel(models.Model):
+    """ Image Sliders in home page """
+    theme = models.CharField(max_length=120)
+    caption = models.CharField(max_length=120)
+    image = models.ImageField(null=True, blank=True, upload_to="carousel/")

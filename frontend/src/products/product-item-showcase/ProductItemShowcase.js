@@ -17,6 +17,7 @@ export function ProductItemShowcase( {product} ) {
     // #ffb142
     const isFavColor = isFav ? "invert(86%) sepia(45%) saturate(3745%) hue-rotate(328deg) brightness(109%) contrast(102%)" : ""
 
+    // console.log(product.image)
     return (
         <ShowcaseContainer className="product-item">
             <ProductImage>
