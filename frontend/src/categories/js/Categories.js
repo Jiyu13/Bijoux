@@ -56,8 +56,14 @@ const ItemWrapper = styled.div`
 `
 
 const Img = styled.img`
-  border-radius: 50%;
+  border-radius: 16px;
+  //border-radius: 50px;
   width: 100%;
+  transition: transform .8s;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
 `
 const Text = styled.p`
   margin-top: 4px;
