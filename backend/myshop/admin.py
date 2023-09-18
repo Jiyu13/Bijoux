@@ -16,6 +16,11 @@ class CarouselAdmin(admin.ModelAdmin):
     list_display = ("theme", "caption", "image")
 
 
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ("category_name", "cover_image")
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(Carousel, CarouselAdmin)
+admin.site.register(Category, CategoryAdmin)

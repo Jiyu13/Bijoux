@@ -46,14 +46,24 @@ export function ProductItemShowcase( {product} ) {
     )
 }
 
-const ShowcaseContainer = styled.div``
+const ShowcaseContainer = styled.div`
+    margin: 12px 0 24px;
+    box-sizing: border-box;
+    float: left;
+    padding: 6px;
+`
 const ProductImage = styled.a`
   position: relative;
 `
 const Img = styled.img`
-  cursor: pointer;
-  width: 100%;
-  max-height: 250px;
+    cursor: pointer;
+    width: 100%;
+    max-height: 250px;
+    &:hover {
+      //text-decoration: underline;
+      //box-shadow: 0 0 50px #ccc;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
 `
 const Circle = styled.div`
   width: 40px;

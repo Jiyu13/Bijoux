@@ -31,5 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('products/', ProductListView.as_view(), name="products"),
     path('products/<int:pk>/', ProductDetailView.as_view(), name="product-detail"),
-    path('carousels/', CarouselListView.as_view(), name="carousels")
+    path('carousels/', CarouselListView.as_view(), name="carousels"),
+    path('categories/', CategoryListView.as_view(), name="categories"),
+    path('categories/<int:pk>/', CategoryDetailView.as_view(), name="categories-detail")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

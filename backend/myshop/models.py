@@ -9,13 +9,15 @@ class Product(models.Model):
     price = models.FloatField()
     image = models.ImageField(null=True, blank=True, upload_to='images/')
 
+    category = models.ForeignKey("Category", null=True,  on_delete=models.CASCADE)
+
     def __str__(self):
         return self.title
 
 
 class ProductImage(models.Model):
     """ A product has many images- ForeignKey """
-    product = models.ForeignKey("Product", on_delete=models.CASCADE)
+    product = models.ForeignKey("Product", on_delete=models.CASCADE, related_name='product_images')
     image_name = models.CharField(max_length=120)
     product_image = models.ImageField(null=True, blank=True, upload_to='images/')
 
@@ -23,8 +25,21 @@ class ProductImage(models.Model):
         return self.image_name
 
 
+class Category(models.Model):
+    """ A categories can have many Products """
+    category_name = models.CharField(max_length=120)
+    cover_image = models.ImageField(null=True, blank=True, upload_to='categories/')
+
+    def __str__(self):
+        return self.category_name
+
+
 class Carousel(models.Model):
     """ Image Sliders in home page """
     theme = models.CharField(max_length=120)
     caption = models.CharField(max_length=120)
     image = models.ImageField(null=True, blank=True, upload_to="carousel/")
+
+    def __str__(self):
+        return self.theme
+

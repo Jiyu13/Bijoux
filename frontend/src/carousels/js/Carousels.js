@@ -6,7 +6,7 @@ import "../carousel.css"
 import arrow_back_ios_black_24dp from "../arrows/arrow_back_ios_black_24dp.svg"
 import arrow_forward_ios_black_24dp from "../arrows/arrow_forward_ios_black_24dp.svg"
 
-import {API_URL} from "../../App";
+import {API_URL} from "../../helpers/Helpers"
 
 export function Carousels() {
 
