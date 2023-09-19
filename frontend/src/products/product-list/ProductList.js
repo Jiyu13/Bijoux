@@ -4,7 +4,6 @@ import './product-list.css'
 export function ProductList( {products} ) {
     return (
         <ListContainer className="product-list">
-            {/*<Filter />*/}
             {products?.map((product, index) => {
                 return (
 

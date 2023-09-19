@@ -6,6 +6,15 @@ import { Link } from "react-router-dom";
 export function Categories( {categories} ) {
     return (
         <CategoryContainer>
+            {/*<Text*/}
+            {/*    style={{*/}
+            {/*        display: "flex",*/}
+            {/*        justifyContent: "flex-end",*/}
+            {/*        padding: "0 12px",*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    Shop all*/}
+            {/*</Text>*/}
             <CategoryItems className="category-list">
 
                 {categories?.map((c, index) => {
@@ -33,7 +42,8 @@ const CategoryContainer = styled.div`
     text-align: center;
     margin: 32px auto 16px;
     display: flex;
-  justify-content: center;
+    flex-direction: column;
+    //justify-content: center;
 `
 
 const CategoryItems = styled.ul`

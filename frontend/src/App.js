@@ -13,6 +13,8 @@ import {fetchFromAPI} from "./helpers/Helpers";
 
 import {API_URL} from "./helpers/Helpers"
 import {Categories} from "./categories/js/Categories";
+import {ChosenForYou} from "./chosen-for-you/js/ChosenForYou";
+import {NewArrivals} from "./new-arrivals/js/NewArrivals";
 function App() {
     const [products, setProduct] = useState(null)
     const [carousels, setCarousels] = useState(null)
@@ -31,7 +33,7 @@ function App() {
         fetchFromAPI("/categories/", setCategories)
     }, []);
 
-    console.log(categories)
+    // console.log(categories)
 
     useEffect(() => {
         fetchFromAPI("/carousels/", setCarousels)
@@ -47,9 +49,10 @@ function App() {
                 <NavBar />
                 <Carousels />
                 {/*<MainPoster />*/}
-                <Categories categories={categories}/>
-                <ProductList products={products}/>
-
+                <ChosenForYou products={products}/>
+                {/*<Categories categories={categories}/>*/}
+                {/*<ProductList products={products}/>*/}
+                <NewArrivals products={products} />
                 <MobileNavBar />
             </div>
         </UserContext.Provider>

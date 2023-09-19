@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../../user-context/UserContext";
 import styled from "styled-components";
-import "../carousel.css"
+import "../css/carousel.css"
 
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos"
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos"
