@@ -1,21 +1,62 @@
 import styled from "styled-components";
+import "./css/navbar.css"
+
 import {NavLink} from "react-router-dom";
 
 export function NavLinks() {
+
+    const activeStyles = {
+        textDecoration: "none",
+        color: "black",
+    }
+
+    const normalStyles = {
+        textDecoration: "none",
+        color: "black"
+    }
+
     return (
-        <NavLinksContainer>
-                <LinkItem>
-                    <NavLink href="/">Home</NavLink>
-                </LinkItem>
-                {/*<LinkItem>*/}
-                {/*    <Link href="#">Shop</Link>*/}
-                {/*</LinkItem>*/}
-                <LinkItem>
-                    <NavLink href="/">About</NavLink>
-                </LinkItem>
-                <LinkItem>
-                    <NavLink href="/">Contact</NavLink>
-                </LinkItem>
+        <NavLinksContainer className="links-container">
+            <NavLink
+                className="nav"
+                to="/home"
+                exact
+                style={ ({ isActive}) =>
+                    isActive ? activeStyles : normalStyles
+                }
+            >
+                Home
+            </NavLink>
+
+            <NavLink
+                to="/shop-all"
+                exact
+                style={ ({ isActive}) =>
+                    isActive ? activeStyles : normalStyles
+                }
+            >
+                Shop All
+            </NavLink>
+
+            <NavLink
+                to="/about"
+                exact
+                style={ ({ isActive}) =>
+                    isActive ? activeStyles : normalStyles
+                }
+            >
+                About
+            </NavLink>
+
+            <NavLink
+                to="/contact"
+                exact
+                style={ ({ isActive}) =>
+                    isActive ? activeStyles : normalStyles
+                }
+            >
+                Contact
+            </NavLink>
         </NavLinksContainer>
     )
 }
@@ -23,29 +64,13 @@ export function NavLinks() {
 const NavLinksContainer = styled.ul`
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 8px;
   list-style: none;
   justify-content: center;
   align-items: center;
   
   padding: 0;
   margin: 0;
-`
-const LinkItem = styled.li`
-  box-sizing: border-box;
-  margin: 0;
-  padding: 8px 4px;
-  border-radius: 8px;
-  transition: all .2s ease-in-out;
-  text-align: center;
-  &:hover {
-    background-color: rgb(169,169,169, 0.2);
-    
-  }
-`
-const Link = styled.a`
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: bold;
+
 `

@@ -1,3 +1,27 @@
+.links-container a {
+    white-space: nowrap;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all .2s ease-in-out;
+    text-align: center;
+}
+
+.links-container a:hover {
+    background-color: rgb(169,169,169, 0.2);
+
+}
+
+.links-container a.active {
+    background-color: rgb(169,169,169, 0.2);
+}
+
+.links-container a.inactive {
+  font-style: italic;
+}
+
+
 @media only screen and (max-width: 989px) {
     .navbar {
           grid-template-columns: 1fr 2fr;
