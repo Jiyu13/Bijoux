@@ -8,13 +8,13 @@ import styled from "styled-components";
 
 export function MobileNavBar() {
 
-    const {isMobile, isTablet} = useContext(UserContext)
-    //
+    const {isMobile, isTablet, isSmallLaptop, isLargeScreen} = useContext(UserContext)
+
     // console.log(isMobile, isTablet)
 
     return (
         <>
-            {isMobile || isTablet ?
+
                 <NavBarContainer>
                     <ContainerItem href="/">
                         <Img src={home_black_24} alt="homepage icon"/>
@@ -37,7 +37,6 @@ export function MobileNavBar() {
                     </ContainerItem>
 
                 </NavBarContainer>
-             : "" }
         </>
 
     )

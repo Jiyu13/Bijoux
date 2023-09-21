@@ -6,7 +6,7 @@ import "../css/carousel.css"
 import arrow_back_ios_black_24dp from "../arrows/arrow_back_ios_black_24dp.svg"
 import arrow_forward_ios_black_24dp from "../arrows/arrow_forward_ios_black_24dp.svg"
 
-import {API_URL} from "../../helpers/Helpers"
+import {API_URL} from "../../helper-functions/Helpers"
 
 export function Carousels() {
 
@@ -85,13 +85,10 @@ const CarouselContainer1 = styled.div`
   place-items: center;
   place-content: center;
   overflow: hidden;
-  max-height: clamp(450px, 50vh, 600px);
-  
-  position: relative;
+  //max-height: clamp(450px, 50vh, 600px);
   margin: 0 auto;
   width: 100%;
   color: white;
-  
 `
 const CarouselInner1 = styled.div`
   position: relative;
@@ -121,9 +118,7 @@ const Img = styled.img`
   width: 100%;
   height: 100%;
   cursor: pointer;
-  &:hover {
-    
-  }
+  border-radius: 16px;
 `
 const LeftArrow1 = styled.button`
     place-self: center left;

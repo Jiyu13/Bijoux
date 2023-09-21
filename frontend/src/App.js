@@ -1,25 +1,26 @@
 import { useState, useEffect } from "react"
 import axios from "axios";
-import {TopHeader} from "./top-header/TopHeader";
 import {NavBar} from "./navbar/NavBar";
-// import {MainPoster} from "./main-poster/js/MainPoster";
-import {ProductList} from "./products/product-list/ProductList";
 import {useMediaQuery} from "react-responsive";
 import {DeviceSize} from "./responsive";
 import {UserContext} from "./user-context/UserContext";
 import {MobileNavBar} from "./navbar/MobileNavBar";
 import {Carousels} from "./carousels/js/Carousels";
-import {fetchFromAPI} from "./helpers/Helpers";
+import {fetchFromAPI} from "./helper-functions/Helpers";
 
-import {API_URL} from "./helpers/Helpers"
+import {API_URL} from "./helper-functions/Helpers"
 import {Categories} from "./categories/js/Categories";
-import {ChosenForYou} from "./chosen-for-you/js/ChosenForYou";
+import styled from "styled-components";
+import {BestSellers} from "./best-sellers/js/BestSellers";
+import {Footer} from "./footer/js/Footer"
 import {NewArrivals} from "./new-arrivals/js/NewArrivals";
 function App() {
     const [products, setProduct] = useState(null)
     const [carousels, setCarousels] = useState(null)
     const [categories, setCategories] = useState(null)
 
+    const isLargeScreen = useMediaQuery({maxWidth: DeviceSize.desktop})
+    const isSmallLaptop = useMediaQuery({maxWidth: DeviceSize.small_laptop})
     const isTablet = useMediaQuery({ maxWidth: DeviceSize.tablet })
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
@@ -39,21 +40,24 @@ function App() {
         fetchFromAPI("/carousels/", setCarousels)
     }, []);
 
-    const userContextValue = {isMobile, isTablet, carousels}
+    const userContextValue = {isMobile, isTablet, isSmallLaptop, isLargeScreen, carousels}
 
     return (
         <UserContext.Provider value={userContextValue}>
 
             <div className="App">
-                <TopHeader />
                 <NavBar />
-                <Carousels />
-                {/*<MainPoster />*/}
-                <ChosenForYou products={products}/>
-                {/*<Categories categories={categories}/>*/}
-                {/*<ProductList products={products}/>*/}
-                <NewArrivals products={products} />
-                <MobileNavBar />
+
+                <Main className="main-container">
+                    <Carousels />
+                    <Categories  categories={categories}/>
+                    <BestSellers products={products}/>
+                    <NewArrivals products={products}/>
+                </Main>
+
+                <Footer />
+
+                {isMobile || isTablet || isSmallLaptop ? <MobileNavBar /> : ""}
             </div>
         </UserContext.Provider>
 
@@ -61,3 +65,8 @@ function App() {
 }
 
 export default App;
+
+
+const Main = styled.div`
+  margin: 0 auto;
+`

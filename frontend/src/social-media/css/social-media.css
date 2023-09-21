@@ -1,0 +1,13 @@
+@media only screen and (max-width: 640px)  {
+    .icons-container  {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+@media only screen and (min-width: 641px) {
+    .icons-container  {
+        flex-direction: row;
+
+    }
+}

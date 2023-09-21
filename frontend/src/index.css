@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
-  background-color: #dfe4ea;
+  /*background-color: #dfe4ea;*/
 }
 
 .App {
@@ -16,30 +16,30 @@ body {
 
 }
 
-/* mobile devices*/
-/*@media only screen and (max-width: 640px) {*/
-/*    .App {*/
-/*       !*margin: 0 50px;*!*/
-/*    }*/
-/*}*/
+ /*mobile devices*/
+@media only screen and (max-width: 640px) {
+    .main-container {
+       margin: 0 50px;
+    }
+}
 
 /* ipads & tablets / smaller */
 @media only screen and (min-width: 768px) {
-    .App {
-        width: 90%;
+    .main-container {
+        width: 100%;
     }
 }
 
  /*laptops*/
-@media only screen and (min-width: 1024px) {
-    .App {
+@media only screen and (min-width: 990px) {
+    .main-container {
         width: 85%;
     }
 }
 
 /* desktops */
 @media only screen and (min-width: 1280px) {
-    .App {
+    .main-container {
        width: 80%;
     }
 }

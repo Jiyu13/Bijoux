@@ -10,16 +10,17 @@ export function Accessibility() {
             <ContainerItem>
                 <Img src={account_circle_black_24} alt="account icon" />
                 <UserName>Hi, ziru!</UserName>
-                <Img src={expand_more_black_24} alt="dropdown icon"/>
+                {/*<Img src={expand_more_black_24} alt="dropdown icon"/>*/}
             </ContainerItem>
             <ContainerItem>
-                <Img src={shopping_cart_black} alt="dropdown icon"/>
+                <Img src={shopping_cart_black} alt="cart icon"/>
             </ContainerItem>
         </Container>
     )
 }
 
 const Container = styled.div`
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -40,4 +41,5 @@ const Img = styled.img`
 
 const UserName = styled.div`
   margin: auto 10px;
+  white-space: nowrap;
 `

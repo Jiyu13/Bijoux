@@ -1,13 +1,13 @@
 import {SliderTemplate} from "../../item-sliders-template/js/SliderTemplate";
 
-export function NewArrivals({products}) {
-
+export function PicksForYou( {products} ) {
     return (
         <SliderTemplate
             products={products}
-            sectionContent="New Arrivals"
+            sectionContent="Picks For You"
             // backgroundColor="rgb(163, 72, 148, 0.2)"
-            borderRadius="0px"
+            backgroundColor="none"
+            borderRadius="16px"
         />
     )
 }

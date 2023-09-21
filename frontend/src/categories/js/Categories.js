@@ -1,20 +1,14 @@
 import styled from "styled-components";
 import "../css/category-list.css"
-import {API_URL} from "../../helpers/Helpers"
+import {API_URL} from "../../helper-functions/Helpers"
 import { Link } from "react-router-dom";
 
 export function Categories( {categories} ) {
     return (
         <CategoryContainer>
-            {/*<Text*/}
-            {/*    style={{*/}
-            {/*        display: "flex",*/}
-            {/*        justifyContent: "flex-end",*/}
-            {/*        padding: "0 12px",*/}
-            {/*    }}*/}
-            {/*>*/}
-            {/*    Shop all*/}
-            {/*</Text>*/}
+            <CategoryTitle>
+                Shop By Collections
+            </CategoryTitle>
             <CategoryItems className="category-list">
 
                 {categories?.map((c, index) => {
@@ -37,28 +31,34 @@ export function Categories( {categories} ) {
 
 const CategoryContainer = styled.div`
     font-family: "Helvetica for Target", HelveticaForTarget, Targetica, "HelveticaNeue for Target", "Helvetica Neue", Helvetica, Arial, sans-serif;
-
     box-sizing: border-box;
-    text-align: center;
-    margin: 32px auto 16px;
+    //text-align: center;
+    margin: 0 auto 24px;
     display: flex;
     flex-direction: column;
     //justify-content: center;
 `
-
+const CategoryTitle = styled.h2`
+    //font-size: 2rem;
+    //margin-right: 12px;
+    margin-bottom: 0;
+    font-weight: 700;
+    white-space: nowrap;
+`
 const CategoryItems = styled.ul`
     box-sizing: border-box;
     display: flex;
     flex-flow: row wrap;
+    //margin-top: 12px;
     margin-bottom: 0;
-    padding: 0 12px;
+    padding: 0;
     list-style: none;
     justify-content: center;
 `
 const CategoryItem = styled.li``
 const ItemWrapper = styled.div`
     box-sizing: border-box;
-    
+    text-align: center;
     &:hover {
       text-decoration: underline;
       transition: opacity 200ms ease-out;
@@ -76,6 +76,6 @@ const Img = styled.img`
   }
 `
 const Text = styled.p`
-  margin-top: 4px;
+  margin-bottom: 0;
 `
 

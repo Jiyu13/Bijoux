@@ -1,0 +1,13 @@
+@media only screen and (max-width: 989px) {
+    .navbar {
+          grid-template-columns: 1fr 2fr;
+
+    }
+}
+
+@media only screen and (min-width: 990px) {
+    .navbar {
+          grid-template-columns: 1fr 1fr 2fr 1fr;
+
+    }
+}
