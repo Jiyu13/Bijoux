@@ -1,0 +1,7 @@
+/* mobile devices / smaller screen */
+@media only screen and (max-width: 600px) {
+    .count-products {
+        grid-template-columns: repeat(2, 1fr);
+        margin: 24px auto;
+    }
+}

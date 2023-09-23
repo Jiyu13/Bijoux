@@ -1,19 +1,25 @@
 import { useState, useEffect } from "react"
+import { Route, Routes } from "react-router-dom";
+import styled from "styled-components";
+
+
 import axios from "axios";
-import {NavBar} from "./navbar/NavBar";
 import {useMediaQuery} from "react-responsive";
 import {DeviceSize} from "./responsive";
 import {UserContext} from "./user-context/UserContext";
-import {MobileNavBar} from "./navbar/MobileNavBar";
-import {Carousels} from "./carousels/js/Carousels";
-import {fetchFromAPI} from "./helper-functions/Helpers";
+
 
 import {API_URL} from "./helper-functions/Helpers"
-import {Categories} from "./categories/js/Categories";
-import styled from "styled-components";
-import {BestSellers} from "./best-sellers/js/BestSellers";
+
+import {NavBar} from "./navbar/NavBar";
+import {MobileNavBar} from "./navbar/MobileNavBar";
+import {fetchFromAPI} from "./helper-functions/Helpers";
 import {Footer} from "./footer/js/Footer"
-import {NewArrivals} from "./new-arrivals/js/NewArrivals";
+import {Home} from "./components/Home";
+import {ProductPage} from "./components/ProductPage";
+import {MobileFilterSidebar} from "./filter/js/MobileFilterSidebar";
+import {SidebarOverlay} from "./filter/js/SidebarOverlay";
+
 function App() {
     const [products, setProduct] = useState(null)
     const [carousels, setCarousels] = useState(null)
@@ -40,19 +46,53 @@ function App() {
         fetchFromAPI("/carousels/", setCarousels)
     }, []);
 
-    const userContextValue = {isMobile, isTablet, isSmallLaptop, isLargeScreen, carousels}
+
+    // ============= toggle filter sideber ==================================
+    const [isOpenFilterSidebar, setOpenFilterSidebar] = useState(false)
+    function handleOpenFilterSidebar() {
+        setOpenFilterSidebar(!isOpenFilterSidebar)
+    }
+
+    const userContextValue = {isMobile, isTablet, isSmallLaptop, isLargeScreen, carousels, handleOpenFilterSidebar}
 
     return (
         <UserContext.Provider value={userContextValue}>
 
             <div className="App">
                 <NavBar />
-
+                {isMobile && isOpenFilterSidebar && (<MobileFilterSidebar/>)}
+                {isMobile && isOpenFilterSidebar && (<SidebarOverlay/>)}
                 <Main className="main-container">
-                    <Carousels />
-                    <Categories  categories={categories}/>
-                    <BestSellers products={products}/>
-                    <NewArrivals products={products}/>
+                    <Routes>
+                        {/*<Route>*/}
+                        {/*    exact*/}
+                        {/*    path='/shop_all'*/}
+                        {/*    element={*/}
+                        {/*        <>ShopAll</>*/}
+                        {/*    }*/}
+
+                        {/*</Route>*/}
+                        <Route
+                            exact
+                            path='/shop'
+                            element={
+                                <ProductPage products={products}/>
+                            }
+                        >
+                        </Route>
+
+                        <Route
+                            exact
+                            path='/'
+                            element={
+                                <Home products={products} categories={categories}/>
+                            }
+                        >
+                        </Route>
+
+
+                    </Routes>
+
                 </Main>
 
                 <Footer />

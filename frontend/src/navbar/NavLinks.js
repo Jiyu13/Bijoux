@@ -19,8 +19,8 @@ export function NavLinks() {
         <NavLinksContainer className="links-container">
             <NavLink
                 className="nav"
-                to="/home"
-                exact
+                to="/"
+                // exact
                 style={ ({ isActive}) =>
                     isActive ? activeStyles : normalStyles
                 }
@@ -29,8 +29,8 @@ export function NavLinks() {
             </NavLink>
 
             <NavLink
-                to="/shop-all"
-                exact
+                to="/shop"
+                // exact
                 style={ ({ isActive}) =>
                     isActive ? activeStyles : normalStyles
                 }
@@ -40,7 +40,7 @@ export function NavLinks() {
 
             <NavLink
                 to="/about"
-                exact
+                // exact
                 style={ ({ isActive}) =>
                     isActive ? activeStyles : normalStyles
                 }
@@ -50,7 +50,7 @@ export function NavLinks() {
 
             <NavLink
                 to="/contact"
-                exact
+                // exact
                 style={ ({ isActive}) =>
                     isActive ? activeStyles : normalStyles
                 }

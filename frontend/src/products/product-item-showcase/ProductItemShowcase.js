@@ -38,19 +38,22 @@ export function ProductItemShowcase( {product} ) {
                 <ProductPrice>${product.price}</ProductPrice>
             </ProductContent>
 
-            <AddToCart>
-                <AddToCartButton type="button">Add to cart</AddToCartButton>
-            </AddToCart>
+            {/*<AddToCart>*/}
+            {/*    <AddToCartButton type="button">Add to cart</AddToCartButton>*/}
+            {/*</AddToCart>*/}
 
         </ShowcaseContainer>
     )
 }
 
 const ShowcaseContainer = styled.div`
-    margin: 12px 0 24px;
+    margin: 0 0 18px;
     box-sizing: border-box;
     float: left;
     padding: 6px;
+    &:hover {
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
 `
 const ProductImage = styled.a`
   position: relative;
@@ -58,12 +61,7 @@ const ProductImage = styled.a`
 const Img = styled.img`
     cursor: pointer;
     width: 100%;
-    max-height: 250px;
-    &:hover {
-      //text-decoration: underline;
-      //box-shadow: 0 0 50px #ccc;
-      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    }
+    //max-height: 250px;
 `
 const Circle = styled.div`
   width: 40px;
@@ -98,9 +96,9 @@ const ProductPromotion = styled.div`
 const Promotion = styled.p``
 
 
-const ProductTitle = styled.h3`
+const ProductTitle = styled.p`
   font-size: 14px;
-  margin-top: 6px;
+  margin: 6px 0;
 `
 const ProductPrice = styled.div`
   font-size: 16px;

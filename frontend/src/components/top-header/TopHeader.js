@@ -1,10 +1,10 @@
 import styled from "styled-components"
 import {useContext} from "react";
-import {UserContext} from "../user-context/UserContext"
+import {UserContext} from "../../user-context/UserContext"
 // import "./top-header.css"
 
-import {SearchBar} from "../search-bar/SearchBar"
-import {Accessibility} from "../accessibility/Accessibility"
+import {SearchBar} from "../../search-bar/SearchBar"
+import {Accessibility} from "../../accessibility/Accessibility"
 export function TopHeader() {
 
     const {isMobile, isTablet} = useContext(UserContext)

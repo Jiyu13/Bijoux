@@ -16,31 +16,31 @@ body {
 
 }
 
- /*mobile devices*/
-@media only screen and (max-width: 640px) {
+/*mobile devices*/
+@media only screen and (min-width: 640px) and (max-width: 767px) {
     .main-container {
-       margin: 0 50px;
+       width: 95%;
     }
 }
 
 /* ipads & tablets / smaller */
 @media only screen and (min-width: 768px) {
     .main-container {
-        width: 100%;
+        width: 80%;
     }
 }
 
  /*laptops*/
 @media only screen and (min-width: 990px) {
     .main-container {
-        width: 85%;
+        width: 72%;
     }
 }
 
 /* desktops */
 @media only screen and (min-width: 1280px) {
     .main-container {
-       width: 80%;
+       width: 60%;
     }
 }
 
