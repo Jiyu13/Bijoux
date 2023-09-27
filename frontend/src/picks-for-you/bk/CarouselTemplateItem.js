@@ -1,4 +1,4 @@
-import {API_URL} from "../../helper-functions/Helpers";
+import {API_URL} from "../../helper-functions/fetchFromAPI";
 
 import styled from "styled-components";
 import "../css/carousel-template.css"

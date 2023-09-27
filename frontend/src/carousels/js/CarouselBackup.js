@@ -1,5 +1,5 @@
 import {useContext, useEffect, useState} from "react";
-import {UserContext} from "../../user-context/UserContext";
+import {UserContext} from "../../global/user-context/UserContext";
 import styled from "styled-components";
 import "../css/carousel.css"
 

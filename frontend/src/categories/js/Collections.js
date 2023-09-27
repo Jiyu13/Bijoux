@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import "../css/category-list.css"
-import {API_URL} from "../../helper-functions/Helpers"
+import {API_URL} from "../../helper-functions/fetchFromAPI"
 import { Link } from "react-router-dom";
 
-export function Categories( {categories} ) {
+export function Collections({categories} ) {
     return (
         <CategoryContainer>
             <CategoryTitle>
@@ -16,8 +16,8 @@ export function Categories( {categories} ) {
                         <CategoryItem key={index} className="category-item">
                             <Link to="" style={{textDecoration: "none", color: "inherit"}}>
                                 <ItemWrapper>
-                                    <Img src={`${API_URL}${c.cover_image}`} alt={`shop by ${c.category_name}`}/>
-                                    <Text>{c.category_name}</Text>
+                                    <Img src={`${API_URL}${c["cover_image"]}`} alt={`shop by ${c["category_name"]}`}/>
+                                    <Text>{c["category_name"]}</Text>
                                 </ItemWrapper>
 
                             </Link>

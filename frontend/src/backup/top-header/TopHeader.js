@@ -1,9 +1,8 @@
 import styled from "styled-components"
 import {useContext} from "react";
-import {UserContext} from "../../user-context/UserContext"
-// import "./top-header.css"
+import {UserContext} from "../../global/user-context/UserContext"
 
-import {SearchBar} from "../../search-bar/SearchBar"
+import {SearchBar} from "../../global/search-bar/SearchBar"
 import {Accessibility} from "../../accessibility/Accessibility"
 export function TopHeader() {
 

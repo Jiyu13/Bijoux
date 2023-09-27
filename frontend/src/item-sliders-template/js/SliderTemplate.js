@@ -3,7 +3,7 @@ import arrow_forward_ios_white_24dp from "../arrows/arrow_forward_ios_white_24dp
 
 import "../css/slider-template.css"
 import styled from "styled-components"
-import {API_URL} from "../../helper-functions/Helpers";
+import {API_URL} from "../../helper-functions/fetchFromAPI";
 import {useEffect, useRef, useState} from "react";
 
 export function SliderTemplate( props ) {
@@ -91,7 +91,7 @@ export function SliderTemplate( props ) {
                                                 <div>
                                                     <Img
                                                         src={`${API_URL}${product.image}`}
-                                                        alt={`${product.title}` + "image"}
+                                                        alt={`${product.title} image`}
                                                         className="item-image"
                                                     />
                                                 </div>
@@ -112,7 +112,7 @@ export function SliderTemplate( props ) {
                             onClick={handleScrollLeft}
 
                         >
-                            <img src={arrow_back_ios_white_24dp}/>
+                            <img src={arrow_back_ios_white_24dp} alt="previouse arrow button"/>
                         </SliderButton>
                         <SliderButton
                             style={{right: "1rem", display: isDisplay, backgroundColor: buttonBackground}}
@@ -120,7 +120,7 @@ export function SliderTemplate( props ) {
                             aria-disabled={nextDisable}
                             onClick={handleScrollRight}
                         >
-                            <img src={arrow_forward_ios_white_24dp}/>
+                            <img src={arrow_forward_ios_white_24dp} alt="next arrow button"/>
                         </SliderButton>
 
                     </SliderWrapper>

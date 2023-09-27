@@ -6,7 +6,7 @@ import {SocialMedias} from "../social-media/js/SocialMedias";
 import {useContext} from "react";
 import {UserContext} from "../user-context/UserContext";
 import {SearchBar} from "../search-bar/SearchBar";
-import {Accessibility} from "../accessibility/Accessibility";
+import {Accessibility} from "../../accessibility/Accessibility";
 
 export function NavBar() {
 

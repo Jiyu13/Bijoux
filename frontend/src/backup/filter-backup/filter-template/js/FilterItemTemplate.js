@@ -16,9 +16,10 @@ export function FilterItemTemplate( props ) {
 
     let menuRef = useRef()
     useEffect(() => {
+        console.log(isOpen)
         let handler = (e) => {
-            if (!menuRef.current.contains(e.target)){
-                setOpen(false)
+            if (isOpen && menuRef.current && !menuRef.current.contains(e.target)){
+                setOpen(!isOpen)
             }
         }
 
@@ -26,34 +27,31 @@ export function FilterItemTemplate( props ) {
         return () => {
             document.removeEventListener("mousedown", handler)
         }
-    });
+    }, [isOpen]);
 
 
 
     return (
-        <FilterContainer ref={menuRef}>
-            <MenuTrigger
-                id={filterItemName}
-                onClick={handleOpenDropdown}
-            >
+        <FilterContainer >
+            <MenuTrigger onClick={handleOpenDropdown}>
                 <FilterItem id={filterItemName}>
                     <FilterName>{filterItemName}</FilterName>
-                        <Img src={expand_more_black_24dp} alt="expand icon"/>
+                    <Img src={expand_more_black_24dp} alt="expand icon"/>
                 </FilterItem>
-                {isOpen && (
-                    <MenuDropdownList>
-                        {filterOptions.map(option =>{
-                            return (
-                                <DropdownItem
-                                    key={option}
-                                    option={option}
-                                />
-                            )
-                        })}
-
-                    </MenuDropdownList>
-                )}
             </MenuTrigger>
+            {isOpen && (
+                <MenuDropdownList ref={menuRef}>
+                    {filterOptions.map(option =>{
+                        return (
+                            <DropdownItem
+                                key={option}
+                                option={option}
+                            />
+                        )
+                    })}
+
+                </MenuDropdownList>
+            )}
 
         </FilterContainer>
     )
@@ -82,7 +80,6 @@ const MenuDropdownList = styled.div`
 
 const Img = styled.img`
   margin-left: 6px;
-
 `
 const FilterName = styled.div``
 const FilterItem = styled.div`

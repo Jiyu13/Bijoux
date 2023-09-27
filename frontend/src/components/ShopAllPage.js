@@ -1,12 +1,11 @@
-import {FilterBar} from "../filter/js/FilterBar";
 import {ProductList} from "../products/products-list/ProductList";
 import styled from "styled-components";
+import {FilterList} from "../filter/filter-redux/FilterList";
 
-export function ProductPage( {products} ) {
-    // console.log(products)
+export function ShopAllPage({products} ) {
     return (
         <ProductPageContainer>
-            <FilterBar />
+            <FilterList />
             <ProductList products={products}/>
         </ProductPageContainer>
 

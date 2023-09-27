@@ -1,11 +1,6 @@
 import styled from "styled-components";
-import {useContext} from "react";
-import {UserContext} from "../../user-context/UserContext";
 
-export function SidebarOverlay() {
-
-    const {handleOpenFilterSidebar} = useContext(UserContext)
-
+export function SidebarOverlay({handleOpenFilterSidebar}) {
 
     return (
         <OverlayContainer onClick={handleOpenFilterSidebar}></OverlayContainer>

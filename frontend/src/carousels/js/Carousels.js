@@ -1,12 +1,12 @@
 import {useContext, useEffect, useState} from "react";
-import {UserContext} from "../../user-context/UserContext";
+import {UserContext} from "../../global/user-context/UserContext";
 import styled from "styled-components";
 import "../css/carousel.css"
 
 import arrow_back_ios_black_24dp from "../arrows/arrow_back_ios_black_24dp.svg"
 import arrow_forward_ios_black_24dp from "../arrows/arrow_forward_ios_black_24dp.svg"
 
-import {API_URL} from "../../helper-functions/Helpers"
+import {API_URL} from "../../helper-functions/fetchFromAPI"
 
 export function Carousels() {
 

@@ -30,7 +30,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     # Nested ProductImage serializers to display associated images with a product
     product_images = ProductImageSerializer(many=True, read_only=True)
-    # To show the Categories details with each Product
+    # To show the Collections details with each Product
     category = CategorySerializer()
 
     class Meta:

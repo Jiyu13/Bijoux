@@ -1,15 +1,12 @@
 import styled from "styled-components";
-import {filterInfo} from "./filterInfo";
-import {DropdownItem} from "../../filter-template/js/DropdownItem";
+import {filterInfo} from "../filter-options/filterInfo";
+import {DropdownItem} from "../../backup/filter-backup/filter-template/js/DropdownItem";
 
 // import add_black_24dp from "../icons/add_black_24dp.svg"
 // import remove_black_24dp from "../icons/remove_black_24dp.svg"
-import close_black_24dp from "../icons/close_black_24dp.svg"
-import {useContext} from "react";
-import {UserContext} from "../../user-context/UserContext";
-export function MobileFilterSidebar() {
-    const {handleOpenFilterSidebar} = useContext(UserContext)
-    const filterItemList = filterInfo
+import close_black_24dp from "../../backup/filter-backup/icons/close_black_24dp.svg"
+export function MobileFilterSidebar({handleOpenFilterSidebar}) {
+    // const filterItemList = filterInfo
 
     return(
         <SidebarContainer>
@@ -22,7 +19,7 @@ export function MobileFilterSidebar() {
                     </CloseButton>
                 </SidebarHeader>
                 <SidebarContent>
-                    {filterItemList.map((each, index) => {
+                    {filterInfo.map((each, index) => {
                         return (
                             <FilterItem key={index}>
                                 <FilterGenre>{each.item}</FilterGenre>

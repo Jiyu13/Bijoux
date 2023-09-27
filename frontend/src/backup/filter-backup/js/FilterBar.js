@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import {useContext} from "react";
-import {UserContext} from "../../user-context/UserContext";
-import {MobileFilterItems} from "./MobileFilterBar";
+import {UserContext} from "../../../global/user-context/UserContext";
+import {MobileFilterItems} from "../../../filter/filter-mobile/MobileFilterBar";
 import {FilterItems} from "./FilterItems";
 
-export function FilterBar( ) {
+export function FilterBar() {
 
     const {isMobile} = useContext(UserContext)
-
+    console.log(isMobile)
     return(
         <FilterContainer>
             {!isMobile && (<FilterItems />) }

@@ -5,20 +5,21 @@ import styled from "styled-components";
 
 import axios from "axios";
 import {useMediaQuery} from "react-responsive";
-import {DeviceSize} from "./responsive";
-import {UserContext} from "./user-context/UserContext";
+import {DeviceSize} from "./global/responsive";
+import {UserContext} from "./global/user-context/UserContext";
 
 
-import {API_URL} from "./helper-functions/Helpers"
+import {API_URL} from "./helper-functions/fetchFromAPI"
 
-import {NavBar} from "./navbar/NavBar";
-import {MobileNavBar} from "./navbar/MobileNavBar";
-import {fetchFromAPI} from "./helper-functions/Helpers";
-import {Footer} from "./footer/js/Footer"
+import {NavBar} from "./global/navbar/NavBar";
+import {MobileNavBar} from "./global/navbar/MobileNavBar";
+import {fetchFromAPI} from "./helper-functions/fetchFromAPI";
+import {Footer} from "./global/footer/js/Footer"
 import {Home} from "./components/Home";
-import {ProductPage} from "./components/ProductPage";
-import {MobileFilterSidebar} from "./filter/js/MobileFilterSidebar";
-import {SidebarOverlay} from "./filter/js/SidebarOverlay";
+import {ShopAllPage} from "./components/ShopAllPage";
+
+import {Provider} from "react-redux";
+import store from "./filter/filter-redux/store/store";
 
 function App() {
     const [products, setProduct] = useState(null)
@@ -47,21 +48,14 @@ function App() {
     }, []);
 
 
-    // ============= toggle filter sideber ==================================
-    const [isOpenFilterSidebar, setOpenFilterSidebar] = useState(false)
-    function handleOpenFilterSidebar() {
-        setOpenFilterSidebar(!isOpenFilterSidebar)
-    }
-
-    const userContextValue = {isMobile, isTablet, isSmallLaptop, isLargeScreen, carousels, handleOpenFilterSidebar}
+    const userContextValue = {isMobile, isTablet, isSmallLaptop, isLargeScreen, carousels}
 
     return (
         <UserContext.Provider value={userContextValue}>
+            <Provider store={store}>
 
             <div className="App">
                 <NavBar />
-                {isMobile && isOpenFilterSidebar && (<MobileFilterSidebar/>)}
-                {isMobile && isOpenFilterSidebar && (<SidebarOverlay/>)}
                 <Main className="main-container">
                     <Routes>
                         {/*<Route>*/}
@@ -76,7 +70,7 @@ function App() {
                             exact
                             path='/shop'
                             element={
-                                <ProductPage products={products}/>
+                                <ShopAllPage products={products}/>
                             }
                         >
                         </Route>
@@ -99,6 +93,7 @@ function App() {
 
                 {isMobile || isTablet || isSmallLaptop ? <MobileNavBar /> : ""}
             </div>
+            </Provider>
         </UserContext.Provider>
 
       );
