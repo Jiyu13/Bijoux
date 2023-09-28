@@ -38,15 +38,15 @@ export function NavLinks() {
                 Shop All
             </NavLink>
 
-            <NavLink
-                to="/about"
-                // exact
-                style={ ({ isActive}) =>
-                    isActive ? activeStyles : normalStyles
-                }
-            >
-                About
-            </NavLink>
+            {/*<NavLink*/}
+            {/*    to="/about"*/}
+            {/*    // exact*/}
+            {/*    style={ ({ isActive}) =>*/}
+            {/*        isActive ? activeStyles : normalStyles*/}
+            {/*    }*/}
+            {/*>*/}
+            {/*    About*/}
+            {/*</NavLink>*/}
 
             <NavLink
                 to="/contact"
@@ -63,8 +63,8 @@ export function NavLinks() {
 
 const NavLinksContainer = styled.ul`
   height: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  //grid-template-columns: repeat(4, 1fr);
   grid-gap: 8px;
   list-style: none;
   justify-content: center;

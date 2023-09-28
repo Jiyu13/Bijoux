@@ -7,24 +7,30 @@ import {useContext} from "react";
 import {UserContext} from "../user-context/UserContext";
 import {SearchBar} from "../search-bar/SearchBar";
 import {Accessibility} from "../../accessibility/Accessibility";
+import {Link} from "react-router-dom";
 
 export function NavBar() {
 
     const {isMobile, isTablet, isSmallLaptop, isLargeScreen} = useContext(UserContext)
 
+    const marginRight = isMobile || isTablet ? "0px" : "32px"
+
     return (
         <>
             <NavBarContainer className="navbar">
                 <LogoSection>
-                    <Logo>Company Logo</Logo>
+                    <Link to="/" >
+                        <Logo>Company Logo</Logo>
+                    </Link>
+
                 </LogoSection>
 
                 {isMobile || isTablet || isSmallLaptop ? "" :
-                        <LinksSection>
+                        <LinksSection style={{marginRight: marginRight}}>
                             <NavLinks />
                         </LinksSection>
                 }
-                <SearchBarSection>
+                <SearchBarSection style={{marginRight: marginRight}}>
                     <SearchBar />
                 </SearchBarSection>
 
@@ -65,11 +71,11 @@ const Logo = styled.div`
 `
 
 const LinksSection = styled.div`
-  margin: 0 32px;
+  //margin: 0 32px;
 `
 
 const SearchBarSection = styled.div`
-  margin: 0 32px;
+  //margin: 0 32px;
 `
 const AccountSection = styled.div`
   margin: 0 32px
