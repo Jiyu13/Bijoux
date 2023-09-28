@@ -4,13 +4,12 @@ import shopping_cart_black_24 from "./mobile-icons/shopping_cart_black_24dp.svg"
 import favorite_border_black_24 from "./mobile-icons/favorite_border_black_24dp.svg"
 import home_black_24 from "./mobile-icons/home_black_24dp.svg"
 import account_circle_black_24 from "./mobile-icons/account_circle_black_24dp.svg"
+import storefront_black_24dp from "./mobile-icons/storefront_black_24dp.svg"
 import styled from "styled-components";
 
 export function MobileNavBar() {
 
     const {isMobile, isTablet, isSmallLaptop, isLargeScreen} = useContext(UserContext)
-
-    // console.log(isMobile, isTablet)
 
     return (
         <>
@@ -18,6 +17,10 @@ export function MobileNavBar() {
                 <NavBarContainer>
                     <ContainerItem href="/">
                         <Img src={home_black_24} alt="homepage icon"/>
+                        <Text>Home</Text>
+                    </ContainerItem>
+                    <ContainerItem href="/shop">
+                        <Img src={storefront_black_24dp} alt="shop icon"/>
                         <Text>Shop</Text>
                     </ContainerItem>
 
@@ -44,7 +47,7 @@ export function MobileNavBar() {
 
 const NavBarContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   height: auto;
   background-color: whitesmoke;
   justify-content: center;
@@ -67,7 +70,7 @@ const ContainerItem = styled.a`
 
 `
 const Img = styled.img`
-  width: 32px;
+  width: 28px;
   margin: 0 auto;
   transition: all .2s ease-in-out;
   &:hover {
@@ -76,5 +79,5 @@ const Img = styled.img`
 `
 
 const Text = styled.div`
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 `
