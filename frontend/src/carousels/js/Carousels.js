@@ -118,7 +118,7 @@ const Img = styled.img`
   width: 100%;
   height: 100%;
   cursor: pointer;
-  border-radius: 16px;
+  //border-radius: 16px;
 `
 const LeftArrow1 = styled.button`
     place-self: center left;
