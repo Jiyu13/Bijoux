@@ -30,6 +30,7 @@ export function NavBar() {
                             <NavLinks />
                         </LinksSection>
                 }
+
                 <SearchBarSection style={{marginRight: marginRight}}>
                     <SearchBar />
                 </SearchBarSection>
@@ -49,14 +50,9 @@ const NavBarContainer = styled.div`
   margin: 0 auto;
   height: 90px;
   display: grid;
-  //grid-template-columns: 1fr 2fr;
-  //grid-template-columns: 1fr 1fr 2fr 1fr;
-  //justify-content: center;
   align-items: center;
-  //padding: 0 2rem;
   box-sizing: border-box;
   top: 0;
-  //position: fixed;
   z-index: 9999;
   box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
   background-color: white;

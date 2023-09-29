@@ -6,20 +6,29 @@ import favorite_border_black_24dp from "./icons/favorite_border_black_24dp.svg"
 import favorite_white_24dp from "./icons/favorite_white_24dp.svg"
 
 import {useState} from "react";
+import {Navigate, useNavigate} from "react-router-dom";
 
 export function ProductItemShowcase( {product} ) {
     const [isFav, setIsFav] = useState(false)
 
+    // ======================= handle favourite icon ====================================
     function handleAddFav() {
         setIsFav((!isFav))
     }
-
     // #ffb142
     const isFavColor = isFav ? "invert(86%) sepia(45%) saturate(3745%) hue-rotate(328deg) brightness(109%) contrast(102%)" : ""
 
+    // ======================= handle redirect to product detail page ====================================
+    const navigate = useNavigate()
+    const productName = product.title.split(" ").join("-")
+    console.log(productName)
+    function handleProductDetail() {
+        navigate('/products/')
+    }
+
     // console.log(product.image)
     return (
-        <ShowcaseContainer className="product-item">
+        <ShowcaseContainer className="product-item" onClick={handleProductDetail} id={product.id}>
             <ProductImage>
                 <Circle></Circle>
                 <FavIcon
@@ -30,9 +39,6 @@ export function ProductItemShowcase( {product} ) {
                 />
                 <Img src={`http://localhost:8000${product.image}`}/>
             </ProductImage>
-            {/*<ProductPromotion>*/}
-            {/*    <Promotion>New | Best Seller</Promotion>*/}
-            {/*</ProductPromotion>*/}
             <ProductContent>
                 <ProductTitle>{product.title}</ProductTitle>
                 <ProductPrice>${product.price}</ProductPrice>

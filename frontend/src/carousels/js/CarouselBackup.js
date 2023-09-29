@@ -73,7 +73,7 @@ const Center = styled.div`
     height: 100%;
     display: grid;
     place-items: center;
-    font-family: Arial, Helvetica, sans-serif;
+    //font-family: Arial, Helvetica, sans-serif;
     text-align: justify;
     text-align-last: center;
 `

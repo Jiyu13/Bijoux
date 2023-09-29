@@ -20,6 +20,7 @@ import {ShopAllPage} from "./components/ShopAllPage";
 
 import {Provider} from "react-redux";
 import store from "./filter/filter-redux/store/store";
+import {ProductDetail} from "./products/product-detail-page/ProductDetail";
 
 function App() {
     const [products, setProduct] = useState(null)
@@ -58,14 +59,14 @@ function App() {
                 <NavBar />
                 <Main className="main-container">
                     <Routes>
-                        {/*<Route>*/}
-                        {/*    exact*/}
-                        {/*    path='/shop_all'*/}
-                        {/*    element={*/}
-                        {/*        <>ShopAll</>*/}
-                        {/*    }*/}
+                        <Route>
+                            exact
+                            path='/products/:product_name/'
+                            element={
+                                <ProductDetail/>
+                            }
 
-                        {/*</Route>*/}
+                        </Route>
                         <Route
                             exact
                             path='/shop'

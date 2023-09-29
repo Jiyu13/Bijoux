@@ -136,7 +136,7 @@ const ComponentContainer = styled.div`
 `
 const ComponentWrapper = styled.div``
 const TitleWrapper = styled.div`
-    font-family: "Helvetica for Target", HelveticaForTarget, Targetica, "HelveticaNeue for Target", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    //font-family: "Helvetica for Target", HelveticaForTarget, Targetica, "HelveticaNeue for Target", "Helvetica Neue", Helvetica, Arial, sans-serif;
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: baseline;

@@ -2,12 +2,20 @@
 
 @media only screen and (max-width: 640px)  {
     .footer-links-section {
-        width: 100%;
+        width: 60%;
+    }
+    .footer-links-wrapper {
+        display: block;
     }
 }
 
 @media only screen and (min-width: 641px) {
     .footer-links-section {
         width: 80%;
+    }
+    .footer-links-wrapper {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
     }
 }

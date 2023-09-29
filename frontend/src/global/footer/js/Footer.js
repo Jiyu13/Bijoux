@@ -4,7 +4,9 @@ import "../css/footer.css"
 import {useContext} from "react";
 import {UserContext} from "../../user-context/UserContext";
 
-import {SocialMedias} from "../../social-media/js/SocialMedias";
+import instagram_icon from "../../social-media/icons/instagram.svg";
+import ticktok_icon from "../../social-media/icons/tiktok.svg";
+import facebook_icon from "../../social-media/icons/square-facebook.svg";
 
 
 export function Footer() {
@@ -13,28 +15,51 @@ export function Footer() {
 
     let marginBottom = isMobile || isTablet || isSmallLaptop ? "80px" : ""
 
+    const flatTo = isMobile ? "right" : ""
+
 
     return (
         <FooterContainer style={{marginBottom: marginBottom}}>
 
             <LinksSection className="footer-links-section">
-                <LinksSectionWrapper>
+                <LinksSectionWrapper
+                    className="footer-links-wrapper"
+                >
 
-                    <LinkContainer>
-                        <LinkTitle>About Us</LinkTitle>
-                        <div>Contact Us</div>
-                        <div>My Account</div>
+                    <LinkContainer >
+                        <LinkTitle>Contact Us</LinkTitle>
+                        <hr/>
+                        <div style={{margin: "12px 0"}}>12345@gmail.com</div>
+                        <div style={{display: "flex", gap: "12px"}}>
+                            {/*style={{margin: "1rem 1rem 1rem 0"}}*/}
+                            <img src={instagram_icon} alt="instagramicon" style={{width: "20px"}}/>
+                            <img src={ticktok_icon} alt="ticktok icon" style={{width: "20px"}}/>
+                            <img src={facebook_icon} alt="facebook icon" style={{width: "20px"}}/>
+                        </div>
+
                     </LinkContainer>
 
                     <LinkContainer>
                         <LinkTitle>Quick Links</LinkTitle>
+                        <hr/>
                         <div>Contact Us</div>
+                        <div>Track Order</div>
                         <div>My Account</div>
+                        <div>Track Order</div>
                     </LinkContainer>
 
                     <LinkContainer>
-                        {!isMobile && (<LinkTitle>Join us on</LinkTitle>)}
-                        <SocialMedias />
+                        <LinkTitle>Subscribe</LinkTitle>
+                        <hr/>
+                        <p>Get updates from us!</p>
+
+                        <form>
+                            <input
+                                type="text"
+                                defaultValue="Email address"
+                            />
+                            <button type="submit">Subscribe</button>
+                        </form>
                     </LinkContainer>
 
 
@@ -51,34 +76,9 @@ export function Footer() {
 const FooterContainer = styled.div`
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
+    background-color: #282c34;
+    color: #d0d1d5;
 `
-
-// Form section
-// const SignupSection = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   padding: 36px;
-// `
-// const Text = styled.p`
-//   margin: 12px 36px;
-// `
-// const Form = styled.form`
-//   display: grid;
-//   grid-template-columns: 2fr auto;
-//   margin: auto 36px;
-//   gap: 12px;
-// `
-// const Input = styled.input`
-//     padding: 12px;
-//     //width: 100%;
-// `
-// const SubmitButton = styled.button`
-//     //margin: auto 12px;
-//     padding: 12px 24px;
-//   white-space: nowrap;
-// `
-
-// Link Section
 
 const LinksSection = styled.div`
     margin: 0 auto;
@@ -86,17 +86,14 @@ const LinksSection = styled.div`
 `
 
 const LinksSectionWrapper = styled.div`
-    display: grid;   
-    justify-content: center;
-    grid-template-columns: repeat(3, 1fr);
 
-    //  column-rule-color: #273c75;
 `
 const LinkContainer = styled.div`
-    margin: 0 auto;
+    margin: 1rem auto;
+    font-size: 1rem;
+    width: 100%;
 `
 const LinkTitle = styled.p`
-    font-size: 1.3rem;
     margin-bottom: 1rem;
     margin-top: 0;
     white-space: nowrap;

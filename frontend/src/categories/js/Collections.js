@@ -30,7 +30,7 @@ export function Collections({categories} ) {
 }
 
 const CategoryContainer = styled.div`
-    font-family: "Helvetica for Target", HelveticaForTarget, Targetica, "HelveticaNeue for Target", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    //font-family: "Helvetica for Target", HelveticaForTarget, Targetica, "HelveticaNeue for Target", "Helvetica Neue", Helvetica, Arial, sans-serif;
     box-sizing: border-box;
     margin: 0 auto 24px;
     display: flex;
