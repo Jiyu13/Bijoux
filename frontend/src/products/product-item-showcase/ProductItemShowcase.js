@@ -21,9 +21,10 @@ export function ProductItemShowcase( {product} ) {
     // ======================= handle redirect to product detail page ====================================
     const navigate = useNavigate()
     const productName = product.title.split(" ").join("-")
-    console.log(productName)
+    // console.log(productName)
     function handleProductDetail() {
-        navigate('/products/')
+        // console.log("click", product?.id)
+        navigate(`/products/${product.id}`)
     }
 
     // console.log(product.image)

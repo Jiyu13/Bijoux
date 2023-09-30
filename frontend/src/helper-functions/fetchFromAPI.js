@@ -4,6 +4,7 @@ import axios from "axios";
 export const API_URL = "http://127.0.0.1:8000"
 export function fetchFromAPI(endpoint, setter) {
     async function fetchData() {
+        console.log(`${API_URL}${endpoint}`)
         try {
             const response = await axios.get(`${API_URL}${endpoint}`)
             return response

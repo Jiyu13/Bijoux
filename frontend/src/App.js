@@ -58,35 +58,35 @@ function App() {
             <div className="App">
                 <NavBar />
                 <Main className="main-container">
-                    <Routes>
-                        <Route>
-                            exact
-                            path='/products/:product_name/'
-                            element={
-                                <ProductDetail/>
-                            }
+                <Routes>
+                    <Route
+                        exact
+                        path='/products/:id'
+                        element={
+                            <ProductDetail />
+                        }
+                    >
+                    </Route>
+                    <Route
+                        exact
+                        path='/shop'
+                        element={
+                            <ShopAllPage products={products}/>
+                        }
+                    >
+                    </Route>
 
-                        </Route>
-                        <Route
-                            exact
-                            path='/shop'
-                            element={
-                                <ShopAllPage products={products}/>
-                            }
-                        >
-                        </Route>
-
-                        <Route
-                            exact
-                            path='/'
-                            element={
-                                <Home products={products} categories={categories}/>
-                            }
-                        >
-                        </Route>
+                    <Route
+                        exact
+                        path='/'
+                        element={
+                            <Home products={products} categories={categories}/>
+                        }
+                    >
+                    </Route>
 
 
-                    </Routes>
+                </Routes>
 
                 </Main>
 
