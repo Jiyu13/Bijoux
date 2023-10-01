@@ -12,7 +12,10 @@ export function fetchFromAPI(endpoint, setter) {
             console.log(error)
         }
     }
-    fetchData().then(res => setter(res.data))
+    fetchData().then(res => {
+        console.log(res)
+        setter(res.data)
+    })
 }
 
 // async function fetchData() {
