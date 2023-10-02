@@ -4,7 +4,7 @@ import axios from "axios";
 export const API_URL = "http://127.0.0.1:8000"
 export function fetchFromAPI(endpoint, setter) {
     async function fetchData() {
-        console.log(`${API_URL}${endpoint}`)
+        // console.log(`${API_URL}${endpoint}`)
         try {
             const response = await axios.get(`${API_URL}${endpoint}`)
             return response
@@ -13,7 +13,7 @@ export function fetchFromAPI(endpoint, setter) {
         }
     }
     fetchData().then(res => {
-        console.log(res)
+        // console.log(res)
         setter(res.data)
     })
 }
