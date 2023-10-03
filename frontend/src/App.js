@@ -93,7 +93,7 @@ function App() {
 
                 <Footer />
 
-                {isMobile || isTablet || isSmallLaptop ? <MobileNavBar /> : ""}
+                {isMobile || isTablet  ? <MobileNavBar /> : ""}
             </div>
             </Provider>
         </UserContext.Provider>
