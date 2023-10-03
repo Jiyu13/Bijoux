@@ -17,48 +17,71 @@ export function NavBar() {
 
     return (
         <>
-            <NavBarContainer className="navbar">
+            {/*<NavBarContainer className="navbar">*/}
+            {/*    <LogoSection>*/}
+            {/*        <Link to="/" >*/}
+            {/*            <Logo>Company Logo</Logo>*/}
+            {/*        </Link>*/}
+
+            {/*    </LogoSection>*/}
+
+            {/*    {isMobile || isTablet || isSmallLaptop ? "" :*/}
+            {/*            <LinksSection style={{marginRight: marginRight}}>*/}
+            {/*                <NavLinks />*/}
+            {/*            </LinksSection>*/}
+            {/*    }*/}
+
+            {/*    <SearchBarSection style={{marginRight: marginRight}}>*/}
+            {/*        <SearchBar />*/}
+            {/*    </SearchBarSection>*/}
+
+            {/*    {isMobile || isTablet || isSmallLaptop  ? "" :*/}
+            {/*        <AccountSection>*/}
+            {/*            <Accessibility />*/}
+            {/*        </AccountSection>*/}
+            {/*    }*/}
+            {/*</NavBarContainer>*/}
+
+            <NavBarContainer>
                 <LogoSection>
                     <Link to="/" >
-                        <Logo>Company Logo</Logo>
+                        <Logo>CompanyLogo</Logo>
                     </Link>
-
                 </LogoSection>
 
-                {isMobile || isTablet || isSmallLaptop ? "" :
-                        <LinksSection style={{marginRight: marginRight}}>
-                            <NavLinks />
-                        </LinksSection>
-                }
-
-                <SearchBarSection style={{marginRight: marginRight}}>
-                    <SearchBar />
-                </SearchBarSection>
-
-                {isMobile || isTablet || isSmallLaptop  ? "" :
-                    <AccountSection>
+                {isMobile || isTablet ? "" :(
+                    <LinksSection>
+                        <NavLinks />
                         <Accessibility />
-                    </AccountSection>
-                }
+                    </LinksSection>
+                )}
+
+
             </NavBarContainer>
         </>
     )
 }
 
 const NavBarContainer = styled.div`
-  width: 100%;
-  margin: 0 auto;
-  height: 90px;
-  display: grid;
-  align-items: center;
+  height: 60px;
   box-sizing: border-box;
   top: 0;
   z-index: 9999;
-  box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
+  position: sticky;
   background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
+  
+  display: flex;
+  align-items: center;
+  max-width: 1600px!important;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-bottom: -1px
 `
 const LogoSection = styled.div`
-  margin: 0 auto;
+  //margin: 0 auto;
+    width: 138px;
+
 `
 const Logo = styled.div`
   //font-size: 2rem;
@@ -67,58 +90,47 @@ const Logo = styled.div`
 `
 
 const LinksSection = styled.div`
-  //margin: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 `
 
 const SearchBarSection = styled.div`
-  //margin: 0 32px;
 `
 const AccountSection = styled.div`
-  margin: 0 32px
+    float: right;
 `
+const SocialMediasSection = styled.div``
 
-// export function NavBar() {
-//
-//     const {isMobile, isTablet} = useContext(UserContext)
-//     // console.log(isMobile, isTablet)
-//
-//     return (
-//         <>
-//
-//             {isMobile || isTablet ? "" :
-//                     <NavBarContainer>
-//                         <LogoSection>
-//                             <Logo>Company Logo</Logo>
-//                         </LogoSection>
-//                         <LinksSection>
-//                             <NavLinks />
-//                         </LinksSection>
-//                         {/*<SocialMediasSection>*/}
-//                         {/*    <SocialMedias />*/}
-//                         {/*</SocialMediasSection>*/}
-//                     </NavBarContainer>
-//
-//             }
-//         </>
-//     )
-// }
-//
 // const NavBarContainer = styled.div`
-//   display: inline-grid;
-//   //grid-template-columns: min-content auto auto;
-//   grid-template-columns: min-content auto;
-//   white-space: nowrap;
-//   align-items: center;
 //   width: 100%;
-//   margin: 12px 0 24px;
+//   margin: 0 auto;
+//   height: 90px;
+//   display: grid;
+//   align-items: center;
+//   box-sizing: border-box;
+//   top: 0;
+//   z-index: 9999;
+//   box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
+//   background-color: white;
 // `
 // const LogoSection = styled.div`
-//   margin-right: 12px;
+//   margin: 0 auto;
 // `
 // const Logo = styled.div`
-//   font-size: 2rem;
+//   //font-size: 2rem;
 //   font-family: "Roboto", sans-serif;
+//   white-space: nowrap;
 // `
 //
-// const LinksSection = styled.div``
-const SocialMediasSection = styled.div``
+// const LinksSection = styled.div`
+//   //margin: 0 32px;
+// `
+//
+// const SearchBarSection = styled.div`
+//   //margin: 0 32px;
+// `
+// const AccountSection = styled.div`
+//   margin: 0 32px
+// `
+// const SocialMediasSection = styled.div``

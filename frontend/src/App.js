@@ -21,6 +21,7 @@ import {ShopAllPage} from "./components/ShopAllPage";
 import {Provider} from "react-redux";
 import store from "./filter/filter-redux/store/store";
 import {ProductDetail} from "./products/product-detail-page/ProductDetail";
+import {FeaturedCollection} from "./featured-collection/js/FeaturedCollection";
 
 function App() {
     const [products, setProduct] = useState(null)
@@ -58,35 +59,35 @@ function App() {
             <div className="App">
                 <NavBar />
                 <Main className="main-container">
-                <Routes>
-                    <Route
-                        exact
-                        path='/products/:id'
-                        element={
-                            <ProductDetail />
-                        }
-                    >
-                    </Route>
-                    <Route
-                        exact
-                        path='/shop'
-                        element={
-                            <ShopAllPage products={products}/>
-                        }
-                    >
-                    </Route>
+                    <Routes>
+                        <Route
+                            exact
+                            path='/products/:id'
+                            element={
+                                <ProductDetail />
+                            }
+                        >
+                        </Route>
+                        <Route
+                            exact
+                            path='/shop'
+                            element={
+                                <ShopAllPage products={products}/>
+                            }
+                        >
+                        </Route>
 
-                    <Route
-                        exact
-                        path='/'
-                        element={
-                            <Home products={products} categories={categories}/>
-                        }
-                    >
-                    </Route>
+                        <Route
+                            exact
+                            path='/'
+                            element={
+                                <Home products={products} categories={categories}/>
+                            }
+                        >
+                        </Route>
 
 
-                </Routes>
+                    </Routes>
 
                 </Main>
 

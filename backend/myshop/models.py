@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -43,3 +44,9 @@ class Carousel(models.Model):
     def __str__(self):
         return self.theme
 
+
+class UserProfile(models.Model):
+    # extend built-in User models
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    address = models.TextField(null=True, blank=True)
+    phone = models.CharField(null=True, blank=True, max_length=16)

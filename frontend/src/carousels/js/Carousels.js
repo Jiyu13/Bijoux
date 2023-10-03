@@ -43,10 +43,16 @@ export function Carousels() {
                     >
                         {carousels?.map((carousel, index) => {
                             return (
-                            <CarouselItem key={index} className="item">
-                                <Img src={`${API_URL}${carousel.image}`} alt={carousel.theme}/>
-                            </CarouselItem>
-                            )})}
+                                 <CarouselItem key={index} className="item">
+                                    <Img src={`${API_URL}${carousel.image}`} alt={carousel.theme}/>
+                                     <SloganText>
+                                         <Text>{carousel.caption}</Text>
+                                         <Button>Shop Now</Button>
+                                    </SloganText>
+                                </CarouselItem>
+                        )})}
+
+
                     </CarouselItems>
                 </CarouselInner1>
                 <LeftArrow1
@@ -88,7 +94,7 @@ const CarouselContainer1 = styled.div`
   //max-height: clamp(450px, 50vh, 600px);
   margin: 0 auto;
   width: 100%;
-  color: white;
+  //color: white;
 `
 const CarouselInner1 = styled.div`
   position: relative;
@@ -120,6 +126,41 @@ const Img = styled.img`
   cursor: pointer;
   //border-radius: 16px;
 `
+
+const SloganText = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    //background-color: #282c34;
+    width: 60%; /* Adjust width as needed */
+    padding: 10px;
+    border-radius: 10px; /* Optional: for rounded corners */
+    text-align: center;
+`
+
+const Text = styled.div`
+    font-size: 2rem; /* You can customize this value */
+    font-weight: bolder;
+    line-height: 3rem;
+`
+
+const  Button = styled.div`
+    color: white;
+    background-color: rgba(40,44,52, 0.6);
+    width: 30%;
+    padding: 12px;
+    margin: 32px auto 0;
+    cursor: pointer;
+    
+    &:hover{
+      background-color: rgba(40,44,52, 0.9);
+    }
+
+}
+    
+`
+
 const LeftArrow1 = styled.button`
     place-self: center left;
 `

@@ -4,11 +4,13 @@ import arrow_forward_ios_white_24dp from "../arrows/arrow_forward_ios_white_24dp
 import "../css/slider-template.css"
 import styled from "styled-components"
 import {API_URL} from "../../helper-functions/fetchFromAPI";
-import {useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
+import {UserContext} from "../../global/user-context/UserContext";
 
 export function SliderTemplate( props ) {
 
-    const {products, sectionContent, backgroundColor, borderRadius} = props
+    const {isMobile, isTablet} = useContext(UserContext)
+    const {products, sectionContent} = props
 
     let className = sectionContent.split(" ").join("-")
 
@@ -31,9 +33,7 @@ export function SliderTemplate( props ) {
     }
 
     function handleScrollLeft() {
-        // console.log(sliderRef)
         if (sliderRef.current) {
-            console.log("click left")
             sliderRef.current.scrollLeft -= sliderRef.current.offsetWidth / 2;
             checkButtons();
         }
@@ -51,6 +51,7 @@ export function SliderTemplate( props ) {
 
     function handleOnMouseEnter() {
         let target = sliderRef.current.className
+        // console.log(target)
         if (target.includes(className)) {
             setDisplay("")
             setBackground("rgba(0,0,0, 0.6)")
@@ -63,15 +64,11 @@ export function SliderTemplate( props ) {
     }
 
     return (
-        <ComponentContainer
-            style={{
-                backgroundColor: backgroundColor,
-                borderRadius: borderRadius
-            }}
-        >
+        <ComponentContainer>
             <ComponentWrapper>
-                 <TitleWrapper>
-                    <Title>{sectionContent}</Title>
+                 <TitleWrapper style={{marginLeft: isMobile || isTablet ? "8px" : ""}}>
+                    <Title>collection / {sectionContent}</Title>
+                     <a href="/shop" style={{fontSize: "14px", textDecoration: "none", color: "#0097e6"}}>view all</a>
                  </TitleWrapper>
 
 
@@ -105,8 +102,9 @@ export function SliderTemplate( props ) {
                                     )
                                 })
                             }
+
                         <SliderButton
-                            style={{left: "1rem", display: isDisplay, backgroundColor: buttonBackground}}
+                            style={{left: "0.5rem", display: isDisplay, backgroundColor: buttonBackground}}
                             className={prevDisable ? "disabled" : "slider-btn"}
                             aria-disabled={prevDisable}
                             onClick={handleScrollLeft}
@@ -115,7 +113,7 @@ export function SliderTemplate( props ) {
                             <img src={arrow_back_ios_white_24dp} alt="previouse arrow button"/>
                         </SliderButton>
                         <SliderButton
-                            style={{right: "1rem", display: isDisplay, backgroundColor: buttonBackground}}
+                            style={{right: "0.5rem", display: isDisplay, backgroundColor: buttonBackground}}
                             className={nextDisable ? "disabled" : "slider-btn"}
                             aria-disabled={nextDisable}
                             onClick={handleScrollRight}
@@ -132,21 +130,20 @@ export function SliderTemplate( props ) {
 
 //
 const ComponentContainer = styled.div`
-  margin: 24px auto;
+    margin: 24px auto;
 `
 const ComponentWrapper = styled.div``
+
 const TitleWrapper = styled.div`
-    //font-family: "Helvetica for Target", HelveticaForTarget, Targetica, "HelveticaNeue for Target", "Helvetica Neue", Helvetica, Arial, sans-serif;
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: baseline;
     gap: 0px;
-    margin-left: 8px;
 `
-const Title = styled.h2`
-    margin-bottom: 0;
-    font-weight: 700;
+const Title = styled.div`
+    font-size: 12px;
     white-space: nowrap;
+    text-decoration: underline;
 `
 
 // Slider Styling
@@ -175,16 +172,12 @@ const Link = styled.a`
     width: 100%;
     font-size: 14px;
     line-height: 1.25;
-    //background-color: rgb(255, 255, 255);
     border-radius: 4px;
     text-align: left;
     position: relative;
-    //box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
     overflow: hidden;
     flex-direction: column;
     cursor: pointer;
-    //position: relative;
-
 `
 const Img = styled.img`
     height: 100%;
@@ -197,7 +190,6 @@ const Img = styled.img`
     }
 `
 const ItemTitleWrapper = styled.div`
-    //position: absolute;
     display: flex;
     flex-direction: column;
     flex: 1 1 0%;
@@ -212,10 +204,7 @@ const ItemTitle = styled.span`
     -webkit-line-clamp: 1;
     display: block;
     font-size: 1rem;
-    //margin-left: 8px;
     margin-bottom: 0.125em;
-    //font-weight: 700;
-    //color: white;
 `
 
 const SliderButton = styled.div`
@@ -223,20 +212,15 @@ const SliderButton = styled.div`
     margin-right: 8px;
     z-index: 1;
     position: absolute;
-    top: 50%;
+    top: 36%;
     transform: translateY(-50%);
     display: flex;
     height: 48px;
     align-items: center;
     justify-content: center;
     transition: opacity 300ms ease 0s;
-    //background-color: rgba(0,0,0, 0.2);
     border-radius: 50%;
     border: none;
     width: 48px;
     cursor: pointer;
-    //
-    //&:hover {
-    //  background-color: rgba(0,0,0, 0.6);
-    //}
 `

@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-body {
+@import url('https://fonts.googleapis.com/css2?family=Lora&family=Playfair+Display&family=Raleway&family=Roboto&display=swap');body {
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Raleway', 'Lora', 'Playfair Display', 'Roboto', sans-serif;
   /*background-color: #dfe4ea;*/
 }
 
@@ -28,21 +27,21 @@ body {
 /* ipads & tablets / smaller */
 @media only screen and (min-width: 768px) {
     .main-container {
-        width: 80%;
+        width: 90%;
     }
 }
 
  /*laptops*/
 @media only screen and (min-width: 990px) {
     .main-container {
-        width: 72%;
+        width: 80%;
     }
 }
 
 /* desktops */
 @media only screen and (min-width: 1280px) {
     .main-container {
-       width: 60%;
+       width: 70%;
     }
 }
 

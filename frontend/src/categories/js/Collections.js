@@ -1,45 +1,69 @@
 import styled from "styled-components";
 import "../css/category-list.css"
-import {API_URL} from "../../helper-functions/fetchFromAPI"
 import { Link } from "react-router-dom";
+import {ToggleCollection} from "../../toggle-collection-carousel/js/ToggleCollection";
 
-export function Collections({categories} ) {
+
+export function Collections({categories, handleChangeCollection, isSelected, products} ) {
+
+
+
+    // const bgColor = isSelected ?
+
     return (
-        <CategoryContainer>
-            <CategoryTitle>
-                Shop By Collections
-            </CategoryTitle>
-            <CategoryItems className="category-list">
+        <>
 
-                {categories?.map((c, index) => {
-                    return (
-                        <CategoryItem key={index} className="category-item">
-                            <Link to="" style={{textDecoration: "none", color: "inherit"}}>
-                                <ItemWrapper>
-                                    <Img src={`${API_URL}${c["cover_image"]}`} alt={`shop by ${c["category_name"]}`}/>
-                                    <Text>{c["category_name"]}</Text>
-                                </ItemWrapper>
+            <CategoryContainer>
+                <CategoryTitle>
+                    Our Collections
+                </CategoryTitle>
+                <Description>
+                    Delve into an exquisite array of jewelry collections, explore and find a piece that resonates with your personal style.
+                </Description>
 
-                            </Link>
-                        </CategoryItem>
-                    )
-                })}
-            </CategoryItems>
-        </CategoryContainer>
+                <CategoryItems>
+
+                    {categories?.map((c, index) => {
+                        return (
+                            <CategoryItem
+                                key={index}
+                                data-value={c["category_name"]}
+                                onClick={handleChangeCollection}
+                                style={{backgroundColor: isSelected === c["category_name"] ? "rgba(40,44,52, 0.9)" : "rgba(40,44,52, 0.6)"}}
+                            >
+                                <Link to=""
+                                    style={{
+                                      textDecoration: "none",
+                                      color: "inherit",
+                                        // backgroundColor:
+                                    }}
+                                >
+                                        <Text>{c["category_name"]}</Text>
+                                </Link>
+                            </CategoryItem>
+                        )
+                    })}
+                </CategoryItems>
+            </CategoryContainer>
+        </>
     )
 }
 
 const CategoryContainer = styled.div`
-    //font-family: "Helvetica for Target", HelveticaForTarget, Targetica, "HelveticaNeue for Target", "Helvetica Neue", Helvetica, Arial, sans-serif;
     box-sizing: border-box;
-    margin: 0 auto 24px;
+    margin: 36px auto;
     display: flex;
     flex-direction: column;
+    text-align: center;
 `
 const CategoryTitle = styled.h2`
+  font-size: 20px;
     margin-bottom: 0;
     font-weight: 700;
     white-space: nowrap;
+`
+const Description = styled.p`
+  font-size: 14px;
 `
 const CategoryItems = styled.ul`
     box-sizing: border-box;
@@ -49,27 +73,20 @@ const CategoryItems = styled.ul`
     padding: 0;
     list-style: none;
     justify-content: center;
+    gap: 24px;
 `
-const CategoryItem = styled.li``
-const ItemWrapper = styled.div`
-    box-sizing: border-box;
-    text-align: center;
-    &:hover {
-      text-decoration: underline;
-      transition: opacity 200ms ease-out;
-    }
-`
-
-const Img = styled.img`
-  border-radius: 16px;
-  width: 100%;
-  transition: transform .8s;
+const CategoryItem = styled.li`
+  text-align: center;
+  //background-color: rgba(40,44,52, 0.6);
+  padding: 6px 12px;
+  color: white;
   
   &:hover {
-    transform: scale(1.05);
+    background-color: rgba(40,44,52, 0.9);
   }
+
 `
-const Text = styled.p`
+const Text = styled.div`
   margin-bottom: 0;
 `
 
