@@ -18,7 +18,8 @@ export function Collections({categories, handleChangeCollection, isSelected, pro
                     Our Collections
                 </CategoryTitle>
                 <Description>
-                    Delve into an exquisite array of jewelry collections, explore and find a piece that resonates with your personal style.
+                    {/*Delve into an exquisite array of jewelry collections, */}
+                    Explore and find a piece that resonates with your personal style.
                 </Description>
 
                 <CategoryItems>
