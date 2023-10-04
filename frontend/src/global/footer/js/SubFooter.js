@@ -1,8 +1,12 @@
 import styled from "styled-components";
+import {useContext} from "react";
+import {UserContext} from "../../user-context/UserContext";
 
 export function SubFooter() {
+    const {isMobile, isTablet} = useContext(UserContext)
+
     return (
-        <SubFooterContainer>
+        <SubFooterContainer style={{margin: isMobile || isTablet ?  "0 auto 132px" : "32px auto"}}>
             <SubFooterNav>
                 <NavWrapper>
                     <NavLinkItem>
@@ -35,7 +39,6 @@ export function SubFooter() {
 
 const SubFooterContainer = styled.div`
   text-align: center;
-  margin: 32px 0;
   font-size: 12px;
   width: 100%;
 `
@@ -44,14 +47,15 @@ const SubFooterNav = styled.nav`
   padding: 0 30px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 `
 
 const NavWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  display: flex;
   gap: 2rem;
+  justify-content: center;
 `
 
 const NavLinkItem = styled.li``
