@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import "./css/navbar.css"
+import "../css/navbar.css"
 
 import {NavLink} from "react-router-dom";
 

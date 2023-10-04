@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import person_black_24 from "./icons/person_black_24dp.svg"
-import expand_more_black_24 from "./icons/expand_more_black_24dp.svg"
+// import expand_more_black_24 from "./icons/expand_more_black_24dp.svg"
 import shopping_cart_black from "./icons/shopping_cart_black_24dp.svg"
-import {SearchBar} from "../global/search-bar/SearchBar";
+// import {SearchBar} from "../global/search-bar/SearchBar";
 import search_black_24dp from "../global/search-bar/icons/search_black_24dp.svg";
 
 

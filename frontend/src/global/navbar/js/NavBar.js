@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import "./css/navbar.css"
+import "../css/navbar.css"
 
 import {NavLinks} from "./NavLinks"
-import {SocialMediasBackup} from "../social-media/js/SocialMediasBackup";
+import {SocialMediasBackup} from "../../social-media/js/SocialMediasBackup";
 import {useContext} from "react";
-import {UserContext} from "../user-context/UserContext";
-import {SearchBar} from "../search-bar/SearchBar";
-import {Accessibility} from "../../accessibility/Accessibility";
+import {UserContext} from "../../user-context/UserContext";
+import {SearchBar} from "../../search-bar/SearchBar";
+import {Accessibility} from "../../../accessibility/Accessibility";
 import {Link} from "react-router-dom";
 
 export function NavBar() {

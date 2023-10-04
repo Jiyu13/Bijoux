@@ -12,8 +12,8 @@ import {UserContext} from "./global/user-context/UserContext";
 import {API_URL} from "./helper-functions/fetchFromAPI"
 
 import {Footer} from './global/footer/js/Footer'
-import {NavBar} from "./global/navbar/NavBar";
-import {MobileNavBar} from "./global/navbar/MobileNavBar";
+import {NavBar} from "./global/navbar/js/NavBar";
+import {MobileNavBar} from "./global/navbar/js/MobileNavBar";
 import {fetchFromAPI} from "./helper-functions/fetchFromAPI";
 import {Home} from "./components/Home";
 import {ShopAllPage} from "./components/ShopAllPage";

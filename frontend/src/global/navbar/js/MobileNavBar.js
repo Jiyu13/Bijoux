@@ -1,10 +1,10 @@
 import {useContext} from "react";
-import {UserContext} from "../user-context/UserContext";
-import shopping_cart_black_24 from "./mobile-icons/shopping_cart_black_24dp.svg";
-import favorite_border_black_24 from "./mobile-icons/favorite_border_black_24dp.svg"
-import home_black_24 from "./mobile-icons/home_black_24dp.svg"
-import account_circle_black_24 from "./mobile-icons/account_circle_black_24dp.svg"
-import storefront_black_24dp from "./mobile-icons/storefront_black_24dp.svg"
+import {UserContext} from "../../user-context/UserContext";
+import shopping_cart_black_24 from "../icons/shopping_cart_black_24dp.svg";
+import search_black_24dp from "../../search-bar/icons/search_black_24dp.svg";
+import home_black_24 from "../icons/home_black_24dp.svg"
+import account_circle_black_24 from "../icons/account_circle_black_24dp.svg"
+import storefront_black_24dp from "../icons/storefront_black_24dp.svg"
 import styled from "styled-components";
 
 export function MobileNavBar() {
@@ -25,8 +25,8 @@ export function MobileNavBar() {
                     </ContainerItem>
 
                     <ContainerItem href="#">
-                        <Img src={favorite_border_black_24} alt="favourite icon"/>
-                        <Text>Favourite</Text>
+                        <Img src={search_black_24dp} alt="search icon"/>
+                        <Text>Search</Text>
                     </ContainerItem>
 
                     <ContainerItem href="#">
