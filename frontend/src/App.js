@@ -20,7 +20,7 @@ import {ShopAllPage} from "./components/ShopAllPage";
 
 import {Provider} from "react-redux";
 import store from "./filter/filter-redux/store/store";
-import {ProductDetail} from "./products/product-detail-page/ProductDetail";
+import {ProductPage} from "./products/product-detail-page/ProductPage";
 import {FeaturedCollection} from "./featured-collection/js/FeaturedCollection";
 
 function App() {
@@ -50,7 +50,7 @@ function App() {
     }, []);
 
 
-    const userContextValue = {isMobile, isTablet, isSmallLaptop, isLargeScreen, carousels}
+    const userContextValue = {isMobile, isTablet, isSmallLaptop, isLargeScreen, carousels, products}
 
     return (
         <UserContext.Provider value={userContextValue}>
@@ -64,7 +64,7 @@ function App() {
                             exact
                             path='/products/:id'
                             element={
-                                <ProductDetail />
+                                <ProductPage />
                             }
                         >
                         </Route>

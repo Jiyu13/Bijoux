@@ -1,0 +1,18 @@
+.material-radio-toolbar input[type="checkbox"] {
+
+}
+
+.material-radio-toolbar input[type="checkbox"]:checked + label {
+    /*background-color:#bfb;*/
+}
+
+.material-radio-toolbar input[type="checkbox"]:focus + label {
+    /*border: 2px dashed #444;*/
+}
+
+.material-radio-toolbar label {
+    /*display: inline-block;*/
+    /*background-color: rgba(40,44,52, 0.6);*/
+    /*padding: 8px 12px;*/
+    /*margin-right: 12px;*/
+}
