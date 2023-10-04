@@ -43,7 +43,7 @@ export function ProductPage() {
 }
 
 const DetailPageContainer = styled.main`
-  margin: 0 auto;
+  margin: 32px auto 0;
   padding: 0 15px;
   //min-width: 690px;
   //max-width: 1430px;
