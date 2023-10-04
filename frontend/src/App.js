@@ -11,17 +11,16 @@ import {UserContext} from "./global/user-context/UserContext";
 
 import {API_URL} from "./helper-functions/fetchFromAPI"
 
+import {Footer} from './global/footer/js/Footer'
 import {NavBar} from "./global/navbar/NavBar";
 import {MobileNavBar} from "./global/navbar/MobileNavBar";
 import {fetchFromAPI} from "./helper-functions/fetchFromAPI";
-import {Footer} from "./global/footer/js/Footer"
 import {Home} from "./components/Home";
 import {ShopAllPage} from "./components/ShopAllPage";
 
 import {Provider} from "react-redux";
 import store from "./filter/filter-redux/store/store";
 import {ProductPage} from "./products/product-detail-page/ProductPage";
-import {FeaturedCollection} from "./featured-collection/js/FeaturedCollection";
 
 function App() {
     const [products, setProduct] = useState(null)
@@ -91,7 +90,7 @@ function App() {
 
                 </Main>
 
-                <Footer />
+                <Footer/>
 
                 {isMobile || isTablet  ? <MobileNavBar /> : ""}
             </div>

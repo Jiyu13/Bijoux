@@ -1,7 +1,7 @@
 import {useContext} from "react";
-import {UserContext} from "../../user-context/UserContext";
+import {UserContext} from "../../../user-context/UserContext";
 
-export function MobileFooter() {
+export function MobileFooterBackup() {
 
     const { isMobile, isTablet, isSmallLaptop, isLargeScreen, carousels} = useContext(UserContext)
 

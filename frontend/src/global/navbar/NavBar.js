@@ -2,7 +2,7 @@ import styled from "styled-components";
 import "./css/navbar.css"
 
 import {NavLinks} from "./NavLinks"
-import {SocialMedias} from "../social-media/js/SocialMedias";
+import {SocialMediasBackup} from "../social-media/js/SocialMediasBackup";
 import {useContext} from "react";
 import {UserContext} from "../user-context/UserContext";
 import {SearchBar} from "../search-bar/SearchBar";

@@ -7,7 +7,7 @@ import ticktok_icon from '../icons/tiktok.svg'
 import {UserContext} from "../../user-context/UserContext";
 
 
-export function SocialMedias() {
+export function SocialMediasBackup() {
 
 
     return (

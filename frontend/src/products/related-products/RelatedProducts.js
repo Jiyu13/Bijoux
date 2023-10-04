@@ -71,6 +71,7 @@ const RelatedProductsHeader = styled.div`
   text-align: center;
   margin: 32px 0;
   letter-spacing: 0.1rem;
+  //color: #c1c1c1;
 `
 const RelatedProductsList = styled.ul`
   display: flex;
