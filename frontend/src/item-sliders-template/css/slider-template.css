@@ -4,28 +4,28 @@
 }
 
 /*mobile devices / smaller screen */
-@media only screen and (max-width: 600px) {
-    .item-image {
-        max-width: 124px;
-    }
-}
+/*@media only screen and (max-width: 600px) {*/
+/*    .item-image {*/
+/*        max-width: 124px;*/
+/*    }*/
+/*}*/
 
-/* ipads & tablets / smaller */
-@media only screen and (min-width: 601px) and (max-width: 768px) {
-    .item-image {
-        max-width: 136px;
-    }
-}
+/*!* ipads & tablets / smaller *!*/
+/*@media only screen and (min-width: 601px) and (max-width: 768px) {*/
+/*    .item-image {*/
+/*        max-width: 136px;*/
+/*    }*/
+/*}*/
 
-@media only screen and (min-width: 769px) and (max-width: 992px) {
-    .item-image {
-        max-width: 148px;
-    }
-}
+/*@media only screen and (min-width: 769px) and (max-width: 992px) {*/
+/*    .item-image {*/
+/*        max-width: 148px;*/
+/*    }*/
+/*}*/
 
-/* laptops & desktop */
-@media only screen and (min-width: 993px) {
-    .item-image {
-        max-width: 156px;
-    }
-}
+/*!* laptops & desktop *!*/
+/*@media only screen and (min-width: 993px) {*/
+/*    .item-image {*/
+/*        max-width: 156px;*/
+/*    }*/
+/*}*/

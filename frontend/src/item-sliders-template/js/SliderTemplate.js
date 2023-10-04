@@ -15,7 +15,7 @@ export function SliderTemplate( props ) {
     let className = sectionContent.split(" ").join("-")
 
     const [buttonBackground, setBackground] = useState("none")
-    const [isDisplay, setDisplay] = useState("none")
+    // const [isDisplay, setDisplay] = useState("none")
     const [prevDisable, setPrevDisable] = useState(true)
     const [nextDisable, setNextDisable] = useState(false);
     const sliderRef = useRef(null);
@@ -49,19 +49,19 @@ export function SliderTemplate( props ) {
         checkButtons()
     }, []);
 
-    function handleOnMouseEnter() {
-        let target = sliderRef.current.className
-        // console.log(target)
-        if (target.includes(className)) {
-            setDisplay("")
-            setBackground("rgba(0,0,0, 0.6)")
-        }
-    }
+    // function handleOnMouseEnter() {
+    //     let target = sliderRef.current.className
+    //     // console.log(target)
+    //     if (target.includes(className)) {
+    //         setDisplay("")
+    //         setBackground("rgba(0,0,0, 0.6)")
+    //     }
+    // }
 
-    function handleMouseLeave() {
-        setDisplay("none")
-        setBackground("none")
-    }
+    // function handleMouseLeave() {
+    //     setDisplay("none")
+    //     setBackground("none")
+    // }
 
     return (
         <ComponentContainer>
@@ -76,35 +76,36 @@ export function SliderTemplate( props ) {
                     <SliderWrapper
                         className={className}
                         ref={sliderRef}
-                        onMouseOver={handleOnMouseEnter}
-                        onMouseOut={handleMouseLeave}
+                        // onMouseOver={handleOnMouseEnter}
+                        // onMouseOut={handleMouseLeave}
                     >
-                            {
-                                products?.map((product, index) => {
-                                    return (
+                        {
+                            products?.map((product, index) => {
+                                return (
+                                    <SliderItem key={index}>
+                                        <Link to="" >
+                                            <Img
+                                                src={`${API_URL}${product.image}`}
+                                                alt={`${product.title} image`}
+                                                className="item-image"
+                                            />
+                                            {/*<ItemTitleWrapper>*/}
+                                                <ItemTitle style={{fontSize: "0.875rem"}}>{product.title}</ItemTitle>
+                                                <ItemTitle style={{marginTop: ".125rem"}}>${product.price}</ItemTitle>
+                                            {/*</ItemTitleWrapper>*/}
+                                        </Link>
 
-                                        <SliderItem key={index}>
-                                            <Link to="" >
-                                                <div>
-                                                    <Img
-                                                        src={`${API_URL}${product.image}`}
-                                                        alt={`${product.title} image`}
-                                                        className="item-image"
-                                                    />
-                                                </div>
-                                                <ItemTitleWrapper>
-                                                    <ItemTitle style={{fontSize: "0.875rem"}}>{product.title}</ItemTitle>
-                                                    <ItemTitle>${product.price}</ItemTitle>
-                                                </ItemTitleWrapper>
-                                            </Link>
-
-                                        </SliderItem>
-                                    )
-                                })
-                            }
+                                    </SliderItem>
+                                )
+                            })
+                        }
 
                         <SliderButton
-                            style={{left: "0.5rem", display: isDisplay, backgroundColor: buttonBackground}}
+                            style={{
+                                left: "0.5rem",
+                                // display: isDisplay,
+                                backgroundColor: buttonBackground
+                        }}
                             className={prevDisable ? "disabled" : "slider-btn"}
                             aria-disabled={prevDisable}
                             onClick={handleScrollLeft}
@@ -113,7 +114,11 @@ export function SliderTemplate( props ) {
                             <img src={arrow_back_ios_white_24dp} alt="previouse arrow button"/>
                         </SliderButton>
                         <SliderButton
-                            style={{right: "0.5rem", display: isDisplay, backgroundColor: buttonBackground}}
+                            style={{
+                                right: "0.5rem",
+                                // display: isDisplay,
+                                backgroundColor: buttonBackground
+                        }}
                             className={nextDisable ? "disabled" : "slider-btn"}
                             aria-disabled={nextDisable}
                             onClick={handleScrollRight}
@@ -166,6 +171,7 @@ const SliderItem = styled.div`
     scroll-snap-align: start;
     flex-shrink: 0;
     display: flex;
+    max-width: 156px;
 `
 const Link = styled.a`
     display: flex;
@@ -183,6 +189,7 @@ const Img = styled.img`
     height: 100%;
     transition: transform .8s;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px;
+    width: 156px;
 
   
     &:hover {
@@ -195,16 +202,16 @@ const ItemTitleWrapper = styled.div`
     flex: 1 1 0%;
     padding: 12px 0;
 `
-const ItemTitle = styled.span`
-    overflow-wrap: break-word;
+const ItemTitle = styled.div`
     max-width: 100%;
-    overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
     -webkit-line-clamp: 1;
-    display: block;
+    
     font-size: 1rem;
-    margin-bottom: 0.125em;
+    margin: 12px 0 0.125em;
+    display: block;
+    word-break: break-word;
+    white-space: normal;
 `
 
 const SliderButton = styled.div`
@@ -212,7 +219,7 @@ const SliderButton = styled.div`
     margin-right: 8px;
     z-index: 1;
     position: absolute;
-    top: 36%;
+    top: 42%;
     transform: translateY(-50%);
     display: flex;
     height: 48px;
@@ -223,4 +230,5 @@ const SliderButton = styled.div`
     border: none;
     width: 48px;
     cursor: pointer;
+    background-color: rgba(0,0,0, 0.6);
 `
