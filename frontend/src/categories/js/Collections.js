@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import "../css/category-list.css"
-import { Link } from "react-router-dom";
-import {ToggleCollection} from "../../toggle-collection-carousel/js/ToggleCollection";
 
 
 export function Collections({categories, handleChangeCollection, isSelected, products} ) {
@@ -32,14 +30,14 @@ export function Collections({categories, handleChangeCollection, isSelected, pro
                                 onClick={handleChangeCollection}
                                 style={{backgroundColor: isSelected === c["category_name"] ? "rgba(40,44,52, 0.9)" : "rgba(40,44,52, 0.6)"}}
                             >
-                                <Link to=""
+                                <Link href=""
                                     style={{
                                       textDecoration: "none",
                                       color: "inherit",
                                         // backgroundColor:
                                     }}
                                 >
-                                        <Text>{c["category_name"]}</Text>
+                                        {c["category_name"]}
                                 </Link>
                             </CategoryItem>
                         )
@@ -77,17 +75,19 @@ const CategoryItems = styled.ul`
     gap: 24px;
 `
 const CategoryItem = styled.li`
-  text-align: center;
-  //background-color: rgba(40,44,52, 0.6);
-  padding: 6px 12px;
-  color: white;
-  
-  &:hover {
-    background-color: rgba(40,44,52, 0.9);
-  }
-
+    
+    //background-color: rgba(40,44,52, 0.6);
+    color: white;
+    &:hover {
+      background-color: rgba(40,44,52, 0.9);
+    }
 `
-const Text = styled.div`
-  margin-bottom: 0;
+const Link = styled.a`
+  padding: 6px 12px;
+  text-align: center;
+  display: block;
+      &:hover {
+      background-color: rgba(40,44,52, 0.9);
+    }
 `
 
