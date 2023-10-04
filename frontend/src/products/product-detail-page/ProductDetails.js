@@ -19,6 +19,7 @@ export function ProductDetails({productDetail}) {
                 <form>
 
                     {/*==================== material section =======================*/}
+                    {/*=================== get from productDetail.material =========*/}
                     <ProductMaterial />
 
                     {/*==================== quantity buttons ===================*/}
@@ -28,6 +29,7 @@ export function ProductDetails({productDetail}) {
                     <ProductAddToCart />
 
                     {/*=================== product description =======================*/}
+                    {/*=================== get from productDetail.description ========*/}
                     <ProductDescription />
                 </form>
 
