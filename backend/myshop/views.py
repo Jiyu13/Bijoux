@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from .serializers import *
 from .models import *
-# from rest_framework import viewsets
 from rest_framework.views import APIView
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -53,12 +52,12 @@ class CarouselListView(APIView):
 
 class CategoryListView(APIView):
     def get(self, request):
-        categories = Category.objects.all()
-        serializer = CategorySerializer(categories, many=True)
+        categories = Collection.objects.all()
+        serializer = CollectionSerializer(categories, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = CategorySerializer(data=request.data)
+        serializer = CollectionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -66,5 +65,11 @@ class CategoryListView(APIView):
 
 
 class CategoryDetailView(RetrieveAPIView):
-    queryset = Category.objects.all().prefetch_related("product_set")
-    serializer_class = CategorySerializer
+    queryset = Collection.objects.all().prefetch_related("product_set")
+    serializer_class = CollectionSerializer
+
+
+class MaterialListView(ListAPIView):
+    queryset = Material.objects.all()
+    serializer_class = MaterialSerializer
+

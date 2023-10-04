@@ -35,6 +35,8 @@ urlpatterns = [
 
     path('carousels/', CarouselListView.as_view(), name="carousels"),
     path('categories/', CategoryListView.as_view(), name="categories"),
-    path('categories/<int:pk>/', CategoryDetailView.as_view(), name="categories-detail")
+    path('categories/<int:pk>/', CategoryDetailView.as_view(), name="categories-detail"),
+
+    path('materials/', MaterialListView.as_view(), name="materials")
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
