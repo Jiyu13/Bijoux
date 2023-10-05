@@ -10,13 +10,12 @@ export function ProductPage() {
     const [productDetail, setProductDetail] = useState(null)
 
     const id = useParams()
-    console.log(id.id)
 
     useEffect(() => {
         fetchFromAPI(`/products/${id.id}/`, setProductDetail)
     }, [id])
 
-    console.log(productDetail)
+    // console.log(productDetail)
 
     return (
         <DetailPageContainer>
@@ -36,7 +35,7 @@ export function ProductPage() {
             </section>
 
             {/* =================== Related Products ===================*/}
-            <RelatedProducts />
+            <RelatedProducts productDetail={productDetail}/>
 
         </DetailPageContainer>
     )
