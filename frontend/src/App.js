@@ -48,7 +48,9 @@ function App() {
     }, []);
 
 
-    const userContextValue = {isMobile, isTablet, isSmallLaptop, isLargeScreen, carousels, products}
+    const userContextValue = {
+        isMobile, isTablet, isSmallLaptop, isLargeScreen,
+        carousels, products, collections}
 
     return (
         <UserContext.Provider value={userContextValue}>
