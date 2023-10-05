@@ -6,6 +6,7 @@ import styled from "styled-components"
 import {API_URL} from "../../helper-functions/fetchFromAPI";
 import {useContext, useEffect, useRef, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
+import {ProductPrice, ProductTitle} from "../../products/related-products/RelatedProducts";
 
 export function SliderTemplate( props ) {
 
@@ -91,8 +92,18 @@ export function SliderTemplate( props ) {
                                                 className="item-image"
                                             />
                                             {/*<ItemTitleWrapper>*/}
-                                                <ItemTitle style={{fontSize: "0.875rem"}}>{product.title}</ItemTitle>
-                                                <ItemTitle style={{marginTop: ".125rem"}}>${product.price}</ItemTitle>
+                                                <ProductTitle
+                                                    style={{
+                                                        // fontSize: "0.875rem",
+                                                        margin: "12px 0"
+                                                    }}
+                                                >{product.title}</ProductTitle>
+                                                <ProductPrice
+                                                    style={{
+                                                        // marginTop: ".125rem"
+                                                        fontSize: "1rem",
+                                                    }}
+                                                >${product.price}</ProductPrice>
                                             {/*</ItemTitleWrapper>*/}
                                         </Link>
 
@@ -185,6 +196,7 @@ const Link = styled.a`
     overflow: hidden;
     flex-direction: column;
     cursor: pointer;
+    text-decoration: none;
 `
 const Img = styled.img`
     height: 100%;
