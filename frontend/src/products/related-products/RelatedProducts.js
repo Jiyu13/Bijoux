@@ -112,7 +112,7 @@ const ImageWrapper = styled.div`
 const Img = styled.img`
   width: 100%;
 `
-const ProductTitle = styled.h3`
+export const ProductTitle = styled.h3`
   font-size: 16px;
   margin: 0 0 12px;
   color: #656565;
@@ -121,4 +121,4 @@ const ProductTitle = styled.h3`
     color: #000;
   }
 `
-const ProductPrice = styled.div``
+export const ProductPrice = styled.div``
