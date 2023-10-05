@@ -12,7 +12,7 @@ export function SliderTemplate( props ) {
     const {isMobile, isTablet} = useContext(UserContext)
     const {products, sectionContent} = props
 
-    let className = sectionContent.split(" ").join("-")
+    // let className = sectionContent.split(" ").join("-")
 
     const [buttonBackground, setBackground] = useState("none")
     // const [isDisplay, setDisplay] = useState("none")
@@ -74,7 +74,7 @@ export function SliderTemplate( props ) {
 
                 <SliderContainer >
                     <SliderWrapper
-                        className={className}
+                        // className={className}
                         ref={sliderRef}
                         // onMouseOver={handleOnMouseEnter}
                         // onMouseOut={handleMouseLeave}
@@ -83,7 +83,8 @@ export function SliderTemplate( props ) {
                             products?.map((product, index) => {
                                 return (
                                     <SliderItem key={index}>
-                                        <Link to="" >
+                                        {/*product.split(" ").join("-")*/}
+                                        <Link href={`/products/${product.id}/`} >
                                             <Img
                                                 src={`${API_URL}${product.image}`}
                                                 alt={`${product.title} image`}
