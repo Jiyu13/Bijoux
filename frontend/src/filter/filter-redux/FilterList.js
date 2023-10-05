@@ -2,12 +2,23 @@ import {filterInfo} from "../filter-options/filterInfo";
 import FilterBox from './FilterBox';
 import styled from "styled-components";
 import {MobileFilterItems} from "../filter-mobile/MobileFilterBar";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
+import {fetchFromAPI} from "../../helper-functions/fetchFromAPI";
 
 export function FilterList() {
 
-    const {isMobile} = useContext(UserContext)
+    const {isMobile, collections, products} = useContext(UserContext)
+
+    const [materials, setMaterials] = useState(null)
+
+    console.log(materials, collections)
+    const materialOptions = materials?.map(material => material.material_name)
+    const collectionOptions = collections?.map(collection => collection.collection_name)
+
+    useEffect(() => {
+        fetchFromAPI("/materials/", setMaterials)
+    }, []);
 
 
     return (
@@ -15,9 +26,9 @@ export function FilterList() {
 
             {!isMobile && (
                 <FilterItemsContainer>
-                    <FilterBox filterName={filterInfo[0].item} options={filterInfo[0].options}/>
-                    <FilterBox filterName={filterInfo[1].item} options={filterInfo[1].options}/>
-                    <FilterBox filterName={filterInfo[2].item} options={filterInfo[2].options}/>
+                    <FilterBox key="Sort" filterName={filterInfo[0].item} options={filterInfo[0].options}/>
+                    <FilterBox key="Collections" filterName="Collections" options={collectionOptions}/>
+                    <FilterBox key="Materials" filterName="Materials" options={materialOptions}/>
                 </FilterItemsContainer>
             )}
 
@@ -25,7 +36,7 @@ export function FilterList() {
 
             <TotalResultNumber className="count-products">
                 {/* should be the length of results*/}
-                1000 results
+                {products?.length} results
             </TotalResultNumber>
         </FilterContainer>
 

@@ -44,7 +44,7 @@ export function FilterBox({ filterName, options}) {
                         {options?.map((option, index) => {
                             return (
                                 <DropdownItem
-                                    key={index}
+                                    key={option}
                                     option={option}
                                 />)
                         })}
