@@ -2,10 +2,15 @@ import styled from "styled-components";
 import {useContext} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 
-export function RelatedProducts() {
+export function RelatedProducts({productDetail}) {
 
     const {products} = useContext(UserContext)
-    console.log(products)
+    const relatedProducts = products?.filter(product =>
+        product?.collection["collection_name"] === productDetail?.collection["collection_name"]
+        // && product?.id !== productDetail?.id
+    )
+    // console.log(relatedProducts)
+    // console.log(productDetail.collection["collection_name"])
 
     return (
         <RelatedProductsContainer>
@@ -14,46 +19,58 @@ export function RelatedProducts() {
             </RelatedProductsHeader>
 
             <RelatedProductsList>
-                <RelatedProduct>
-                    <Link to="">
-                        <ImageWrapper>
-                            <Img src={products[0].image}/>
-                        </ImageWrapper>
-                        <ProductTitle>{products[0].title}</ProductTitle>
-                    </Link>
-                    <ProductPrice>${products[0].price}</ProductPrice>
-                </RelatedProduct>
+                {relatedProducts?.map((rp, index) => {
+                    return (
+                         <RelatedProduct key={index}>
+                            <Link to="">
+                                <ImageWrapper>
+                                    <Img src={rp?.image}/>
+                                </ImageWrapper>
+                                <ProductTitle>{rp.title}</ProductTitle>
+                            </Link>
+                            <ProductPrice>${rp.price}</ProductPrice>
+                        </RelatedProduct>
+                )})}
+                {/*<RelatedProduct>*/}
+                {/*    <Link to="">*/}
+                {/*        <ImageWrapper>*/}
+                {/*            <Img src={products[0]?.image}/>*/}
+                {/*        </ImageWrapper>*/}
+                {/*        <ProductTitle>{products[0].title}</ProductTitle>*/}
+                {/*    </Link>*/}
+                {/*    <ProductPrice>${products[0].price}</ProductPrice>*/}
+                {/*</RelatedProduct>*/}
 
-                <RelatedProduct>
-                    <Link to="">
-                        <ImageWrapper>
-                            <Img src={products[1].image}/>
-                        </ImageWrapper>
-                        <ProductTitle>{products[1].title}</ProductTitle>
-                    </Link>
-                    <ProductPrice>${products[1].price}</ProductPrice>
-                </RelatedProduct>
+                {/*<RelatedProduct>*/}
+                {/*    <Link to="">*/}
+                {/*        <ImageWrapper>*/}
+                {/*            <Img src={products[1].image}/>*/}
+                {/*        </ImageWrapper>*/}
+                {/*        <ProductTitle>{products[1].title}</ProductTitle>*/}
+                {/*    </Link>*/}
+                {/*    <ProductPrice>${products[1].price}</ProductPrice>*/}
+                {/*</RelatedProduct>*/}
 
-                <RelatedProduct>
-                    <Link to="">
-                        <ImageWrapper>
-                            <Img src={products[2].image}/>
-                        </ImageWrapper>
-                        <ProductTitle>{products[2].title}</ProductTitle>
-                    </Link>
-                    <ProductPrice>${products[2].price}</ProductPrice>
-                </RelatedProduct>
+                {/*<RelatedProduct>*/}
+                {/*    <Link to="">*/}
+                {/*        <ImageWrapper>*/}
+                {/*            <Img src={products[2].image}/>*/}
+                {/*        </ImageWrapper>*/}
+                {/*        <ProductTitle>{products[2].title}</ProductTitle>*/}
+                {/*    </Link>*/}
+                {/*    <ProductPrice>${products[2].price}</ProductPrice>*/}
+                {/*</RelatedProduct>*/}
 
-                <RelatedProduct>
-                    <Link to="">
-                        <ImageWrapper>
-                            <Img src={products[3].image}/>
-                        </ImageWrapper>
-                        <ProductTitle>{products[3].title}</ProductTitle>
-                    </Link>
-                    <ProductPrice>${products[3].price}</ProductPrice>
+                {/*<RelatedProduct>*/}
+                {/*    <Link to="">*/}
+                {/*        <ImageWrapper>*/}
+                {/*            <Img src={products[3].image}/>*/}
+                {/*        </ImageWrapper>*/}
+                {/*        <ProductTitle>{products[3].title}</ProductTitle>*/}
+                {/*    </Link>*/}
+                {/*    <ProductPrice>${products[3].price}</ProductPrice>*/}
 
-                </RelatedProduct>
+                {/*</RelatedProduct>*/}
 
             </RelatedProductsList>
 
