@@ -2,9 +2,9 @@ import styled from "styled-components";
 import "../css/category-list.css"
 
 
-export function Collections({categories, handleChangeCollection, isSelected, products} ) {
+export function Collections({collections, handleChangeCollection, isSelected, products} ) {
 
-
+    // console.log(isSelected)
 
     // const bgColor = isSelected ?
 
@@ -22,23 +22,24 @@ export function Collections({categories, handleChangeCollection, isSelected, pro
 
                 <CategoryItems>
 
-                    {categories?.map((c, index) => {
+                    {collections?.map((c, index) => {
                         return (
                             <CategoryItem
                                 key={index}
-                                data-value={c["category_name"]}
+                                data-value={c["collection_name"]}
                                 onClick={handleChangeCollection}
-                                style={{backgroundColor: isSelected === c["category_name"] ? "rgba(40,44,52, 0.9)" : "rgba(40,44,52, 0.6)"}}
+                                style={{
+                                    backgroundColor: isSelected === c["collection_name"] ? "rgba(40,44,52, 0.9)" : "rgba(40,44,52, 0.6)"}}
                             >
-                                <Link href=""
-                                    style={{
-                                      textDecoration: "none",
-                                      color: "inherit",
-                                        // backgroundColor:
-                                    }}
-                                >
-                                        {c["category_name"]}
-                                </Link>
+                                {/*<Link href=""*/}
+                                {/*    style={{*/}
+                                {/*      textDecoration: "none",*/}
+                                {/*      color: "inherit",*/}
+                                {/*        // backgroundColor:*/}
+                                {/*    }}*/}
+                                {/*>*/}
+                                        {c["collection_name"]}
+                                {/*</Link>*/}
                             </CategoryItem>
                         )
                     })}
@@ -75,19 +76,19 @@ const CategoryItems = styled.ul`
     gap: 24px;
 `
 const CategoryItem = styled.li`
-    
-    //background-color: rgba(40,44,52, 0.6);
+    padding: 6px 12px;
     color: white;
+    cursor: pointer;
     &:hover {
-      background-color: rgba(40,44,52, 0.9);
+      background-color: rgba(40,44,52, 0.9)!important;
     }
 `
-const Link = styled.a`
-  padding: 6px 12px;
-  text-align: center;
-  display: block;
-      &:hover {
-      background-color: rgba(40,44,52, 0.9);
-    }
-`
+// const Link = styled.a`
+//   padding: 6px 12px;
+//   text-align: center;
+//   display: block;
+//       &:hover {
+//       background-color: rgba(40,44,52, 0.9);
+//     }
+// `
 
