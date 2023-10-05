@@ -25,7 +25,7 @@ import {ProductPage} from "./products/product-detail-page/ProductPage";
 function App() {
     const [products, setProduct] = useState(null)
     const [carousels, setCarousels] = useState(null)
-    const [categories, setCategories] = useState(null)
+    const [collections, setCollections] = useState(null)
 
     const isLargeScreen = useMediaQuery({maxWidth: DeviceSize.desktop})
     const isSmallLaptop = useMediaQuery({maxWidth: DeviceSize.small_laptop})
@@ -39,10 +39,9 @@ function App() {
     }, [])
 
     useEffect(() => {
-        fetchFromAPI("/categories/", setCategories)
+        fetchFromAPI("/collections/", setCollections)
     }, []);
 
-    // console.log(categories)
 
     useEffect(() => {
         fetchFromAPI("/carousels/", setCarousels)
@@ -80,7 +79,7 @@ function App() {
                             exact
                             path='/'
                             element={
-                                <Home products={products} categories={categories}/>
+                                <Home products={products} collections={collections}/>
                             }
                         >
                         </Route>
