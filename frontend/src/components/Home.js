@@ -1,25 +1,25 @@
 import {Carousels} from "../carousels/js/Carousels";
 import {Collections} from "../categories/js/Collections";
-import {ToggleCollection} from "../toggle-collection-carousel/js/ToggleCollection";
+import {ToggleCollectionProducts} from "../toggle-collection-carousel/js/ToggleCollectionProducts";
 import {NewArrivals} from "../new-arrivals/js/NewArrivals";
 import {FeaturedCollection} from "../featured-collection/js/FeaturedCollection";
 import {useState} from "react";
 
-export function Home({categories, products}) {
+export function Home({collections, products}) {
 
     const [isSelected, setIsSelected] = useState("Best Sellers")
 
     function handleChangeCollection(e) {
-        // console.log(e.currentTarget.dataset.value)
-        setIsSelected(e.currentTarget.dataset.value)
+        // console.log(e.target.dataset.value)
+        setIsSelected(e.target.dataset.value)
     }
 
     return (
         <>
             <Carousels />
             <FeaturedCollection />
-            <Collections categories={categories} isSelected={isSelected} handleChangeCollection={handleChangeCollection} products={products}/>
-            <ToggleCollection products={products} isSelected={isSelected}/>
+            <Collections collections={collections} isSelected={isSelected} handleChangeCollection={handleChangeCollection} products={products}/>
+            <ToggleCollectionProducts products={products} isSelected={isSelected}/>
             {/*<NewArrivals products={products}/>*/}
         </>
     )
