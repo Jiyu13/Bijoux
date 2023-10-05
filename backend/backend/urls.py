@@ -34,8 +34,8 @@ urlpatterns = [
     # path('products/<str:name>/', CategoryDetailView.as_view(), name="product-detail"),
 
     path('carousels/', CarouselListView.as_view(), name="carousels"),
-    path('categories/', CategoryListView.as_view(), name="categories"),
-    path('categories/<int:pk>/', CategoryDetailView.as_view(), name="categories-detail"),
+    path('collections/', CollectionListView.as_view(), name="collections"),
+    path('collections/<int:pk>/', CollectionDetailView.as_view(), name="collections-detail"),
 
     path('materials/', MaterialListView.as_view(), name="materials")
 

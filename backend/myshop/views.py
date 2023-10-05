@@ -50,10 +50,10 @@ class CarouselListView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CategoryListView(APIView):
+class CollectionListView(APIView):
     def get(self, request):
-        categories = Collection.objects.all()
-        serializer = CollectionSerializer(categories, many=True)
+        collections = Collection.objects.all()
+        serializer = CollectionSerializer(collections, many=True)
         return Response(serializer.data)
 
     def post(self, request):
@@ -64,7 +64,7 @@ class CategoryListView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CategoryDetailView(RetrieveAPIView):
+class CollectionDetailView(RetrieveAPIView):
     queryset = Collection.objects.all().prefetch_related("product_set")
     serializer_class = CollectionSerializer
 
