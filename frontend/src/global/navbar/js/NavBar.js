@@ -73,7 +73,6 @@ const NavBarContainer = styled.div`
   
   display: flex;
   align-items: center;
-  max-width: 1600px!important;
   padding-left: 40px;
   padding-right: 40px;
   margin-bottom: -1px
