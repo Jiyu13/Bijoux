@@ -37,6 +37,12 @@ urlpatterns = [
     path('collections/', CollectionListView.as_view(), name="collections"),
     path('collections/<int:pk>/', CollectionDetailView.as_view(), name="collections-detail"),
 
-    path('materials/', MaterialListView.as_view(), name="materials")
+    path('materials/', MaterialListView.as_view(), name="materials"),
+
+    path('customers/', UserListView.as_view(), name="customers"),
+    path('customers/<int:pk>/', CustomerDetailView.as_view(), name="customer-detail"),
+    path('profiles/', CustomerProfileListView.as_view(), name="customer-profiles"),
+    path('profiles/<int:pk>/', CustomerProfileListView.as_view(), name="customer-profile-detail"),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

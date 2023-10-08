@@ -54,6 +54,23 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ["id", "title", "description", "price", "image", "collection", "product_images", "materials"]
 
 
+# ==========================  User + Customer Profile  =============================
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username", "first_name", "last_name", "email"]
+
+
+class CustomerProfileSerializer(serializers.ModelSerializer):
+    # Nested serialization to show user details
+    customer = UserSerializer(read_only=True)
+
+    class Meta:
+        model = CustomerProfile
+        fields = ["customer", "address", "phone"]
+
+
+# ==============  Carousel - Home page image sliders ======================
 class CarouselSerializer(serializers.ModelSerializer):
     class Meta:
         model = Carousel

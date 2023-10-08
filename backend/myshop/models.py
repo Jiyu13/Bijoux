@@ -24,6 +24,9 @@ class Product(models.Model):
     title = models.CharField(max_length=120)
     description = models.TextField()
     price = models.FloatField()
+    # stock = models.PositiveIntegerField()
+    # is_active = models.BooleanField(default=True)
+    # create_at = models.DateTimeField(auto_now_add=True)
     # cover image
     image = models.ImageField(null=True, blank=True, upload_to='images/')
 
@@ -55,8 +58,15 @@ class Carousel(models.Model):
         return self.theme
 
 
-# class UserProfile(models.Model):
-#     # extend built-in User models
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     address = models.TextField(null=True, blank=True)
-#     phone = models.CharField(null=True, blank=True, max_length=16)
+# ==========================  User Profile  =============================
+class CustomerProfile(models.Model):
+    # cus
+    customer = models.OneToOneField(User, on_delete=models.CASCADE)  # delete user will delete user profile, not vice verse
+    address = models.TextField(null=True, blank=True)
+    phone = models.CharField(null=True, blank=True, max_length=20)
+
+    def __str__(self):
+        return self.customer.username
+
+
+
