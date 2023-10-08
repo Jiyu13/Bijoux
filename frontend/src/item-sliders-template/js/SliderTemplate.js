@@ -197,6 +197,7 @@ const Link = styled.a`
     flex-direction: column;
     cursor: pointer;
     text-decoration: none;
+    color: #656565;
 `
 const Img = styled.img`
     height: 100%;
