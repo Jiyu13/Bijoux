@@ -6,9 +6,11 @@ export function ProductQuantity() {
     const [quantity, setQuantity] = useState(1)
 
     function handleDecrease() {
+        console.log("click")
         setQuantity(prev => prev - 1)
     }
     function handleIncrease() {
+        console.log("click")
         setQuantity(prev => prev + 1)
     }
 
@@ -27,7 +29,11 @@ export function ProductQuantity() {
                 >
                     -
                 </ControlDecrease>
-                <ControlInput type="text" defaultValue={quantity}/>
+                <ControlInput
+                    type="text"
+                    // defaultValue={quantity}
+                    value={quantity}
+                />
                 <ControlIncrease
                     type="button"
                     onClick={handleIncrease}
