@@ -4,12 +4,19 @@ import {ProductQuantity} from "./ProductQuantity";
 import {ProductAddToCart} from "./ProductAddToCart";
 import {ProductDescription} from "./ProductDescription";
 import styled from "styled-components";
+import {useContext} from "react";
+import {UserContext} from "../../global/user-context/UserContext";
 export function ProductDetails({productDetail}) {
 
-
+    const {isMobile} = useContext(UserContext)
 
     return (
-        <div style={{flex: "1", width: "50%", paddingLeft: "30px"}}>
+        <div style={{
+                flex: "1",
+                width: isMobile ? "100%" : "50%",
+                paddingLeft: isMobile ? "0" : "30px"
+            }}
+        >
             <div style={{}}>
                 <ProductTitle>{productDetail?.title}</ProductTitle>
             </div>

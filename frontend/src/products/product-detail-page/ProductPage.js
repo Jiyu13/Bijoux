@@ -1,11 +1,14 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {fetchFromAPI} from "../../helper-functions/fetchFromAPI";
 import styled from "styled-components";
 import {ProductDetails} from "./ProductDetails";
 import {RelatedProducts} from "../related-products/RelatedProducts";
+import {UserContext} from "../../global/user-context/UserContext";
 
 export function ProductPage() {
+
+    const {isMobile} = useContext(UserContext)
 
     const [productDetail, setProductDetail] = useState(null)
 
@@ -23,9 +26,9 @@ export function ProductPage() {
             <section>
                 <section style={{padding: "8px"}}>
 
-                    <div style={{display: "flex"}}>
+                    <div style={{display: "flex", flexDirection: isMobile ? "column" : "row"}}>
                         {/*=================== Product Image ===================*/}
-                        <div style={{flex: "1", width: "50%"}}>
+                        <div style={{flex: "1", width: isMobile ? "100%" : "50%"}}>
                             <img src={productDetail?.image} style={{width: "100%"}}/>
                         </div>
                         {/*=================== Detail and order ================*/}
