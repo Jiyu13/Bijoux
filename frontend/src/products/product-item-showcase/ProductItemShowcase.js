@@ -103,7 +103,7 @@ const ProductPromotion = styled.div`
 const Promotion = styled.p``
 
 
-const ProductTitle = styled.p`
+const ProductTitle = styled.h3`
   font-size: 14px;
   margin: 6px 0;
 `

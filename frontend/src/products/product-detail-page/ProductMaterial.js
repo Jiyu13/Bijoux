@@ -39,11 +39,11 @@ const MaterialOptions = styled.div`
 `
 
 const OptionWrapper = styled.div`
-    background-color: rgba(40,44,52, 0.8);
+    //background-color: rgba(40,44,52, 0.8);
     padding: 8px 12px;
     margin-right: 12px;
-    color: white;
-  
+    //color: white;
+    border: solid 1px;
     &:hover {
       background-color: rgba(40,44,52, 1);
     }

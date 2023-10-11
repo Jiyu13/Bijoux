@@ -1,13 +1,19 @@
 import styled from "styled-components";
 
-export function DropdownItem( {option} ) {
+export function DropdownItem( props ) {
+
+    const {option, filterName, handleCheckboxChange, selectedFilters} = props
+
     return (
         <DropdownContainer>
             <Checkbox
                 type="checkbox"
                 id={option}
                 name={option}
-                value={option}
+                value={`${filterName}: ${option}`}
+                checked={selectedFilters?.includes(`${filterName}: ${option}`)}
+                onChange={handleCheckboxChange}
+
             />
             <Label htmlFor={option}>{option}</Label>
         </DropdownContainer>

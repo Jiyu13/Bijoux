@@ -6,13 +6,14 @@ import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import {fetchFromAPI} from "../../helper-functions/fetchFromAPI";
 
-export function FilterList() {
+export function FilterList({handleCheckboxChange, selectedFilters}) {
 
     const {isMobile, collections, products} = useContext(UserContext)
 
     const [materials, setMaterials] = useState(null)
 
-    console.log(materials, collections)
+
+    // console.log(materials, collections)
     const materialOptions = materials?.map(material => material.material_name)
     const collectionOptions = collections?.map(collection => collection.collection_name)
 
@@ -26,9 +27,27 @@ export function FilterList() {
 
             {!isMobile && (
                 <FilterItemsContainer>
-                    <FilterBox key="Sort" filterName={filterInfo[0].item} options={filterInfo[0].options}/>
-                    <FilterBox key="Collections" filterName="Collections" options={collectionOptions}/>
-                    <FilterBox key="Materials" filterName="Materials" options={materialOptions}/>
+                    <FilterBox
+                        key="Sort"
+                        filterName={filterInfo[0].item}
+                        options={filterInfo[0].options}
+                        handleCheckboxChange={handleCheckboxChange}
+                        selectedFilters={selectedFilters}
+                    />
+                    <FilterBox
+                        key="Collections"
+                        filterName="Collections"
+                        options={collectionOptions}
+                        handleCheckboxChange={handleCheckboxChange}
+                        selectedFilters={selectedFilters}
+                    />
+                    <FilterBox
+                        key="Materials"
+                        filterName="Materials"
+                        options={materialOptions}
+                        handleCheckboxChange={handleCheckboxChange}
+                        selectedFilters={selectedFilters}
+                    />
                 </FilterItemsContainer>
             )}
 
@@ -57,5 +76,6 @@ const FilterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
-  padding: 6px;
+  padding: 6px 6px 6px 0;
+  margin: 24px 0;
 `

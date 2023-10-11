@@ -5,12 +5,15 @@ import styled from "styled-components";
 import expand_more_black_24dp from "../../backup/filter-backup/filter-template/icons/expand_more_black_24dp.svg";
 import {useEffect, useRef} from "react";
 
-export function FilterBox({ filterName, options}) {
+export function FilterBox({ filterName, options, handleCheckboxChange, selectedFilters }) {
+
+    // console.log("options", options)
+    // console.log("selectedOptions", selectedOptions)
+
     const dispatch = useDispatch()
     const isOpen = useSelector((state) => state.filters[filterName])
 
     const handleToggle = () => {
-        // console.log("click")
         dispatch(toggleFilter(filterName))
     }
 
@@ -45,7 +48,10 @@ export function FilterBox({ filterName, options}) {
                             return (
                                 <DropdownItem
                                     key={option}
+                                    filterName={filterName}
                                     option={option}
+                                    handleCheckboxChange={handleCheckboxChange}
+                                    selectedFilters={selectedFilters}
                                 />)
                         })}
                     </MenuDropdownList>
@@ -61,7 +67,7 @@ export default FilterBox;
 const MenuDropdownList = styled.div`
     box-sizing: border-box;
     position: absolute;
-    top: 180px;
+    top: 150px;
     background-color: white;
     box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19) !important;
     width: 20rem;
@@ -95,6 +101,4 @@ const MenuTrigger = styled.div`
     margin: 0 2px;
 `
 const FilterContainer = styled.div`
-    display
-
 `
