@@ -4,12 +4,19 @@ import {FilterList} from "../filter/filter-redux/FilterList";
 import {useEffect, useState} from "react";
 import {SelectedOptions} from "../selected-options/SelectedOptions";
 
-export function ShopAllPage({products} ) {
+const Sort = {
+    Up: 'Up',
+    Down: 'Down',
+    Left: 'Left',
+    Right: 'Right'
+};
+
+export function ShopAllPage({products}) {
 
     // product.collection.collection_name
     // product.materials -- array
     // product.price
-    // console.log(products)
+
     const [selectedFilters, setSelectedFilters] = useState([])
     const [resultProducts, setResultProducts] = useState(null)
     // const [sortedResults, setSortedResults] = useState(null)
@@ -18,71 +25,44 @@ export function ShopAllPage({products} ) {
     function handleCheckboxChange(e) {
 
         const value = e.target.value ? e.target.value : e.currentTarget.value
-        //
-        // if (selectedFilters.includes(value)) {
-        //     setSelectedFilters(prev => prev.filter(o => o !== value))
-        // } else {
-        //     setSelectedFilters(prev => [...prev, value])
-        // }
 
-        if (selectedFilters.includes(value)) {
-
-            setSelectedFilters(prev => prev.filter(o => o !== value))
-
-            if (value === "Sort: Highest Price" || value === "Sort: Lowest Price") {
-                setResultProducts(products)
-            } else {
-                console.log(resultProducts)
-                setResultProducts(resultProducts)
-            }
-
+        let filters = selectedFilters
+        if (e.target.checked) {
+            filters = [...filters, value]
         } else {
-
-            setSelectedFilters(prev => [...prev, value])
-
-            if (value === "Sort: Highest Price") {
-                // [...products] copy products
-                const sortHighest = [...products]?.sort(function(a, b) { return b.price - a.price})
-                setResultProducts(sortHighest)
-            } else if (value === "Sort: Lowest Price") {
-                // [...products] copy products
-                const sortLowest = [...products]?.sort(function(a, b) { return a.price - b.price})
-                setResultProducts(sortLowest)
-            } else {
-                if (value.includes("Collections")) {
-                    const filterTerm = value.split(": ")[1]
-                    const results = [...products]?.filter(p => {
-                        return p.collection.collection_name === filterTerm
-                    })
-                    setResultProducts(results)
-                }
-            }
+            filters = filters.filter(filter => filter !== value)
         }
 
+        // console.log(filters)
 
+        let noSortFilters = filters.filter(f => !f.includes("Sort:"))
+        let filteredProducts = []
+
+        noSortFilters.forEach(f => {
+            const filterTerm = f.split(": ")[1]
+
+
+            const results = [...products]?.filter(p => {
+                return p.collection.collection_name === filterTerm
+            })
+            filteredProducts = [...filteredProducts, ...results]
+        })
+
+        filteredProducts = noSortFilters.length > 0 ? filteredProducts : products
+
+        if (filters.includes("Sort: Highest Price")) {
+            filteredProducts = filteredProducts.sort(function (a, b) {
+                return b.price - a.price
+            })
+        } else if(filters.includes("Sort: Lowest Price")) {
+              filteredProducts = filteredProducts.sort(function (a, b) {
+                return a.price - b.price
+            })
+        }
+
+        setResultProducts(filteredProducts)
+        setSelectedFilters(filters)
     }
-
-    // setSelectedFilters(prev =>
-    //     prev.includes(value) ?
-    //         prev.filter(o => o !== value)
-    //         :
-    //         [...prev, value]
-    // )
-    // console.log("==============after selectedOptions===================", selectedOptions)
-    // let results = products
-    // for (let option in selectedFilters) {
-    //     if (option === "Sort: Highest Price") {
-    //         const results = results?.sort(function(a, b) { return b.price - a.price})
-    //     } else if (option === "Sort: Lowest Price") {
-    //         const results = results?.sort(function(a, b) { return a.price - b.price})
-    //     } else if (option.includes("Collections")){
-    //         const results = results?.filter(product => product.collection.collection_name !== option)
-    //     } else if (option.includes("Materials")){
-    //         const results = results?.filter(product => !option in product.Materials)
-    //     }
-    //
-    // }
-    // setResultProducts(results)
 
     return (
         <ProductPageContainer>
@@ -105,3 +85,49 @@ export function ShopAllPage({products} ) {
 const ProductPageContainer = styled.div`
   margin: 1rem auto;
 `
+
+//
+// const getFilteredProducts = (f) =>{
+//     console.log(f)
+//     switch (f) {
+//         case "Sort: Highest Price":
+//             if (filteredProducts.length === 0) {
+//                 return [...products]?.sort(function (a, b) {
+//                     return b.price - a.price
+//                 })
+//             } else {
+//                 return [...filteredProducts]?.sort(function (a, b) {
+//                     return b.price - a.price
+//                 })
+//             }
+//         case "Sort: Lowest Price":
+//             if (filteredProducts.length === 0) {
+//                 return [...products]?.sort(function (a, b) { return a.price - b.price})
+//             } else {
+//                 return [...filteredProducts]?.sort(function (a, b) { return a.price - b.price})
+//             }
+//         case f.includes("Materials"):
+//             if (filteredProducts.length === 0 || filteredProducts.length === products.length) {
+//
+//                 const results = [...products]?.filter(p => {
+//                     console.log(p)
+//                     return p.materials.includes(filterTerm)
+//                 })
+//                 return results
+//             } else {
+//                 const results = [...products]?.filter(p => p.materials.includes(filterTerm))
+//                 return [...filteredProducts, ...results]
+//             }
+//         default:
+//
+//             if (filteredProducts.length === 0 || filteredProducts.length === products.length) {
+//                 const results = [...products]?.filter(p => p.collection.collection_name === filterTerm)
+//                 return results
+//             } else {
+//                 const results = [...products]?.filter(p => p.collection.collection_name === filterTerm)
+//                 return [...filteredProducts, ...results]
+//             }
+//     }
+// }
+// filteredProducts = getFilteredProducts(f)
+// console.log(filteredProducts)
