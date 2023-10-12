@@ -1,15 +1,8 @@
 import {ProductList} from "../products/products-list/ProductList";
 import styled from "styled-components";
 import {FilterList} from "../filter/filter-redux/FilterList";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {SelectedOptions} from "../selected-options/SelectedOptions";
-
-const Sort = {
-    Up: 'Up',
-    Down: 'Down',
-    Left: 'Left',
-    Right: 'Right'
-};
 
 export function ShopAllPage({products}) {
 
@@ -19,8 +12,6 @@ export function ShopAllPage({products}) {
 
     const [selectedFilters, setSelectedFilters] = useState([])
     const [resultProducts, setResultProducts] = useState(null)
-    // const [sortedResults, setSortedResults] = useState(null)
-    // const [filterResults, setFilterResults] = useState(null)
 
     function handleCheckboxChange(e) {
 
@@ -35,6 +26,7 @@ export function ShopAllPage({products}) {
 
         // console.log(filters)
 
+        // ========================= filters excluding "sort" ================================================
         let noSortFilters = filters.filter(f => !f.includes("Sort:"))
         let filteredProducts = []
 
@@ -48,6 +40,7 @@ export function ShopAllPage({products}) {
             filteredProducts = [...filteredProducts, ...results]
         })
 
+        // ========================= "sort" products ================================================
         filteredProducts = noSortFilters.length > 0 ? filteredProducts : products
 
         if (filters.includes("Sort: Highest Price")) {
