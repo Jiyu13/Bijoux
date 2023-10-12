@@ -31,13 +31,13 @@ export function ProductItemShowcase( {product} ) {
     return (
         <ShowcaseContainer className="product-item" onClick={handleProductDetail} id={product.id}>
             <ProductImage>
-                <Circle></Circle>
-                <FavIcon
-                    src={isFav ? favorite_white_24dp : favorite_border_black_24dp}
-                    alt="add to favourite"
-                    style={{filter: isFavColor}}
-                    onClick={handleAddFav}
-                />
+                {/*<Circle></Circle>*/}
+                {/*<FavIcon*/}
+                {/*    src={isFav ? favorite_white_24dp : favorite_border_black_24dp}*/}
+                {/*    alt="add to favourite"*/}
+                {/*    style={{filter: isFavColor}}*/}
+                {/*    onClick={handleAddFav}*/}
+                {/*/>*/}
                 <Img src={`http://localhost:8000${product.image}`}/>
             </ProductImage>
             <ProductContent>
