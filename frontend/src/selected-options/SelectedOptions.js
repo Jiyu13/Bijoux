@@ -1,38 +1,20 @@
+import styled from "styled-components";
+
 export function SelectedOptions({selectedFilters, handleCheckboxChange}) {
 
-    // console.log(selectedOptions)
-
     return (
-        <div
-            style={{
-                display: "flex",
-                flexWrap: "wrap",
-                // marginLeft: "0",
-                // paddingLeft: "0"
-            }}
-        >
+        <SelectedOptionsContainer>
             {selectedFilters?.map(option => {
-                // console.log("===============option====================",option)
-                    return <button
+                return (
+                    <OptionButton
                         key={option}
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignContent: "center",
-                            margin: "12px 8px 12px 0",
-                            border: "solid 1px",
-                            borderRadius: "20px",
-                            cursor: "pointer"
-                        }}
                         value={option}
                         onClick={handleCheckboxChange}
                     >
 
                         <div
-
                             style={{
                                 padding: "2px 12px",
-                                // margin: "12px 4px 12px 0",
                                 fontSize: "0.9rem",
                                 whiteSpace: "nowrap"
                             }}
@@ -40,11 +22,30 @@ export function SelectedOptions({selectedFilters, handleCheckboxChange}) {
                             {option}
                         </div>
                         <div style={{padding: "2px 12px"}}>x</div>
-                    </button>
-                }
-
+                    </OptionButton>
+                )}
             )}
-        </div>
+        </SelectedOptionsContainer>
 
     )
 }
+
+const SelectedOptionsContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`
+
+const OptionButton = styled.button`
+    display: flex;
+    justify-content: center;
+    //align-content: center;
+    margin: 12px 8px 12px 0;
+    border: solid 1px;
+    border-radius: 20px;
+    cursor: pointer;
+    background: none;
+    &:hover {
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px, rgb(51, 51, 51) 0px 0px 0px 2px;
+    } 
+   
+`
