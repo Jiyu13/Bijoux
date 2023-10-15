@@ -22,7 +22,7 @@ export function RelatedProducts({productDetail}) {
                 {relatedProducts?.map((rp, index) => {
                     return (
                          <RelatedProduct key={index}>
-                            <Link to="">
+                            <Link href={`/products/${rp.id}`}>
                                 <ImageWrapper>
                                     <Img src={rp?.image}/>
                                 </ImageWrapper>
@@ -102,6 +102,7 @@ const RelatedProduct = styled.li`
 const Link = styled.a`
   text-decoration: none;
   color: #282c34;
+  cursor: pointer;
   &:hover {
     text-decoration: underline;
   }
