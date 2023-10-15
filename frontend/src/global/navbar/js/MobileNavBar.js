@@ -56,6 +56,7 @@ const NavBarContainer = styled.div`
   bottom: 0;
   width: 100%;
   box-sizing: border-box;
+  z-index: 1;
 `
 const ContainerItem = styled.a`
   padding: 8px;
