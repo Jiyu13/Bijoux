@@ -46,6 +46,7 @@ const OptionWrapper = styled.div`
     border: solid 1px;
     &:hover {
       background-color: rgba(40,44,52, 1);
+      color: whitesmoke;
     }
 `
 
