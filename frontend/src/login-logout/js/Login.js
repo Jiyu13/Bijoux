@@ -7,11 +7,12 @@ export function Login() {
                 padding: "100px 0 35px",
                 borderBottom: "1px solid #dddddd"
             }}>
-                <h1>Customer Login</h1>
+                <h1>Login</h1>
             </div>
 
             <FormWrapper>
                 <form>
+
                     <Field>
                         <Label>Email</Label>
                         <Input />
@@ -32,6 +33,11 @@ export function Login() {
                     />
                 </form>
 
+                <div style={{fontSize: "0.9rem"}}>
+                    Don't have an account?
+                    <SignupLink href="/register">Sign up</SignupLink>
+                     here!
+                </div>
             </FormWrapper>
         </LoginContainer>
     )
@@ -82,8 +88,18 @@ const LoginButton = styled.input`
     letter-spacing: 0.1rem;
     cursor: pointer;
     transition: .3s ease;
-    margin: 4rem 0 1.5rem;
+    margin: 2rem 0 1.5rem;
     &:hover {
       box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px, rgb(51, 51, 51) 0px 0px 0px 2px;
+    }
+`
+
+export const SignupLink = styled(ForgetPasswordLink)`
+  font-size: 0.9rem;
+  margin: 0 6px;
+  font-weight: bold;
+  &:hover {
+        text-decoration-line: underline;
+        text-decoration-thickness: 2px;
     }
 `
