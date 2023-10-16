@@ -21,8 +21,11 @@ import {ShopAllPage} from "./components/ShopAllPage";
 import {Provider} from "react-redux";
 import store from "./filter/filter-redux/store/store";
 import {ProductPage} from "./products/product-detail-page/ProductPage";
+import {Login} from "./login-logout/js/Login";
+import {CreateAccount} from "./login-logout/js/CreateAccount";
 
 function App() {
+    const [currentUser, setCurrentUser] = useState()
     const [products, setProduct] = useState(null)
     const [carousels, setCarousels] = useState(null)
     const [collections, setCollections] = useState(null)
@@ -31,6 +34,10 @@ function App() {
     const isSmallLaptop = useMediaQuery({maxWidth: DeviceSize.small_laptop})
     const isTablet = useMediaQuery({ maxWidth: DeviceSize.tablet })
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
+
+    // useEffect(() => {
+    //     fetchFromAPI("/login/", setCurrentUser)
+    // }, [])
 
     useEffect(() => {
         axios.get(API_URL + "/products/")
@@ -73,6 +80,23 @@ function App() {
                             path='/shop'
                             element={
                                 <ShopAllPage products={products}/>
+                            }
+                        >
+                        </Route>
+
+                        <Route
+                            exact
+                            path='/login'
+                            element={
+                                <Login />
+                            }
+                        >
+                        </Route>
+                        <Route
+                            exact
+                            path='/register'
+                            element={
+                                <CreateAccount />
                             }
                         >
                         </Route>
