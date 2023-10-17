@@ -39,8 +39,17 @@ urlpatterns = [
 
     path('materials/', MaterialListView.as_view(), name="materials"),
 
+    # ==================== user =============================
+    path('register/', UserRegister.as_view(), name='register'),
+    path('login/', UserLogin.as_view(), name='login'),
+    path('logout/', UserLogout.as_view(), name='logout'),
+    path('user/', UserView.as_view(), name='user'),
+    # ==================== user =============================
+
     path('customers/', UserListView.as_view(), name="customers"),
     path('customers/<int:pk>/', CustomerDetailView.as_view(), name="customer-detail"),
+
+
     path('profiles/', CustomerProfileListView.as_view(), name="customer-profiles"),
     path('profiles/<int:pk>/', CustomerProfileListView.as_view(), name="customer-profile-detail"),
 
