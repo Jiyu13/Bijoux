@@ -1,7 +1,61 @@
+from django.conf import settings
+from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractBaseUser, PermissionsMixin
+
 
 # Create your models here.
+
+# =============================================================================================
+class AppUserManager(BaseUserManager):
+    """ custom manager for AppUser model"""
+    def create_user(self, email, password=None, **extra_fields):
+        """" create standard users, expects an email & password  & additional fields """
+        if not email:
+            raise ValueError('An email is required.')
+        if not password:
+            raise ValueError('A password is required.')
+        email = self.normalize_email(email)                  # normalize email, converts the domain part of the email to lowercase
+        user = self.model(email=email, **extra_fields)       # create a user instance
+        user.set_password(password)                          # set its ps (hashed)
+        user.save()                                          # save to database
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        """" create superusers """
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_staff', True)
+        superuser = self.create_user(email, password, **extra_fields)
+        return superuser
+
+
+class AppUser(AbstractBaseUser, PermissionsMixin):
+    user_id = models.AutoField(primary_key=True)
+    email = models.EmailField(max_length=50, unique=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    is_staff = models.BooleanField(default=False)
+
+    # use the email as the unique identifier for authentication, instead of the default "username"
+    USERNAME_FIELD = 'email'
+    # list of fields that will be prompted for when creating
+    REQUIRED_FIELDS = ['first_name', 'last_name']
+    objects = AppUserManager()
+
+    def __str__(self):
+        return f"{self.email} - {self.last_name}"
+
+
+# ==========================  User Profile  ==================================================
+class CustomerProfile(models.Model):
+    # cus
+    customer = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # delete user will delete user profile, not vice verse
+    address = models.TextField(null=True, blank=True)
+    phone = models.CharField(null=True, blank=True, max_length=20)
+
+    def __str__(self):
+        return self.customer.email
+# =============================================================================================
 
 
 class Material(models.Model):
@@ -57,16 +111,6 @@ class Carousel(models.Model):
     def __str__(self):
         return self.theme
 
-
-# ==========================  User Profile  =============================
-class CustomerProfile(models.Model):
-    # cus
-    customer = models.OneToOneField(User, on_delete=models.CASCADE)  # delete user will delete user profile, not vice verse
-    address = models.TextField(null=True, blank=True)
-    phone = models.CharField(null=True, blank=True, max_length=20)
-
-    def __str__(self):
-        return self.customer.username
 
 
 
