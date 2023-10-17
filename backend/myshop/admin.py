@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import *
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
 
 # Register your models here.
@@ -10,8 +10,10 @@ class CustomerProfileInline(admin.StackedInline):
     verbose_name_plural = 'Customer Profile'
 
 
-class UserAdmin(admin.ModelAdmin):
-    inlines = [CustomerProfileInline]
+class AppUserAdmin(admin.ModelAdmin):
+    list_display = ('email', 'first_name', 'last_name')  # You can customize this as per your requirements
+    search_fields = ('email',)
+    ordering = ('email',)
 
 
 # Additionally, if you want a separate admin for CustomerProfile
@@ -47,8 +49,8 @@ class MaterialAdmin(admin.ModelAdmin):
     list_display = ("material_name",)
 
 
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
+# admin.site.unregister(User)
+admin.site.register(AppUser, AppUserAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(Carousel, CarouselAdmin)
