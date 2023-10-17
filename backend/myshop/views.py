@@ -1,24 +1,79 @@
+from django.contrib.auth import login, logout
 from django.shortcuts import render
+from rest_framework.authentication import SessionAuthentication
+
 from .serializers import *
 from .models import *
 from rest_framework.views import APIView
 from rest_framework.generics import RetrieveAPIView, ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
+
+from .validations import custom_validation, validate_email, validate_password
+from .permissions import IsSuperUserOrReadOnly
+
 
 # Create your views here.
+# ============================= User Register / Login / Logout =============================
+class UserRegister(APIView):
+    """can be accessed by anyone, only has a post method"""
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        clean_data = custom_validation(request.data)
+        serializer = UserRegisterSerializer(data=clean_data)
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.create(clean_data)
+            if user:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserLogin(APIView):
+    """can be accessed by anyone"""
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = (SessionAuthentication,)
+
+    def post(self, request):
+        data = request.data
+        assert validate_email(data)
+        assert validate_password(data)
+        serializer = UserLoginSerializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.check_user(data)
+            login(request, user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UserLogout(APIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = ()
+
+    def post(self, request):
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
+
+
+class UserView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response({'user': serializer.data}, status=status.HTTP_200_OK)
 
 
 # ============================= User =============================
 # listing all users and creating a new user
 class UserListView(ListCreateAPIView):
-    queryset = User.objects.all()
+    queryset = AppUser.objects.all()
     serializer_class = UserSerializer  # with generic views
+    permission_classes = [IsSuperUserOrReadOnly]
 
 
 # retrieving, updating, or deleting a specific user based on their id
 class CustomerDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
+    queryset = AppUser.objects.all()
     serializer_class = UserSerializer
 
 
@@ -34,6 +89,8 @@ class UserProfileDetailView(RetrieveUpdateDestroyAPIView):
 
 # ============================= Product  =============================
 class ProductListView(APIView):
+    permission_classes = [IsSuperUserOrReadOnly]
+
     def get(self, request):
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)  # with APIView, manually handle (CRUD)
@@ -49,6 +106,8 @@ class ProductListView(APIView):
 
 
 class ProductDetailView(APIView):
+    permission_classes = [IsSuperUserOrReadOnly]
+
     def get(self, request, pk):
         try:
             product = Product.objects.get(pk=pk)
@@ -62,6 +121,8 @@ class ProductDetailView(APIView):
 
 # ============================= Carousel =============================
 class CarouselListView(APIView):
+    permission_classes = [IsSuperUserOrReadOnly]
+
     def get(self, request):
         carousels = Carousel.objects.all()
         serializer = CarouselSerializer(carousels, many=True)
@@ -78,6 +139,8 @@ class CarouselListView(APIView):
 # ============================= Collection ====================================
 
 class CollectionListView(APIView):
+    permission_classes = [IsSuperUserOrReadOnly]
+
     def get(self, request):
         collections = Collection.objects.all()
         serializer = CollectionSerializer(collections, many=True)
@@ -92,12 +155,16 @@ class CollectionListView(APIView):
 
 
 class CollectionDetailView(RetrieveAPIView):
+    permission_classes = [IsSuperUserOrReadOnly]
+
     queryset = Collection.objects.all().prefetch_related("product_set")
     serializer_class = CollectionSerializer
 
 
 # ============================= Material =============================
 class MaterialListView(ListAPIView):
+    permission_classes = [IsSuperUserOrReadOnly]
+
     queryset = Material.objects.all()
     serializer_class = MaterialSerializer
 
