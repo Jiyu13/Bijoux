@@ -1,7 +1,9 @@
 # convert model instances to JSON so that frontend can work with the received data
-
+from django.contrib.auth import authenticate, get_user_model
 from rest_framework import serializers
 from .models import *
+
+UserModel = get_user_model()
 
 
 class MaterialSerializer(serializers.ModelSerializer):
@@ -55,10 +57,39 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 # ==========================  User + Customer Profile  =============================
-class UserSerializer(serializers.ModelSerializer):
+class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ["id", "username", "first_name", "last_name", "email"]
+        model = UserModel
+        fields = '__all__'
+
+    def create(self, clean_data):
+        user_obj = UserModel.objects.create_user(
+            email=clean_data['email'],
+            password=clean_data['password']
+        )
+        user_obj.first_name = clean_data['first_name']
+        user_obj.last_name = clean_data['last_name']
+        user_obj.save()
+        return user_obj
+
+
+class UserLoginSerializer(serializers.ModelSerializer):
+    """ authenticate username & password pf the user """
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+    def check_user(self, clean_data):
+        user = authenticate(username=clean_data['email'], password=clean_data['password'])
+        if not user:
+            raise ValueError("user not found")
+        return user
+
+
+class UserSerializer(serializers.ModelSerializer):
+    """ based on the model & returns user """
+    class Meta:
+        model = UserModel
+        fields = ["id", "first_name", "last_name", "email"]
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
