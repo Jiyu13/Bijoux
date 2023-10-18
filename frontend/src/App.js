@@ -9,7 +9,7 @@ import {DeviceSize} from "./global/responsive";
 import {UserContext} from "./global/user-context/UserContext";
 
 
-import {API_URL} from "./helper-functions/fetchFromAPI"
+import {API_URL, postFromAPI} from "./helper-functions/fetchFromAPI"
 
 import {Footer} from './global/footer/js/Footer'
 import {NavBar} from "./global/navbar/js/NavBar";
@@ -24,9 +24,12 @@ import {ProductPage} from "./products/product-detail-page/ProductPage";
 import {Login} from "./login-logout/js/Login";
 import {CreateAccount} from "./login-logout/js/CreateAccount";
 
+
+
+
 function App() {
     const [currentUser, setCurrentUser] = useState()
-    const [products, setProduct] = useState(null)
+    const [products, setProducts] = useState(null)
     const [carousels, setCarousels] = useState(null)
     const [collections, setCollections] = useState(null)
 
@@ -35,14 +38,12 @@ function App() {
     const isTablet = useMediaQuery({ maxWidth: DeviceSize.tablet })
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
-    // useEffect(() => {
-    //     fetchFromAPI("/login/", setCurrentUser)
-    // }, [])
 
     useEffect(() => {
-        axios.get(API_URL + "/products/")
-        .then(res => setProduct(res.data))
-        .catch(error => console.log(error))
+        fetchFromAPI("/products/", setProducts)
+        // axios.get(API_URL + "/products/")
+        // .then(res => setProduct(res.data))
+        // .catch(error => console.log(error))
     }, [])
 
     useEffect(() => {
@@ -56,6 +57,7 @@ function App() {
 
 
     const userContextValue = {
+        setCurrentUser, currentUser,
         isMobile, isTablet, isSmallLaptop, isLargeScreen,
         carousels, products, collections}
 
