@@ -1,6 +1,42 @@
 import styled from "styled-components";
+import {useContext, useEffect, useState} from "react";
+import {UserContext} from "../../global/user-context/UserContext";
+import {API_URL, postFromAPI} from "../../helper-functions/fetchFromAPI";
+import axios from "axios";
 
 export function Login() {
+
+    const {setCurrentUser} = useContext(UserContext)
+
+
+    const initialValue = {
+        email: "",
+        password: "",
+    }
+
+    const [formData, setFormData] = useState(initialValue)
+    const [loginError, setLoginError] = useState(null)
+    function handleInput(e) {
+        const value = e.target.value
+        const name = e.target.name
+        setFormData({...formData, [name]: value})
+    }
+
+    function handleLoginSubmit(e) {
+        e.preventDefault()
+        console.log("handleLoginSubmit is called")
+        const loginUser = {
+            email: formData.email,
+            password: formData.password
+        }
+        postFromAPI( "/login/", loginUser, setCurrentUser, setLoginError)
+    }
+
+    // useEffect(() => {
+    //     console.log(loginError)
+    //
+    // }, [loginError]);
+
     return (
         <LoginContainer>
             <div style={{
@@ -10,17 +46,42 @@ export function Login() {
                 <h1>Login</h1>
             </div>
 
+            <div
+                style={{
+                    display: loginError ? "" : "none",
+                    margin: "24px 0",
+                    color: "red",
+                    fontWeight: "bold"
+                }}
+            >
+                {loginError}
+            </div>
+
             <FormWrapper>
-                <form>
+                <form onSubmit={handleLoginSubmit}>
 
                     <Field>
                         <Label>Email</Label>
-                        <Input />
+                        <Input
+                            required
+                            text="text"
+                            placeholder="your@email.com"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInput}
+                        />
 
                     </Field>
                     <Field>
                         <Label>Password</Label>
-                        <Input/>
+                        <Input
+                            required
+                            text="password"
+                            placeholder=""
+                            name="password"
+                            value={formData.password}
+                            onChange={handleInput}
+                        />
                     </Field>
 
                     <div style={{marginTop: ""}}>
