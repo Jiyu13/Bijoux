@@ -73,15 +73,15 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         return user_obj
 
 
-class UserLoginSerializer(serializers.ModelSerializer):
+class UserLoginSerializer(serializers.Serializer):
     """ authenticate username & password pf the user """
     email = serializers.EmailField()
     password = serializers.CharField()
 
     def check_user(self, clean_data):
-        user = authenticate(username=clean_data['email'], password=clean_data['password'])
+        user = authenticate(email=clean_data['email'], password=clean_data['password'])
         if not user:
-            raise ValueError("user not found")
+            raise serializers.ValidationError("Invalid email or password")  # Use DRF's ValidationError
         return user
 
 
