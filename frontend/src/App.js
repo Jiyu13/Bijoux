@@ -9,7 +9,7 @@ import {DeviceSize} from "./global/responsive";
 import {UserContext} from "./global/user-context/UserContext";
 
 
-import {API_URL, postFromAPI} from "./helper-functions/fetchFromAPI"
+import {API_URL, client, postFromAPI} from "./helper-functions/fetchFromAPI"
 
 import {Footer} from './global/footer/js/Footer'
 import {NavBar} from "./global/navbar/js/NavBar";
@@ -22,13 +22,19 @@ import {Provider} from "react-redux";
 import store from "./filter/filter-redux/store/store";
 import {ProductPage} from "./products/product-detail-page/ProductPage";
 import {Login} from "./login-logout/js/Login";
-import {CreateAccount} from "./login-logout/js/CreateAccount";
+import {CreateAccount} from "./account/CreateAccount";
+import {AccountPage} from "./account/AccountPage";
+import {AddressesPage} from "./account/AddressesPage";
 
 
 
 
 function App() {
-    const [currentUser, setCurrentUser] = useState()
+    const [currentUser, setCurrentUser] = useState(null)
+
+    const storeIsLogin = localStorage.getItem("isLogin") === "true"
+    const [isLogin, setIsLogin] = useState(storeIsLogin)
+
     const [products, setProducts] = useState(null)
     const [carousels, setCarousels] = useState(null)
     const [collections, setCollections] = useState(null)
@@ -38,6 +44,21 @@ function App() {
     const isTablet = useMediaQuery({ maxWidth: DeviceSize.tablet })
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
+
+    useEffect(() => {
+        client.get('/user/', {withCredentials: true})
+            .then(res => {
+                const user = res.data.user
+                if (user) {
+                    setCurrentUser(user)
+                }
+            })
+            .catch(err => console.log(err))
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem("isLogin", isLogin)
+    }, [isLogin]);
 
     useEffect(() => {
         fetchFromAPI("/products/", setProducts)
@@ -57,7 +78,7 @@ function App() {
 
 
     const userContextValue = {
-        setCurrentUser, currentUser,
+        setCurrentUser, currentUser, isLogin, setIsLogin,
         isMobile, isTablet, isSmallLaptop, isLargeScreen,
         carousels, products, collections}
 
@@ -82,6 +103,24 @@ function App() {
                             path='/shop'
                             element={
                                 <ShopAllPage products={products}/>
+                            }
+                        >
+                        </Route>
+
+                        <Route
+                            exact
+                            path='/account/addresses'
+                            element={
+                                <AddressesPage />
+                            }
+                        >
+                        </Route>
+
+                        <Route
+                            exact
+                            path='/account'
+                            element={
+                                <AccountPage />
                             }
                         >
                         </Route>
