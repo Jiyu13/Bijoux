@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import {SignupLink} from "./Login";
+import {SignupLink} from "../login-logout/js/Login";
 
 export function CreateAccount() {
    return (
         <LoginContainer>
             <div style={{
                 padding: "100px 0 35px",
-                borderBottom: "1px solid #dddddd"
+                // borderBottom: "1px solid #dddddd"
             }}>
-                <h1>Sign Up</h1>
+                <h1>Create Account</h1>
             </div>
 
             <FormWrapper>
@@ -32,13 +32,13 @@ export function CreateAccount() {
                         <Label>Password</Label>
                         <Input/>
                     </Field>
-
-                    <LoginButton type="submit" value="Create Account"
-                    />
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                        <LoginButton type="submit" value="Submit"/>
+                    </div>
                 </form>
 
                 <div style={{fontSize: "0.9rem"}}>
-                    Already has an account?
+                    Already have an account?
                     <LoginLink href="/login">
                         Login
                     </LoginLink>
@@ -52,6 +52,10 @@ export function CreateAccount() {
 
 
 const LoginContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     color: rgb(82, 82, 82);
     margin: 0 auto;
     boxSizing: border-box;
@@ -84,7 +88,7 @@ const LoginButton = styled.input`
     letter-spacing: 0.1rem;
     cursor: pointer;
     transition: .3s ease;
-    margin: 2rem 0 1.5rem;
+    margin: 2rem 0 2rem;
     &:hover {
       box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px, rgb(51, 51, 51) 0px 0px 0px 2px;
     }
