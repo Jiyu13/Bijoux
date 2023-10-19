@@ -1,13 +1,29 @@
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {UserContext} from "../global/user-context/UserContext";
 import styled from "styled-components";
+import {EditAddress} from "./EditAddress";
+import {DarkButton, LightButton} from "../components/buttons";
+import {NewAddress} from "./NewAddress";
 
 export function AddressesPage() {
+
+    const [isEditAddress, setEditAddress] = useState(false)
+    const [isNewAddress, setNewAddress] = useState(false)
 
     const { currentUser, isMobile } = useContext(UserContext)
 
     const userFullName = currentUser?.first_name + " " + currentUser?.last_name
 
+
+    function handleEditAddressClick() {
+        setEditAddress(!isEditAddress)
+        setNewAddress(false)
+    }
+
+    function handleNewAddressClick() {
+        setEditAddress(false)
+        setNewAddress(!isNewAddress)
+    }
 
     return (
         <div style={{margin: isMobile ? "0 16px" : "0 auto"}}>
@@ -26,35 +42,17 @@ export function AddressesPage() {
                     <div>
                         address
                     </div>
-                    <div style={{display: "flex", margin: "12px 0"}}>
-                        <Button>Edit</Button>
-                        <Button>Delete</Button>
+                    <div style={{display: "flex", margin: "12px 0", gap: "12px"}}>
+                        <LightButton onClick={handleEditAddressClick}>Edit</LightButton>
+                        <LightButton>Delete</LightButton>
+                        <DarkButton onClick={handleNewAddressClick}>
+                            Add New Address
+                        </DarkButton>
                     </div>
-                   <Button
-                       style={{
-                           backgroundColor: "rgba(40,44,52, 1)",
-                           margin: "12px 0",
-                           color: "whitesmoke"
-                       }}
-                   >
-                        Add New Address
-                    </Button>
-
                 </div>
             </section>
+            {isEditAddress && (<EditAddress />)}
+            {isNewAddress && (<NewAddress />)}
         </div>
     )
 }
-
-
-const Button = styled.button`
-  padding: 12px 24px;
-  border: solid 1px #282c34;
-  transition: .3s ease;
-  cursor: pointer;
-  margin-right: 12px;
-  background: none;
-  &:hover {
-      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px, rgb(51, 51, 51) 0px 0px 0px 2px;
-  }
-`
