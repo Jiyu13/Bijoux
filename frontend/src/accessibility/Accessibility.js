@@ -5,13 +5,17 @@ import shopping_cart_black from "./icons/shopping_cart_black_24dp.svg"
 // import {SearchBar} from "../global/search-bar/SearchBar";
 import search_black_24dp from "../global/search-bar/icons/search_black_24dp.svg";
 import {useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import {UserContext} from "../global/user-context/UserContext";
 
 
 export function Accessibility() {
 
+    const { isLogin } = useContext(UserContext)
+
     let navigate = useNavigate()
     function handleLogin() {
-        navigate('/login')
+        {isLogin ? navigate('/account') : navigate('/login')}
     }
 
 
@@ -22,7 +26,9 @@ export function Accessibility() {
             </ContainerItem>
             <ContainerItem style={{display: "flex"}} onClick={handleLogin}>
                 <Img src={person_black_24} alt="account icon" />
-                {/*<UserName>Hi, ziru!</UserName>*/}
+                {/*<UserName>*/}
+                    {/*{currentUser ? ""}*/}
+                {/*</UserName>*/}
                 {/*<Img src={expand_more_black_24} alt="dropdown icon"/>*/}
             </ContainerItem>
             <ContainerItem>
