@@ -81,7 +81,7 @@ class UserLoginSerializer(serializers.Serializer):
     def check_user(self, clean_data):
         user = authenticate(email=clean_data['email'], password=clean_data['password'])
         if not user:
-            raise serializers.ValidationError("Invalid email or password")  # Use DRF's ValidationError
+            raise serializers.ValidationError("Invalid email or password. Please try again.")  # Use DRF's ValidationError
         return user
 
 
@@ -89,7 +89,7 @@ class UserSerializer(serializers.ModelSerializer):
     """ based on the model & returns user """
     class Meta:
         model = UserModel
-        fields = ["id", "first_name", "last_name", "email"]
+        fields = ["user_id", "first_name", "last_name", "email"]
 
 
 class CustomerProfileSerializer(serializers.ModelSerializer):
