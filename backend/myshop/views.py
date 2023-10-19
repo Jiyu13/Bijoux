@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout
+from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.authentication import SessionAuthentication
 
@@ -42,6 +43,12 @@ class UserLogin(APIView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.check_user(data)
             login(request, user)
+            request.session["user"] = {
+                'id': user.user_id,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email
+            }
             return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -50,6 +57,7 @@ class UserLogout(APIView):
     authentication_classes = ()
 
     def post(self, request):
+        request.session['user'] = None
         logout(request)
         return Response(status=status.HTTP_200_OK)
 
@@ -60,7 +68,9 @@ class UserView(APIView):
 
     def get(self, request):
         serializer = UserSerializer(request.user)
-        return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+        user_info = request.session.get("user", None)
+        return JsonResponse({'user': user_info})
+        # return Response({'user': serializer.data}, status=status.HTTP_200_OK)
 
 
 # ============================= User =============================
