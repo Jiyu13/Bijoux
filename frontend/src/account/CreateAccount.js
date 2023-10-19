@@ -64,17 +64,17 @@ const LoginContainer = styled.div`
 const FormWrapper = styled.div`
     padding: 25px 0 100px;
 `
-const Field = styled.div`
+export const Field = styled.div`
   display: flex;
   flex-direction: column;
 `
 
-const Label = styled.label`
+export const Label = styled.label`
     margin-bottom: 0.8rem;
     color: rgb(82, 82, 82);
 `
 
-const Input = styled.input`
+export const Input = styled.input`
     margin-bottom: 1rem;
     padding: 10px 12px;
     font-size: 1.2rem;
