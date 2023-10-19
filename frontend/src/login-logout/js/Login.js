@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
-import {API_URL, postFromAPI} from "../../helper-functions/fetchFromAPI";
-import axios from "axios";
+import {client, fetchFromAPI} from "../../helper-functions/fetchFromAPI";
+import {useNavigate} from "react-router-dom";
 
 export function Login() {
 
-    const {setCurrentUser} = useContext(UserContext)
+    const {setCurrentUser, setIsLogin} = useContext(UserContext)
 
 
     const initialValue = {
@@ -16,32 +16,53 @@ export function Login() {
 
     const [formData, setFormData] = useState(initialValue)
     const [loginError, setLoginError] = useState(null)
+
     function handleInput(e) {
         const value = e.target.value
         const name = e.target.name
         setFormData({...formData, [name]: value})
     }
 
+    let navigate = useNavigate()
     function handleLoginSubmit(e) {
         e.preventDefault()
-        console.log("handleLoginSubmit is called")
+
         const loginUser = {
             email: formData.email,
             password: formData.password
         }
-        postFromAPI( "/login/", loginUser, setCurrentUser, setLoginError)
+
+        client.post(`/login/`, loginUser, { withCredentials: true })
+            .then(res => {
+                // console.log(res)
+                setIsLogin(true)
+                setLoginError(null)
+                navigate('/account')
+                return client.get('/user/', { withCredentials: true })
+            })
+            .then(res => {
+                const user = res.data.user
+                // console.log(user)
+                setCurrentUser(user)
+            })
+
+            .catch(err => {
+                setIsLogin(false)
+                // console.log(err.response.data)
+                setLoginError(err.response.data)
+            })
+
+
+        // postFromAPI( "/login/", loginUser, setCurrentUser, setLoginError)
     }
 
-    // useEffect(() => {
-    //     console.log(loginError)
-    //
-    // }, [loginError]);
 
+    // console.log(currentUser)
     return (
         <LoginContainer>
             <div style={{
                 padding: "100px 0 35px",
-                borderBottom: "1px solid #dddddd"
+                // borderBottom: "1px solid #dddddd"
             }}>
                 <h1>Login</h1>
             </div>
@@ -90,8 +111,10 @@ export function Login() {
                         </ForgetPasswordLink>
                     </div>
 
-                    <LoginButton type="submit" value="Login"
-                    />
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                        <LoginButton type="submit" value="Login"/>
+                    </div>
+
                 </form>
 
                 <div style={{fontSize: "0.9rem"}}>
@@ -106,9 +129,13 @@ export function Login() {
 
 
 const LoginContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     color: rgb(82, 82, 82);
     margin: 0 auto;
-    boxSizing: border-box;
+    box-sizing: border-box;
 `
 
 const FormWrapper = styled.div`
@@ -149,7 +176,7 @@ const LoginButton = styled.input`
     letter-spacing: 0.1rem;
     cursor: pointer;
     transition: .3s ease;
-    margin: 2rem 0 1.5rem;
+    margin: 2rem 0 2rem;
     &:hover {
       box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px, rgb(51, 51, 51) 0px 0px 0px 2px;
     }
