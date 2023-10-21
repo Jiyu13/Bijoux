@@ -2,7 +2,12 @@ import {Field, Input, Label} from "../account/CreateAccount";
 import {DarkButton, LightButton} from "../components/buttons";
 import styled from "styled-components";
 
-export function NewAddress() {
+export function NewAddress({setNewAddress}) {
+
+    function handleCancel() {
+        setNewAddress(false)
+    }
+
     return (
     <NewFormPage>
             <h3>Add New Address</h3>
@@ -58,7 +63,7 @@ export function NewAddress() {
                 </Field>
                 <div style={{display: "flex", justifyContent: "center", gap: "2rem"}}>
                     <DarkButton type="submit">Submit</DarkButton>
-                    <LightButton type="submit">Cancel</LightButton>
+                    <LightButton type="button" onClick={handleCancel}>Cancel</LightButton>
                 </div>
              </form>
         </NewFormPage>

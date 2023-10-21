@@ -100,7 +100,7 @@ export function AddressesPage() {
                             Add New Address
                         </DarkButton>
 
-                        {isNewAddress && (<NewAddress />)}
+                        {isNewAddress && (<NewAddress setNewAddress={setNewAddress}/>)}
 
                         <ul style={{paddingLeft: "0", listStyle: "none"}}>
                             {addresses?.map((address, index) => {
