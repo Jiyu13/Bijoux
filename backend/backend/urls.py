@@ -44,7 +44,11 @@ urlpatterns = [
     path('login/', UserLogin.as_view(), name='login'),
     path('logout/', UserLogout.as_view(), name='logout'),
     path('user/', UserView.as_view(), name='user'),
-    # ==================== user =============================
+    # ==================== user address =============================
+    path('addresses/', AddressListView.as_view(), name='addresses-list'),
+    path('address/<int:pk>/', AddressDetailView.as_view(), name='address-detail'),
+
+    # ===============================================================
 
     path('customers/', UserListView.as_view(), name="customers"),
     path('customers/<int:pk>/', CustomerDetailView.as_view(), name="customer-detail"),

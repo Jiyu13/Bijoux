@@ -16,6 +16,14 @@ class AppUserAdmin(admin.ModelAdmin):
     ordering = ('email',)
 
 
+class AddressAdmin(admin.ModelAdmin):
+    list_display = (
+        'user', 'first_name', 'last_name', 'city', 'state', 'zip_code', 'phone', 'is_default'
+    )  # Fields you want to see in the list view
+    # search_fields = ['user__first_name', 'city', 'state']  # Fields you want to be able to search by
+    # list_filter = ['is_default', 'city', 'state']  # Fields you want filters for
+
+
 # Additionally, if you want a separate admin for CustomerProfile
 @admin.register(CustomerProfile)
 class CustomerProfileAdmin(admin.ModelAdmin):
@@ -51,6 +59,8 @@ class MaterialAdmin(admin.ModelAdmin):
 
 # admin.site.unregister(User)
 admin.site.register(AppUser, AppUserAdmin)
+admin.site.register(Address, AddressAdmin)
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(Carousel, CarouselAdmin)

@@ -1,29 +1,50 @@
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../global/user-context/UserContext";
-import styled from "styled-components";
-import {EditAddress} from "./EditAddress";
-import {DarkButton, LightButton} from "../components/buttons";
+import {DarkButton} from "../components/buttons";
 import {NewAddress} from "./NewAddress";
+import {fetchFromAPI} from "../helper-functions/fetchFromAPI";
+import {Address} from "./Address";
 
 export function AddressesPage() {
 
-    const [isEditAddress, setEditAddress] = useState(false)
+    const [editingAddressId, setEditingAddressId] = useState(null)
+
     const [isNewAddress, setNewAddress] = useState(false)
+    const [addresses, setAddresses] = useState(null)
 
     const { currentUser, isMobile } = useContext(UserContext)
 
-    const userFullName = currentUser?.first_name + " " + currentUser?.last_name
+
+    useEffect(() => {
+        fetchFromAPI('/addresses/', setAddresses)
+    }, []);
 
 
-    function handleEditAddressClick() {
-        setEditAddress(!isEditAddress)
+    function handleEditAddressClick(id) {
+        if (editingAddressId === id) {
+            setEditingAddressId(null)
+        } else {
+            setEditingAddressId(id)
+        }
         setNewAddress(false)
     }
 
     function handleNewAddressClick() {
-        setEditAddress(false)
         setNewAddress(!isNewAddress)
     }
+
+    function onUpdateAddress(updatedAddress) {
+        const updatedAddresses = addresses.map(address => {
+            if (address.id === updatedAddress.id) {
+                return updatedAddress
+            } else {
+                return address
+            }
+        })
+
+        setAddresses(updatedAddresses)
+    }
+
 
     return (
         <div style={{margin: isMobile ? "0 16px" : "0 auto"}}>
@@ -38,21 +59,31 @@ export function AddressesPage() {
 
             <section>
                 <div>
-                    <div>{userFullName} (Default address)</div>
-                    <div>
-                        address
-                    </div>
-                    <div style={{display: "flex", margin: "12px 0", gap: "12px"}}>
-                        <LightButton onClick={handleEditAddressClick}>Edit</LightButton>
-                        <LightButton>Delete</LightButton>
-                        <DarkButton onClick={handleNewAddressClick}>
-                            Add New Address
-                        </DarkButton>
-                    </div>
+
+                    <DarkButton onClick={handleNewAddressClick}>
+                        Add New Address
+                    </DarkButton>
+
+                    {isNewAddress && (<NewAddress />)}
+
+                    <ul style={{paddingLeft: "0", listStyle: "none"}}>
+                        {addresses?.map((address, index) => {
+                            return (
+                                <Address
+                                    key={`${currentUser?.first_name}-${index}`}
+                                    address={address}
+                                    isEditAddress={editingAddressId === address.id}
+                                    handleEditAddressClick={() => handleEditAddressClick(address.id)}
+                                    setEditingAddressId={setEditingAddressId}
+                                    onUpdateAddress={onUpdateAddress}
+                                />
+                        )})}
+                    </ul>
+
                 </div>
             </section>
-            {isEditAddress && (<EditAddress />)}
-            {isNewAddress && (<NewAddress />)}
+
+
         </div>
     )
 }

@@ -1,5 +1,5 @@
 from django.contrib.auth import login, logout
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import render
 from rest_framework.authentication import SessionAuthentication
 
@@ -96,6 +96,50 @@ class UserProfileDetailView(RetrieveUpdateDestroyAPIView):
     queryset = CustomerProfile.objects.all()
     serializer_class = CustomerProfileSerializer
 
+
+# ============================= User Address  =============================
+class AddressListView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        addresses = Address.objects.filter(user=request.user)
+        serializer = UserAddressSerializer(addresses, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = UserAddressSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AddressDetailView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_object(self, pk):
+        try:
+            return Address.objects.get(pk=pk, user=self.request.user)
+        except Address.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        address = self.get_object(pk)
+        serializer = UserAddressSerializer(address)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        address = self.get_object(pk)
+        serializer = UserAddressSerializer(address, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        address = self.get_object(pk)
+        address.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 # ============================= Product  =============================
 class ProductListView(APIView):

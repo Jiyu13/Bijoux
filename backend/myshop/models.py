@@ -55,6 +55,24 @@ class CustomerProfile(models.Model):
 
     def __str__(self):
         return self.customer.email
+
+
+class Address(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    # add fields in admin.py
+    first_name = models.CharField(max_length=50, null=True, blank=True)
+    last_name = models.CharField(max_length=50, null=True, blank=True)
+    address_line_1 = models.CharField(max_length=500)
+    address_line_2 = models.CharField(max_length=500, null=True, blank=True)
+    city = models.CharField(max_length=255)
+    country = models.CharField(max_length=255)
+    state = models.CharField(max_length=255)
+    zip_code = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255)
+    is_default = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.first_name}, {self.city}, {self.phone}"
 # =============================================================================================
 
 

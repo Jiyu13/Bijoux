@@ -101,6 +101,15 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
         fields = ["customer", "address", "phone"]
 
 
+class UserAddressSerializer(serializers.ModelSerializer):
+    # to include additional details from the related AppUser model using a nested serializer
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Address
+        fields = '__all__'
+
+
 # ==============  Carousel - Home page image sliders ======================
 class CarouselSerializer(serializers.ModelSerializer):
     class Meta:
