@@ -1,4 +1,4 @@
-import {Field, Input, Label} from "./CreateAccount";
+import {Field, Input, Label} from "../account/CreateAccount";
 import styled from "styled-components";
 import {DarkButton, LightButton} from "../components/buttons";
 import {useState} from "react";
