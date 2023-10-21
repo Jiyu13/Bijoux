@@ -1,7 +1,6 @@
 import {LightButton} from "../components/buttons";
 import {EditAddressForm} from "./EditAddressForm";
 import styled from "styled-components";
-import {client} from "../helper-functions/fetchFromAPI";
 
 export function Address( props ) {
 
@@ -17,7 +16,6 @@ export function Address( props ) {
     const city = address?.city
     const country = address?.country
     const isDefault = address?.is_default
-    const phone = address?.phone
     const state = address?.state
     const zipCode = address?.zip_code
 
