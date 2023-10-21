@@ -1,14 +1,13 @@
 import styled from "styled-components";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../global/user-context/UserContext";
-import {client} from "../helper-functions/fetchFromAPI";
+import {client, fetchFromAPI} from "../helper-functions/fetchFromAPI";
 import {useNavigate} from "react-router-dom";
 
 export function AccountPage() {
 
     const { currentUser, setCurrentUser, setIsLogin, isMobile, isTablet} = useContext(UserContext)
 
-    // console.log(currentUser)
 
     const userFullName = currentUser?.first_name + " " + currentUser?.last_name
     const userEmail = currentUser?.email
@@ -16,7 +15,7 @@ export function AccountPage() {
 
     let navigate = useNavigate()
     function handleLogout() {
-        client.post('/logout/', {withCredential: true})
+        client.post('/logout/', {withCredentials: true})
             .then(res => {
                 setIsLogin(false)
                 setCurrentUser(null)
@@ -54,6 +53,7 @@ export function AccountPage() {
                     <InfoField style={{marginTop: "36px"}}>
                         <ViewAddressLink href="/account/addresses">
                             View Addresses
+                            {/*({addresses?.length})*/}
                         </ViewAddressLink>
                     </InfoField>
                 </div>
