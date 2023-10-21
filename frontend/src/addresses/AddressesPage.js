@@ -2,7 +2,7 @@ import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../global/user-context/UserContext";
 import {DarkButton} from "../components/buttons";
 import {NewAddress} from "./NewAddress";
-import {fetchFromAPI} from "../helper-functions/fetchFromAPI";
+import {client, fetchFromAPI} from "../helper-functions/fetchFromAPI";
 import {Address} from "./Address";
 
 export function AddressesPage() {
@@ -20,6 +20,10 @@ export function AddressesPage() {
     }, []);
 
 
+    function handleNewAddressClick() {
+        setNewAddress(!isNewAddress)
+    }
+
     function handleEditAddressClick(id) {
         if (editingAddressId === id) {
             setEditingAddressId(null)
@@ -29,12 +33,8 @@ export function AddressesPage() {
         setNewAddress(false)
     }
 
-    function handleNewAddressClick() {
-        setNewAddress(!isNewAddress)
-    }
-
     function onUpdateAddress(updatedAddress) {
-        const updatedAddresses = addresses.map(address => {
+        const updatedAddresses = addresses?.map(address => {
             if (address.id === updatedAddress.id) {
                 return updatedAddress
             } else {
@@ -45,6 +45,22 @@ export function AddressesPage() {
         setAddresses(updatedAddresses)
     }
 
+
+    function handleDeleteAddressClick(e) {
+        const id = parseInt(e.target.value)
+        client.delete(`/address/${id}/`, {withCredentials: true})
+            .then(res => {
+                console.log(res.data)
+                onDeleteAddress(id)
+            })
+            .catch(error => console.log(error.response.data))
+    }
+    function onDeleteAddress(deleteId) {
+        const updatedAddresses = addresses?.filter(address => {
+            return address.id !== deleteId
+        })
+        setAddresses(updatedAddresses)
+    }
 
     return (
         <div style={{margin: isMobile ? "0 16px" : "0 auto"}}>
@@ -76,6 +92,7 @@ export function AddressesPage() {
                                     handleEditAddressClick={() => handleEditAddressClick(address.id)}
                                     setEditingAddressId={setEditingAddressId}
                                     onUpdateAddress={onUpdateAddress}
+                                    handleDeleteAddressClick={handleDeleteAddressClick}
                                 />
                         )})}
                     </ul>

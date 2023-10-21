@@ -1,12 +1,13 @@
 import {LightButton} from "../components/buttons";
 import {EditAddressForm} from "./EditAddressForm";
 import styled from "styled-components";
+import {client} from "../helper-functions/fetchFromAPI";
 
 export function Address( props ) {
 
     const {
         address, isEditAddress, handleEditAddressClick,
-        setEditingAddressId, onUpdateAddress
+        setEditingAddressId, onUpdateAddress, handleDeleteAddressClick
     } = props
 
     const firstName = address?.first_name
@@ -19,7 +20,6 @@ export function Address( props ) {
     const phone = address?.phone
     const state = address?.state
     const zipCode = address?.zip_code
-
 
 
     return (
@@ -51,7 +51,12 @@ export function Address( props ) {
                     >
                         Edit
                     </LightButton>
-                    <LightButton>Delete</LightButton>
+                    <LightButton
+                        value={address.id}
+                        onClick={handleDeleteAddressClick}
+                    >
+                        Delete
+                    </LightButton>
 
                 </div>
             </div>

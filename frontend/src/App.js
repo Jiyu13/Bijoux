@@ -3,13 +3,12 @@ import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 
 
-import axios from "axios";
 import {useMediaQuery} from "react-responsive";
 import {DeviceSize} from "./global/responsive";
 import {UserContext} from "./global/user-context/UserContext";
 
 
-import {API_URL, client, postFromAPI} from "./helper-functions/fetchFromAPI"
+import {client} from "./helper-functions/fetchFromAPI"
 
 import {Footer} from './global/footer/js/Footer'
 import {NavBar} from "./global/navbar/js/NavBar";
@@ -24,7 +23,7 @@ import {ProductPage} from "./products/product-detail-page/ProductPage";
 import {Login} from "./login-logout/js/Login";
 import {CreateAccount} from "./account/CreateAccount";
 import {AccountPage} from "./account/AccountPage";
-import {AddressesPage} from "./account/AddressesPage";
+import {AddressesPage} from "./addresses/AddressesPage";
 
 
 
@@ -62,9 +61,6 @@ function App() {
 
     useEffect(() => {
         fetchFromAPI("/products/", setProducts)
-        // axios.get(API_URL + "/products/")
-        // .then(res => setProduct(res.data))
-        // .catch(error => console.log(error))
     }, [])
 
     useEffect(() => {
