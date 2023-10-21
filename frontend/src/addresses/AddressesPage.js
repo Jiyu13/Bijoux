@@ -4,10 +4,14 @@ import {DarkButton} from "../components/buttons";
 import {NewAddress} from "./NewAddress";
 import {client, fetchFromAPI} from "../helper-functions/fetchFromAPI";
 import {Address} from "./Address";
+import {DeleteAddressConfirmation} from "./DeleteAddressConfirmation";
 
 export function AddressesPage() {
 
     const [editingAddressId, setEditingAddressId] = useState(null)
+
+    const [deletingAddressId, setDeletingAddressId] = useState(null)
+    const [showDeletePopup, setDeletePopup] = useState(false)
 
     const [isNewAddress, setNewAddress] = useState(false)
     const [addresses, setAddresses] = useState(null)
@@ -24,6 +28,7 @@ export function AddressesPage() {
         setNewAddress(!isNewAddress)
     }
 
+    // =================================== update address ====================================
     function handleEditAddressClick(id) {
         if (editingAddressId === id) {
             setEditingAddressId(null)
@@ -45,15 +50,22 @@ export function AddressesPage() {
         setAddresses(updatedAddresses)
     }
 
-
+    // =================================== delete address ====================================
     function handleDeleteAddressClick(e) {
         const id = parseInt(e.target.value)
-        client.delete(`/address/${id}/`, {withCredentials: true})
+        setDeletePopup(true)
+        setDeletingAddressId(id)
+    }
+
+    function handleDeleteAddress() {
+        // const id = parseInt(e.target.value)
+        client.delete(`/address/${deletingAddressId}/`, {withCredentials: true})
             .then(res => {
-                console.log(res.data)
-                onDeleteAddress(id)
+                // console.log(res.data)
+                onDeleteAddress(deletingAddressId)
             })
             .catch(error => console.log(error.response.data))
+        setDeletePopup(null)
     }
     function onDeleteAddress(deleteId) {
         const updatedAddresses = addresses?.filter(address => {
@@ -63,44 +75,54 @@ export function AddressesPage() {
     }
 
     return (
-        <div style={{margin: isMobile ? "0 16px" : "0 auto"}}>
-            <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "100px 0 35px",
-                // borderBottom: "1px solid #dddddd"
-            }}>
-                <h1>Addresses</h1>
-            </div>
+        <>
+            {showDeletePopup && (
+                <DeleteAddressConfirmation
+                    setDeletePopup={setDeletePopup}
+                    handleDeleteAddress={handleDeleteAddress}
+                />
+            )}
 
-            <section>
-                <div>
-
-                    <DarkButton onClick={handleNewAddressClick}>
-                        Add New Address
-                    </DarkButton>
-
-                    {isNewAddress && (<NewAddress />)}
-
-                    <ul style={{paddingLeft: "0", listStyle: "none"}}>
-                        {addresses?.map((address, index) => {
-                            return (
-                                <Address
-                                    key={`${currentUser?.first_name}-${index}`}
-                                    address={address}
-                                    isEditAddress={editingAddressId === address.id}
-                                    handleEditAddressClick={() => handleEditAddressClick(address.id)}
-                                    setEditingAddressId={setEditingAddressId}
-                                    onUpdateAddress={onUpdateAddress}
-                                    handleDeleteAddressClick={handleDeleteAddressClick}
-                                />
-                        )})}
-                    </ul>
-
+            <div style={{margin: isMobile ? "0 16px" : "0 auto"}}>
+                <div style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    padding: "100px 0 35px",
+                    // borderBottom: "1px solid #dddddd"
+                }}>
+                    <h1>Addresses</h1>
                 </div>
-            </section>
+
+                <section>
+                    <div>
+
+                        <DarkButton onClick={handleNewAddressClick}>
+                            Add New Address
+                        </DarkButton>
+
+                        {isNewAddress && (<NewAddress />)}
+
+                        <ul style={{paddingLeft: "0", listStyle: "none"}}>
+                            {addresses?.map((address, index) => {
+                                return (
+                                    <Address
+                                        key={`${currentUser?.first_name}-${index}`}
+                                        address={address}
+                                        isEditAddress={editingAddressId === address.id}
+                                        handleEditAddressClick={() => handleEditAddressClick(address.id)}
+                                        setEditingAddressId={setEditingAddressId}
+                                        onUpdateAddress={onUpdateAddress}
+
+                                        handleDeleteAddressClick={handleDeleteAddressClick}
+                                    />
+                            )})}
+                        </ul>
+
+                    </div>
+                </section>
 
 
-        </div>
+            </div>
+        </>
     )
 }
