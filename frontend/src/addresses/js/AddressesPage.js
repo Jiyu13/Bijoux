@@ -26,6 +26,7 @@ export function AddressesPage() {
 
     function handleNewAddressClick() {
         setNewAddress(!isNewAddress)
+        setEditingAddressId(null)
     }
 
     // =================================== update address ====================================
@@ -83,11 +84,13 @@ export function AddressesPage() {
                 />
             )}
 
-            <div style={{margin: isMobile ? "0 16px" : "0 auto"}}>
+            <div
+                style={{
+                    margin: isMobile ? "0 16px" : "0 auto",
+                }}
+            >
                 <div style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    padding: "100px 0 35px",
+                    padding: "60px 0 35px",
                     // borderBottom: "1px solid #dddddd"
                 }}>
                     <h1>Addresses</h1>
