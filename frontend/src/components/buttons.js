@@ -9,6 +9,7 @@ export const DarkButton = styled.button`
     cursor: pointer;
     transition: .3s ease;
     margin: 2rem 0;
+  height: 48px;
     &:hover {
       box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px, rgb(51, 51, 51) 0px 0px 0px 2px;
     }

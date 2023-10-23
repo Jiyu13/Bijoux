@@ -1,8 +1,8 @@
 import {useContext, useEffect, useState} from "react";
-import {UserContext} from "../global/user-context/UserContext";
-import {DarkButton} from "../components/buttons";
+import {UserContext} from "../../global/user-context/UserContext";
+import {DarkButton} from "../../components/buttons";
 import {NewAddress} from "./NewAddress";
-import {client, fetchFromAPI} from "../helper-functions/fetchFromAPI";
+import {client, fetchFromAPI} from "../../helper-functions/fetchFromAPI";
 import {Address} from "./Address";
 import {DeleteAddressConfirmation} from "./DeleteAddressConfirmation";
 

@@ -23,7 +23,7 @@ import {ProductPage} from "./products/product-detail-page/ProductPage";
 import {Login} from "./login-logout/js/Login";
 import {CreateAccount} from "./account/CreateAccount";
 import {AccountPage} from "./account/AccountPage";
-import {AddressesPage} from "./addresses/AddressesPage";
+import {AddressesPage} from "./addresses/js/AddressesPage";
 
 
 

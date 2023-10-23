@@ -1,10 +1,17 @@
-import {Field, Input, Label} from "../account/CreateAccount";
+import {Field, Input, Label} from "../../account/CreateAccount";
 import styled from "styled-components";
-import {DarkButton, LightButton} from "../components/buttons";
-import {useState} from "react";
-import {client} from "../helper-functions/fetchFromAPI";
+import {DarkButton, LightButton} from "../../components/buttons";
+import {useContext, useState} from "react";
+import {client} from "../../helper-functions/fetchFromAPI";
+
+import '../css/address.css'
+import {UserContext} from "../../global/user-context/UserContext";
+import {FormHeader, NameFieldBox} from "../css/addressFormStyles";
+
 
 export function EditAddressForm({address, setEditingAddressId, onUpdateAddress}) {
+
+    const {isMobile} = useContext(UserContext)
 
     const firstName = address?.first_name
     const lastName = address?.last_name
@@ -65,28 +72,39 @@ export function EditAddressForm({address, setEditingAddressId, onUpdateAddress})
 
     return (
         <EditFormPage>
-            <h3>Edit address</h3>
-            <form onSubmit={handleEditAddressSubmit}>
-                 <Field>
-                    <Label>First Name</Label>
-                    <Input
-                        type="text"
-                        name='first_name'
-                        value={editFormData.first_name}
-                        onChange={handleOnchange}
-                    />
 
-                 </Field>
-                 <Field>
-                    <Label>Last Name</Label>
-                    <Input
-                        type="text"
-                        name='last_name'
-                        value={editFormData.last_name}
-                        onChange={handleOnchange}
-                    />
+            <form
+                className='address-form'
+                onSubmit={handleEditAddressSubmit}
+            >
+                <FormHeader>Edit address</FormHeader>
+                <NameFieldBox
+                    style={{
+                        flexDirection: isMobile ? "column" : "row",
+                        gap: isMobile ? "0px" : "6px"
+                    }}
+                >
+                     <Field style={{width: isMobile ? "100%" : "50%",}}>
+                        <Label>First Name</Label>
+                        <Input
+                            type="text"
+                            name='first_name'
+                            value={editFormData.first_name}
+                            onChange={handleOnchange}
+                        />
 
-                </Field>
+                     </Field>
+                     <Field style={{width: isMobile ? "100%" : "50%",}}>
+                        <Label>Last Name</Label>
+                        <Input
+                            type="text"
+                            name='last_name'
+                            value={editFormData.last_name}
+                            onChange={handleOnchange}
+                        />
+
+                    </Field>
+                </NameFieldBox>
                 <Field>
                     <Label>Address line 1</Label>
                     <Input

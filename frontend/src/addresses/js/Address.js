@@ -1,4 +1,4 @@
-import {LightButton} from "../components/buttons";
+import {LightButton} from "../../components/buttons";
 import {EditAddressForm} from "./EditAddressForm";
 import styled from "styled-components";
 
