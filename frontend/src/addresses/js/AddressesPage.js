@@ -14,7 +14,7 @@ export function AddressesPage() {
     const [showDeletePopup, setDeletePopup] = useState(false)
 
     const [isNewAddress, setNewAddress] = useState(false)
-    const [addresses, setAddresses] = useState(null)
+    const [addresses, setAddresses] = useState([])
 
     const { currentUser, isMobile } = useContext(UserContext)
 
@@ -27,6 +27,11 @@ export function AddressesPage() {
     function handleNewAddressClick() {
         setNewAddress(!isNewAddress)
         setEditingAddressId(null)
+    }
+
+    function onAddNewAddress(newAddress) {
+        setAddresses([...addresses, newAddress])
+        setNewAddress(false)
     }
 
     // =================================== update address ====================================
@@ -103,7 +108,13 @@ export function AddressesPage() {
                             Add New Address
                         </DarkButton>
 
-                        {isNewAddress && (<NewAddress setNewAddress={setNewAddress}/>)}
+                        {isNewAddress && (
+                            <NewAddress
+                                setNewAddress={setNewAddress}
+                                onAddNewAddress={onAddNewAddress}
+                                setAddresses={{setAddresses}}
+                            />
+                        )}
 
                         <ul style={{paddingLeft: "0", listStyle: "none"}}>
                             {addresses?.map((address, index) => {

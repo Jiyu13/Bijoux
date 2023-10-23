@@ -6,8 +6,9 @@ import '../css/address.css'
 import {AddressLabel, FormHeader, NameFieldBox} from "../css/addressFormStyles";
 import {useContext, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
+import {client} from "../../helper-functions/fetchFromAPI";
 
-export function NewAddress({setNewAddress}) {
+export function NewAddress({setNewAddress,onAddNewAddress}) {
 
     const {isMobile} = useContext(UserContext)
 
@@ -51,11 +52,17 @@ export function NewAddress({setNewAddress}) {
             address_line_2: newFormData.address_line_2,
             city: newFormData.city,
             country: newFormData.country,
-            is_default: newFormData.isDefault,
+            is_default: newFormData.is_default,
             phone: newFormData.phone,
             state: newFormData.state,
             zip_code: newFormData.zip_code
         }
+
+        client.post('/addresses/', formObject, {withCredentials: true})
+            .then(res => onAddNewAddress(res.data))
+            .catch(error => console.log(error))
+
+        setNewFormData(initialValue)
     }
 
     function handleCancel() {
@@ -69,7 +76,10 @@ export function NewAddress({setNewAddress}) {
     return (
     <NewFormPage>
 
-            <form className='address-form'>
+            <form
+                className='address-form'
+                onSubmit={handleNewAddressSubmit}
+            >
 
                 <FormHeader>Add New Address</FormHeader>
 
