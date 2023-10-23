@@ -1,0 +1,32 @@
+
+.address-form {
+    margin: 0 auto;
+}
+
+/*mobile devices*/
+@media only screen and (max-width: 640px) {
+    .address-form {
+      padding: 0 15%;
+    }
+}
+
+/* ipads & tablets / smaller */
+@media only screen and (min-width: 768px) {
+    .address-form {
+        width: 75%;
+    }
+}
+
+ /*laptops*/
+@media only screen and (min-width: 990px) {
+    .address-form {
+        width: 70%;
+    }
+}
+
+/* desktops */
+@media only screen and (min-width: 1280px) {
+    .address-form {
+       width: 60%;
+    }
+}
