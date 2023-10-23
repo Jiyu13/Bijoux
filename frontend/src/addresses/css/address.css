@@ -1,12 +1,8 @@
 
-.address-form {
-    margin: 0 auto;
-}
-
 /*mobile devices*/
 @media only screen and (max-width: 640px) {
     .address-form {
-      padding: 0 15%;
+        width: 100%;
     }
 }
 
