@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 
 export function AccountPage() {
 
-    const { currentUser, setCurrentUser, setIsLogin, isMobile, isTablet} = useContext(UserContext)
+    const { currentUser, setCurrentUser, setIsLogin, isMobile} = useContext(UserContext)
 
 
     const userFullName = currentUser?.first_name + " " + currentUser?.last_name
@@ -46,7 +46,7 @@ export function AccountPage() {
 
                 }}
             >
-                <div style={{marginRight: "24px"}}>
+                <div style={{marginRight: isMobile ? "" :  "72px"}}>
                     <h3>Account Details</h3>
                     <InfoField>{userFullName}</InfoField>
                     <InfoField>{userEmail}</InfoField>
