@@ -41,7 +41,12 @@ export function EditAddressForm({address, setEditingAddressId, onUpdateAddress})
 
     function handleOnchange(e) {
         const name = e.target.name
-        const value = e.target.value
+        let value
+        if (e.target.type === "checkbox") {
+            value = e.target.checked
+        } else {
+            value = e.target.value
+        }
         setEditFormData({...editFormData, [name]: value,})
     }
 
