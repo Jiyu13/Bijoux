@@ -102,7 +102,7 @@ class AddressListView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        addresses = Address.objects.filter(user=request.user)
+        addresses = Address.objects.filter(user=request.user).order_by('-is_default')
         serializer = UserAddressSerializer(addresses, many=True)
         return Response(serializer.data)
 
