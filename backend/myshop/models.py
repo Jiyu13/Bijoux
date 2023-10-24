@@ -73,6 +73,15 @@ class Address(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name}, {self.city}, {self.phone}"
+
+    def save(self, *args, **kwargs):
+        # if this address is set to be the default
+        if self.is_default:
+            # Reset the `is_default` field of all other addresses for this user to `False`
+            Address.objects.filter(user=self.user, is_default=True).update(is_default=False)
+
+        # Now save (or update) the current instance
+        super(Address, self).save(*args, **kwargs)
 # =============================================================================================
 
 
