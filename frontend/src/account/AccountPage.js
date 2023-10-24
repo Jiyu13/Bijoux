@@ -71,7 +71,7 @@ export function AccountPage() {
 const AccountPageContainer = styled.div`
   //width: 85%;
 `
-const LogoutText = styled.div`
+export const LogoutText = styled.div`
     margin: auto 0;
     cursor: pointer;
     color: rgb(82, 82, 82);

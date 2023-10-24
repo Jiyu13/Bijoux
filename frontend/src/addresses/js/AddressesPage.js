@@ -5,6 +5,9 @@ import {NewAddress} from "./NewAddress";
 import {client, fetchFromAPI} from "../../helper-functions/fetchFromAPI";
 import {Address} from "./Address";
 import {DeleteAddressConfirmation} from "./DeleteAddressConfirmation";
+import {LogoutText} from "../../account/AccountPage";
+import styled from "styled-components";
+import {useNavigate} from "react-router-dom";
 
 export function AddressesPage() {
 
@@ -80,6 +83,14 @@ export function AddressesPage() {
         setAddresses(updatedAddresses)
     }
 
+
+    // ====================================================================
+    const navigate = useNavigate()
+
+    function handleBackToAccoutnPage() {
+        navigate('/account/')
+    }
+
     return (
         <>
             {showDeletePopup && (
@@ -99,6 +110,9 @@ export function AddressesPage() {
                     // borderBottom: "1px solid #dddddd"
                 }}>
                     <h1>Addresses</h1>
+                    <BackToAccount onClick={handleBackToAccoutnPage}>
+                        Back to account
+                    </BackToAccount>
                 </div>
 
                 <section>
@@ -140,3 +154,6 @@ export function AddressesPage() {
         </>
     )
 }
+
+
+const BackToAccount = styled(LogoutText)``
