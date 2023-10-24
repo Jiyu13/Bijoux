@@ -76,6 +76,10 @@ export function EditAddressForm({address, setEditingAddressId, onUpdateAddress})
     }
 
 
+    function handleCancelUpdate() {
+        setEditingAddressId(null)
+    }
+
     return (
         <EditFormPage>
 
@@ -182,6 +186,7 @@ export function EditAddressForm({address, setEditingAddressId, onUpdateAddress})
                     <Input
                         type="checkbox"
                         name='is_default'
+                        disabled={initialValue?.is_default}
                         checked={editFormData.is_default}
                         onChange={handleOnchange}
 
@@ -191,7 +196,7 @@ export function EditAddressForm({address, setEditingAddressId, onUpdateAddress})
 
                 <div style={{display: "flex", justifyContent: "center", gap: "2rem"}}>
                     <DarkButton type="submit">Update Address</DarkButton>
-                    <LightButton type="submit">Cancel</LightButton>
+                    <LightButton type="button" onClick={handleCancelUpdate}>Cancel</LightButton>
                 </div>
              </form>
         </EditFormPage>
