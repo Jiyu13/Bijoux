@@ -60,11 +60,12 @@ export function EditAddressForm({address, setEditingAddressId, onUpdateAddress})
             address_line_2: editFormData.address_line_2,
             city: editFormData.city,
             country: editFormData.country,
-            is_default: editFormData.isDefault,
+            is_default: editFormData.is_default,
             phone: editFormData.phone,
             state: editFormData.state,
             zip_code: editFormData.zip_code
         }
+
         client.put(`/address/${address?.id}/`, formObject, {withCredentials: true})
             .then(res => {
                 // console.log(res.data)

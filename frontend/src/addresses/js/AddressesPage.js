@@ -26,14 +26,22 @@ export function AddressesPage() {
         fetchFromAPI('/addresses/', setAddresses)
     }, []);
 
-
     function handleNewAddressClick() {
         setNewAddress(!isNewAddress)
         setEditingAddressId(null)
     }
 
     function onAddNewAddress(newAddress) {
-        setAddresses([...addresses, newAddress])
+        if (newAddress.is_default) {
+            const defaultAddress = addresses.find(address => address.is_default)
+            if (defaultAddress) {
+                defaultAddress.is_default = false
+            }
+            setAddresses(prev => [newAddress, ...prev])
+        } else {
+            setAddresses(prev => [...prev, newAddress])
+        }
+
         setNewAddress(false)
     }
 
@@ -50,11 +58,14 @@ export function AddressesPage() {
     function onUpdateAddress(updatedAddress) {
         const updatedAddresses = addresses?.map(address => {
             if (address.id === updatedAddress.id) {
-                return updatedAddress
+                return {...address, is_default: true};
             } else {
-                return address
+                return {...address, is_default: false};
             }
         })
+
+        // Sort the addresses to ensure the `is_default` address is at the top
+        updatedAddresses.sort((a, b) => b.is_default - a.is_default);
 
         setAddresses(updatedAddresses)
     }
