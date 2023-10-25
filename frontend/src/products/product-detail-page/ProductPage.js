@@ -18,7 +18,6 @@ export function ProductPage() {
         fetchFromAPI(`/products/${id.id}/`, setProductDetail)
     }, [id])
 
-    // console.log(productDetail)
 
     return (
         <DetailPageContainer>

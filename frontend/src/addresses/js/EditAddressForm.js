@@ -68,7 +68,6 @@ export function EditAddressForm({address, setEditingAddressId, onUpdateAddress})
 
         client.put(`/address/${address?.id}/`, formObject, {withCredentials: true})
             .then(res => {
-                // console.log(res.data)
                 onUpdateAddress(res.data)
             })
             .catch(error => console.log(error.response.data))

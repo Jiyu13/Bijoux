@@ -52,7 +52,6 @@ export function SliderTemplate( props ) {
 
     // function handleOnMouseEnter() {
     //     let target = sliderRef.current.className
-    //     // console.log(target)
     //     if (target.includes(className)) {
     //         setDisplay("")
     //         setBackground("rgba(0,0,0, 0.6)")

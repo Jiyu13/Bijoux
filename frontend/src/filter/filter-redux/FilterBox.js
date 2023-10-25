@@ -7,9 +7,6 @@ import {useEffect, useRef} from "react";
 
 export function FilterBox({ filterName, options, handleCheckboxChange, selectedFilters }) {
 
-    // console.log("options", options)
-    // console.log("selectedOptions", selectedOptions)
-
     const dispatch = useDispatch()
     const isOpen = useSelector((state) => state.filters[filterName])
 
@@ -20,7 +17,6 @@ export function FilterBox({ filterName, options, handleCheckboxChange, selectedF
     const dropdownRef = useRef()
     useEffect(() => {
         let clickOutsideHandler = (e) => {
-            // console.log(e)
             if (isOpen && dropdownRef.current && !dropdownRef.current.contains(e.target)){
                 dispatch(toggleFilter(filterName))
             }

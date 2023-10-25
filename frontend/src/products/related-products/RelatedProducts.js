@@ -9,8 +9,6 @@ export function RelatedProducts({productDetail}) {
         product?.collection["collection_name"] === productDetail?.collection["collection_name"]
         // && product?.id !== productDetail?.id
     )
-    // console.log(relatedProducts)
-    // console.log(productDetail.collection["collection_name"])
 
     return (
         <RelatedProductsContainer>

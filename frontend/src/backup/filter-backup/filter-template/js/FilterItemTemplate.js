@@ -16,7 +16,6 @@ export function FilterItemTemplate( props ) {
 
     let menuRef = useRef()
     useEffect(() => {
-        console.log(isOpen)
         let handler = (e) => {
             if (isOpen && menuRef.current && !menuRef.current.contains(e.target)){
                 setOpen(!isOpen)

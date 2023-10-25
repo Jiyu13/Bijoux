@@ -81,7 +81,6 @@ export function AddressesPage() {
         // const id = parseInt(e.target.value)
         client.delete(`/address/${deletingAddressId}/`, {withCredentials: true})
             .then(res => {
-                // console.log(res.data)
                 onDeleteAddress(deletingAddressId)
             })
             .catch(error => console.log(error.response.data))

@@ -6,11 +6,9 @@ export function ProductQuantity() {
     const [quantity, setQuantity] = useState(1)
 
     function handleDecrease() {
-        console.log("click")
         setQuantity(prev => prev - 1)
     }
     function handleIncrease() {
-        console.log("click")
         setQuantity(prev => prev + 1)
     }
 

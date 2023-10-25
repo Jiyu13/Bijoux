@@ -2,11 +2,7 @@ import styled from "styled-components";
 import "../css/category-list.css"
 
 
-export function Collections({collections, handleChangeCollection, isSelected, products} ) {
-
-    // console.log(isSelected)
-
-    // const bgColor = isSelected ?
+export function Collections({collections, handleChangeCollection, isSelected} ) {
 
     return (
         <>

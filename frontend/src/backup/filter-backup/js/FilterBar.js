@@ -7,7 +7,6 @@ import {FilterItems} from "./FilterItems";
 export function FilterBar() {
 
     const {isMobile} = useContext(UserContext)
-    console.log(isMobile)
     return(
         <FilterContainer>
             {!isMobile && (<FilterItems />) }

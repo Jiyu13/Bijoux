@@ -13,7 +13,6 @@ export function FilterList({handleCheckboxChange, selectedFilters}) {
     const [materials, setMaterials] = useState(null)
 
 
-    // console.log(materials, collections)
     const materialOptions = materials?.map(material => material.material_name)
     const collectionOptions = collections?.map(collection => collection.collection_name)
 

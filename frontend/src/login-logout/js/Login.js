@@ -34,7 +34,6 @@ export function Login() {
 
         client.post(`/login/`, loginUser, { withCredentials: true })
             .then(res => {
-                // console.log(res)
                 setIsLogin(true)
                 setLoginError(null)
                 navigate('/account')
@@ -42,22 +41,16 @@ export function Login() {
             })
             .then(res => {
                 const user = res.data.user
-                // console.log(user)
                 setCurrentUser(user)
             })
 
             .catch(err => {
                 setIsLogin(false)
-                // console.log(err.response.data)
                 setLoginError(err.response.data)
             })
-
-
-        // postFromAPI( "/login/", loginUser, setCurrentUser, setLoginError)
     }
 
 
-    // console.log(currentUser)
     return (
         <LoginContainer>
             <div style={{
