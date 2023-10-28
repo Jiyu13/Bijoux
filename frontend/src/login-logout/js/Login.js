@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 
 export function Login() {
 
-    const {setCurrentUser, setIsLogin} = useContext(UserContext)
+    const {setCurrentUser, setIsLogin, isLogin} = useContext(UserContext)
 
 
     const initialValue = {
@@ -23,7 +23,6 @@ export function Login() {
         setFormData({...formData, [name]: value})
     }
 
-    let navigate = useNavigate()
     function handleLoginSubmit(e) {
         e.preventDefault()
 
@@ -36,20 +35,20 @@ export function Login() {
             .then(res => {
                 setIsLogin(true)
                 setLoginError(null)
-                navigate('/account')
-                return client.get('/user/', { withCredentials: true })
-            })
-            .then(res => {
-                const user = res.data.user
-                setCurrentUser(user)
-            })
 
+                const user = res.data
+                // console.log(user)
+                setCurrentUser(user)
+
+                window.location.href = "/account"
+                // navigate('/account') // doesn't refresh page
+                // return client.get('/user/', { withCredentials: true })
+            })
             .catch(err => {
                 setIsLogin(false)
                 setLoginError(err.response.data)
             })
     }
-
 
     return (
         <LoginContainer>
