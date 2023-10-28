@@ -49,3 +49,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+/* Remove or change the background color of autocomplete suggestions */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;  /*  cannot remove the bg-color  without this setting */
+    transition: background-color 5000s ease-in-out 0s;
+}
