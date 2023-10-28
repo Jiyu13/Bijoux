@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout
+from django.core.exceptions import ValidationError
 from django.http import JsonResponse, Http404
 from django.shortcuts import render
 from rest_framework.authentication import SessionAuthentication
@@ -9,6 +10,9 @@ from rest_framework.views import APIView
 from rest_framework.generics import RetrieveAPIView, ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
+
+from rest_framework.authtoken.models import Token
+
 
 from .validations import custom_validation, validate_email, validate_password
 from .permissions import IsSuperUserOrReadOnly
@@ -21,13 +25,43 @@ class UserRegister(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request):
-        clean_data = custom_validation(request.data)
-        serializer = UserRegisterSerializer(data=clean_data)
+        validated_data = custom_validation(request.data)
+        print(validated_data)
+        if 'errors' in validated_data:
+            return Response(validated_data['errors'], status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = UserRegisterSerializer(data=validated_data)
         if serializer.is_valid(raise_exception=True):
-            user = serializer.create(clean_data)
+            user = serializer.create(validated_data)
             if user:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    # def post(self, request):
+    #     try:
+    #         clean_data = custom_validation(request.data)
+    #     except ValidationError as e:
+    #         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    #
+    #     serializer = UserRegisterSerializer(data=clean_data)
+    #     if serializer.is_valid(raise_exception=True):
+    #         try:
+    #             serializer.create(clean_data)
+    #             return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #         except ValueError as e:
+    #             # Catch the password validation errors.
+    #             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    #
+    #     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    # def post(self, request):
+    #     clean_data = custom_validation(request.data)
+    #     serializer = UserRegisterSerializer(data=clean_data)
+    #     if serializer.is_valid(raise_exception=True):
+    #         user = serializer.create(clean_data)
+    #         if user:
+    #             return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLogin(APIView):
@@ -42,14 +76,19 @@ class UserLogin(APIView):
         serializer = UserLoginSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.check_user(data)
+            # print(user.user_id, user.first_name, user.last_name, user.email)
             login(request, user)
-            request.session["user"] = {
+
+            user_data = {
                 'id': user.user_id,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
                 'email': user.email
             }
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(
+                user_data,
+                status=status.HTTP_200_OK
+            )
 
 
 class UserLogout(APIView):
@@ -68,9 +107,9 @@ class UserView(APIView):
 
     def get(self, request):
         serializer = UserSerializer(request.user)
-        user_info = request.session.get("user", None)
-        return JsonResponse({'user': user_info})
-        # return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+        # user_info = request.session.get("user", None)
+        # return JsonResponse({'user': user_info})
+        return Response({'user': serializer.data}, status=status.HTTP_200_OK)
 
 
 # ============================= User =============================
