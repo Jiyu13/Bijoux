@@ -43,6 +43,10 @@ function App() {
     const isTablet = useMediaQuery({ maxWidth: DeviceSize.tablet })
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
+    useEffect(() => {
+        // stays at this top level
+        localStorage.setItem("isLogin", isLogin)
+    }, [isLogin]);
 
     useEffect(() => {
         client.get('/user/', {withCredentials: true})
@@ -54,10 +58,6 @@ function App() {
             })
             .catch(err => console.log(err))
     }, [])
-
-    useEffect(() => {
-        localStorage.setItem("isLogin", isLogin)
-    }, [isLogin]);
 
     useEffect(() => {
         fetchFromAPI("/products/", setProducts)
