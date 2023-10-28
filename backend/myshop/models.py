@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth import password_validation
 from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
 from django.contrib.auth.models import User, AbstractBaseUser, PermissionsMixin
@@ -15,6 +16,15 @@ class AppUserManager(BaseUserManager):
             raise ValueError('An email is required.')
         if not password:
             raise ValueError('A password is required.')
+
+        # ================================== password validations ==============================
+        # if len(password) < 8:
+        #     raise ValueError("Password must be at least 8 characters long.")
+        # if not any(char.isdigit() for char in password):
+        #     raise ValueError('Password must contain at least one numeric character.')
+        # if not any(char.isalpha() for char in password):
+        #     raise ValueError('password must contain at least one alphabetic character.')
+
         email = self.normalize_email(email)                  # normalize email, converts the domain part of the email to lowercase
         user = self.model(email=email, **extra_fields)       # create a user instance
         user.set_password(password)                          # set its ps (hashed)
