@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "corsheaders",
     "rest_framework",
+    'rest_framework.authtoken',
     "myshop",
 ]
 
@@ -82,6 +83,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
 }
 ##################################################################################################
@@ -129,6 +131,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        # 'OPTIONS': {
+        #     'min_length': 8,  # Change this value as per your requirements
+        # }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
