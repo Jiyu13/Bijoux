@@ -1,12 +1,12 @@
-import {Field, Input, Label} from "../../account/CreateAccount";
-import styled from "styled-components";
-import {DarkButton, LightButton} from "../../components/buttons";
 import {useContext, useState} from "react";
 import {client} from "../../helper-functions/fetchFromAPI";
 
-import '../css/address.css'
+
 import {UserContext} from "../../global/user-context/UserContext";
-import {FormHeader, NameFieldBox} from "../css/addressFormStyles";
+
+import styled from "styled-components";
+import '../css/address.css'
+import {CancelButton, FieldBox, FormInput, FormLabel, SubmitInputButton, FormHeader, NameFieldBox} from "../../components/formStyles";
 
 
 export function EditAddressForm({address, setEditingAddressId, onUpdateAddress}) {
@@ -93,96 +93,96 @@ export function EditAddressForm({address, setEditingAddressId, onUpdateAddress})
                         gap: isMobile ? "0px" : "6px"
                     }}
                 >
-                     <Field style={{width: isMobile ? "100%" : "50%",}}>
-                        <Label>First Name</Label>
-                        <Input
+                     <FieldBox style={{width: isMobile ? "100%" : "50%",}}>
+                        <FormLabel>First Name</FormLabel>
+                        <FormInput
                             type="text"
                             name='first_name'
                             value={editFormData.first_name}
                             onChange={handleOnchange}
                         />
 
-                     </Field>
-                     <Field style={{width: isMobile ? "100%" : "50%",}}>
-                        <Label>Last Name</Label>
-                        <Input
+                     </FieldBox>
+                     <FieldBox style={{width: isMobile ? "100%" : "50%",}}>
+                        <FormLabel>Last Name</FormLabel>
+                        <FormInput
                             type="text"
                             name='last_name'
                             value={editFormData.last_name}
                             onChange={handleOnchange}
                         />
 
-                    </Field>
+                    </FieldBox>
                 </NameFieldBox>
-                <Field>
-                    <Label>Address line 1</Label>
-                    <Input
+                <FieldBox>
+                    <FormLabel>Address line 1</FormLabel>
+                    <FormInput
                         type="text"
                         name='address_line_1'
                         value={editFormData.address_line_1}
                         onChange={handleOnchange}
                     />
 
-                </Field>
-                <Field>
-                    <Label>Address line 2</Label>
-                    <Input
+                </FieldBox>
+                <FieldBox>
+                    <FormLabel>Address line 2</FormLabel>
+                    <FormInput
                         type="text"
                         name='address_line_2'
                         value={editFormData.address_line_2}
                         onChange={handleOnchange}
                     />
-                </Field>
+                </FieldBox>
 
-                <Field>
-                    <Label>City</Label>
-                    <Input
+                <FieldBox>
+                    <FormLabel>City</FormLabel>
+                    <FormInput
                         type="text"
                         name="city"
                         value={editFormData.city}
                         onChange={handleOnchange}
                     />
-                </Field>
-                <Field>
-                    <Label>Country</Label>
-                    <Input
+                </FieldBox>
+                <FieldBox>
+                    <FormLabel>Country</FormLabel>
+                    <FormInput
                         type="text"
                         name='country'
                         value={editFormData.country}
                         onChange={handleOnchange}
                     />
-                </Field>
-                <Field>
-                    <Label>State / Province</Label>
-                    <Input
+                </FieldBox>
+                <FieldBox>
+                    <FormLabel>State / Province</FormLabel>
+                    <FormInput
                         type="text"
                         name='state'
                         value={editFormData.state}
                         onChange={handleOnchange}
                     />
-                </Field>
-                <Field>
-                    <Label>ZIP / Postal Code</Label>
-                    <Input
+                </FieldBox>
+                <FieldBox>
+                    <FormLabel>ZIP / Postal Code</FormLabel>
+                    <FormInput
                         type="text"
                         name='zip_code'
                         value={editFormData.zip_code}
                         onChange={handleOnchange}
                     />
-                </Field>
-                <Field>
-                    <Label>Phone</Label>
-                    <Input
+                </FieldBox>
+                <FieldBox>
+                    <FormLabel>Phone</FormLabel>
+                    <FormInput
                         type="text"
                         name='phone'
                         value={editFormData.phone}
                         onChange={handleOnchange}
                     />
-                </Field>
+                </FieldBox>
 
-                <Field style={{flexDirection: "row"}}>
+                <FieldBox style={{flexDirection: "row"}}>
 
-                    <Input
+                    <FormInput
                         type="checkbox"
                         name='is_default'
                         disabled={initialValue?.is_default}
@@ -190,18 +190,16 @@ export function EditAddressForm({address, setEditingAddressId, onUpdateAddress})
                         onChange={handleOnchange}
 
                     />
-                    <Label>Set as Default Address?</Label>
-                </Field>
+                    <FormLabel>Set as Default Address?</FormLabel>
+                </FieldBox>
 
                 <div style={{display: "flex", justifyContent: "center", gap: "2rem"}}>
-                    <DarkButton type="submit">Update Address</DarkButton>
-                    <LightButton type="button" onClick={handleCancelUpdate}>Cancel</LightButton>
+                    <SubmitInputButton type="submit" value='Update Address' />
+                    <CancelButton type="button" onClick={handleCancelUpdate}>Cancel</CancelButton>
                 </div>
              </form>
         </EditFormPage>
     )
 }
 
-const EditFormPage = styled.div`
-  //margin-top: 36px;
-`
+const EditFormPage = styled.div``

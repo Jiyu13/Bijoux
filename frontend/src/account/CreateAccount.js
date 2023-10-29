@@ -1,9 +1,18 @@
 import styled from "styled-components";
-import {SignupLink} from "../login-logout/js/Login";
 import {PasswordRestrictions} from "./PasswordRestrictions";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import {client} from "../helper-functions/fetchFromAPI";
 import {UserContext} from "../global/user-context/UserContext";
+import {
+    CustomLink,
+    FieldBox,
+    Form,
+    FormInput,
+    FormLabel,
+    FormPageContainer,
+    FormWrapper,
+    SubmitInputButton
+} from "../components/formStyles";
 
 export function CreateAccount() {
 
@@ -95,11 +104,8 @@ export function CreateAccount() {
     const disabledButton = !formData.first_name || !formData.last_name || !formData.email || !formData.password
 
    return (
-        <LoginContainer>
-            <div style={{
-                padding: "50px 0 35px",
-                // borderBottom: "1px solid #dddddd"
-            }}>
+        <FormPageContainer>
+            <div style={{padding: "50px 0 35px"}}>
                 <h1>Create Account</h1>
             </div>
 
@@ -110,10 +116,10 @@ export function CreateAccount() {
             />
 
             <FormWrapper>
-                <form onSubmit={handleSubmitCreateAccount}>
-                     <Field>
-                        <Label>First Name</Label>
-                        <Input
+                <Form onSubmit={handleSubmitCreateAccount}>
+                     <FieldBox>
+                        <FormLabel>First Name</FormLabel>
+                        <FormInput
                             type='text'
                             name='first_name'
                             value={formData.first_name}
@@ -126,10 +132,10 @@ export function CreateAccount() {
                          {/*    </ErrorContainer>*/}
                          {/*)}*/}
 
-                     </Field>
-                     <Field>
-                        <Label>Last Name</Label>
-                        <Input
+                     </FieldBox>
+                     <FieldBox>
+                        <FormLabel>Last Name</FormLabel>
+                        <FormInput
                             type='text'
                             name='last_name'
                             value={formData.last_name}
@@ -141,10 +147,10 @@ export function CreateAccount() {
                         {/*         <span>*{lastNameError}</span>*/}
                         {/*     </ErrorContainer>*/}
                         {/* )}*/}
-                    </Field>
-                    <Field>
-                        <Label>Email</Label>
-                        <Input
+                    </FieldBox>
+                    <FieldBox>
+                        <FormLabel>Email</FormLabel>
+                        <FormInput
                             type='text'
                             name='email'
                             value={formData.email}
@@ -156,29 +162,30 @@ export function CreateAccount() {
                                  <span>*{emailExistError}</span>
                              </ErrorContainer>
                          )}
-                    </Field>
-                    <Field>
-                        <Label>Password</Label>
-                        <Input
+                    </FieldBox>
+                    <FieldBox>
+                        <FormLabel>Password</FormLabel>
+                        <FormInput
                             type='text'
                             name='password'
                             value={formData.password}
                             onChange={handleInputChange}
                             style={{border: lengthError || numericError || alphabeticError? "1px solid #e74c3c" : "1px solid rgb(118, 118, 118)"}}
                         />
-                    </Field>
+                    </FieldBox>
                     <div style={{display: "flex", justifyContent: "center"}}>
-                        <LoginButton
+                        <SubmitInputButton
                             type="submit"
                             value="Submit"
                             disabled={disabledButton}
                             style={{
                                 backgroundColor: disabledButton ? "rgba(40,44,52,.7)" : "rgba(40,44,52, 1)",
-                                cursor: disabledButton ? "no-drop" : "pointer"
+                                cursor: disabledButton ? "no-drop" : "pointer",
+
                             }}
                         />
                     </div>
-                </form>
+                </Form>
 
                 <div style={{fontSize: "0.9rem"}}>
                     Already have an account?
@@ -189,59 +196,17 @@ export function CreateAccount() {
                 </div>
 
             </FormWrapper>
-        </LoginContainer>
+        </FormPageContainer>
     )
 }
 
 
-const LoginContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: rgb(82, 82, 82);
-    margin: 0 auto;
-    boxSizing: border-box;
+const LoginLink = styled(CustomLink)`
+  color: rgb(82, 82, 82);
+  font-size: 0.9rem;
+  margin: 0 6px;
+  font-weight: bold;
 `
-
-const FormWrapper = styled.div`
-    padding: 25px 0 100px;
-`
-export const Field = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
-`
-
-export const Label = styled.label`
-    margin-bottom: 0.8rem;
-    color: rgb(82, 82, 82);
-`
-
-export const Input = styled.input`
-    
-    padding: 10px 12px;
-    font-size: 1.2rem;
-    border-radius: 4px;
-`
-
-const LoginButton = styled.input`
-    //background-color: rgba(40,44,52, 1);
-    color: whitesmoke;
-    padding: 12px 24px;
-    border: none;
-    letter-spacing: 0.1rem;
-    //cursor: pointer;
-    transition: .3s ease;
-    margin: 2rem 0 2rem;
-    border-radius: 4px;
-    width: 100%;
-    //&:hover {
-    //  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px, rgb(51, 51, 51) 0px 0px 0px 2px;
-    //}
-`
-
-const LoginLink = styled(SignupLink)``
 
 
 const ErrorContainer = styled.div`
