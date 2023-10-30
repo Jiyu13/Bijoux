@@ -50,12 +50,13 @@ urlpatterns = [
 
     # ===============================================================
 
-    path('customers/', UserListView.as_view(), name="customers"),
-    path('customers/<int:pk>/', CustomerDetailView.as_view(), name="customer-detail"),
+    # path('customers/', UserListView.as_view(), name="customers"),
+    # path('customers/<int:pk>/', CustomerDetailView.as_view(), name="customer-detail"),
+    path('contact-requests/create/', CreateContactRequestView.as_view(), name='create-contact-request'),
+    path('contact-requests/', ListContactRequestsView.as_view(), name='list-contact-requests'),
 
-
-    path('profiles/', CustomerProfileListView.as_view(), name="customer-profiles"),
-    path('profiles/<int:pk>/', CustomerProfileListView.as_view(), name="customer-profile-detail"),
+    # path('profiles/', CustomerProfileListView.as_view(), name="customer-profiles"),
+    # path('profiles/<int:pk>/', CustomerProfileListView.as_view(), name="customer-profile-detail"),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

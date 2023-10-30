@@ -92,13 +92,20 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ["user_id", "first_name", "last_name", "email"]
 
 
-class CustomerProfileSerializer(serializers.ModelSerializer):
-    # Nested serialization to show user details
-    customer = UserSerializer(read_only=True)
+# class CustomerProfileSerializer(serializers.ModelSerializer):
+#     # Nested serialization to show user details
+#     customer = UserSerializer(read_only=True)
+#
+#     class Meta:
+#         model = CustomerProfile
+#         fields = ["customer", "address", "phone"]
 
+
+# ============================= User Address  =============================
+class ContactRequestSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomerProfile
-        fields = ["customer", "address", "phone"]
+        model = ContactRequest
+        fields = '__all__'
 
 
 class UserAddressSerializer(serializers.ModelSerializer):

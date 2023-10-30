@@ -1,13 +1,16 @@
 from django.contrib.auth import login, logout
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
 from django.http import JsonResponse, Http404
 from django.shortcuts import render
+from django.urls import reverse
 from rest_framework.authentication import SessionAuthentication
 
 from .serializers import *
 from .models import *
 from rest_framework.views import APIView
-from rest_framework.generics import RetrieveAPIView, ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, \
+    CreateAPIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
 
@@ -114,26 +117,61 @@ class UserView(APIView):
 
 # ============================= User =============================
 # listing all users and creating a new user
-class UserListView(ListCreateAPIView):
-    queryset = AppUser.objects.all()
-    serializer_class = UserSerializer  # with generic views
-    permission_classes = [IsSuperUserOrReadOnly]
+# class UserListView(ListCreateAPIView):
+#     queryset = AppUser.objects.all()
+#     serializer_class = UserSerializer  # with generic views
+#     permission_classes = [IsSuperUserOrReadOnly]
+#
+#
+# # retrieving, updating, or deleting a specific user based on their id
+# class CustomerDetailView(RetrieveUpdateDestroyAPIView):
+#     queryset = AppUser.objects.all()
+#     serializer_class = UserSerializer
+#
+#
+# class CustomerProfileListView(ListCreateAPIView):
+#     queryset = CustomerProfile.objects.all()
+#     serializer_class = CustomerProfileSerializer
+#
+#
+# class UserProfileDetailView(RetrieveUpdateDestroyAPIView):
+#     queryset = CustomerProfile.objects.all()
+#     serializer_class = CustomerProfileSerializer
 
 
-# retrieving, updating, or deleting a specific user based on their id
-class CustomerDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = AppUser.objects.all()
-    serializer_class = UserSerializer
+# ============================= User Address  =============================
+class CreateContactRequestView(CreateAPIView):
+    queryset = ContactRequest.objects.all()
+    serializer_class = ContactRequestSerializer
+
+    def create(self, request, *args, **kwargs):
+
+        response = super().create(request, *args, **kwargs)  # Create the ContactRequest
+
+        # Get the created ContactRequest object
+        contact_request = response.data
+
+        # Compose the email content
+        subject = "Contact Request Sent"
+        message = f"Your contact request with subject '{contact_request['subject']}' has been sent successfully."
+        sender_email = "your_email@example.com"  # Set the sender's email address
+        receiver_email = contact_request['sender']  # Get the sender's email from the ContactRequest data
+
+        # Create a URL to view the details of the ContactRequest (optional)
+        request_url = request.build_absolute_uri(reverse('contact-request-detail', args=[contact_request['id']]))
+
+        # Include the request URL in the email message (optional)
+        message += f"\nYou can view the details of your request here: {request_url}"
+
+        # Send the email
+        send_mail(subject, message, sender_email, [receiver_email])
+
+        return response
 
 
-class CustomerProfileListView(ListCreateAPIView):
-    queryset = CustomerProfile.objects.all()
-    serializer_class = CustomerProfileSerializer
-
-
-class UserProfileDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = CustomerProfile.objects.all()
-    serializer_class = CustomerProfileSerializer
+class ListContactRequestsView(ListAPIView):
+    queryset = ContactRequest.objects.all()
+    serializer_class = CollectionSerializer
 
 
 # ============================= User Address  =============================

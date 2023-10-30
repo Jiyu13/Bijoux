@@ -4,16 +4,20 @@ from .models import *
 
 
 # Register your models here.
-class CustomerProfileInline(admin.StackedInline):
-    model = CustomerProfile
-    can_delete = False
-    verbose_name_plural = 'Customer Profile'
+# class CustomerProfileInline(admin.StackedInline):
+#     model = CustomerProfile
+#     can_delete = False
+#     verbose_name_plural = 'Customer Profile'
 
 
 class AppUserAdmin(admin.ModelAdmin):
     list_display = ("user_id", 'email', 'first_name', 'last_name')  # You can customize this as per your requirements
     search_fields = ('email',)
     ordering = ('email',)
+
+
+class ContactRequestAdmin(admin.ModelAdmin):
+    list_display = ('id', 'sender', 'subject', 'created_at')
 
 
 class AddressAdmin(admin.ModelAdmin):
@@ -25,16 +29,16 @@ class AddressAdmin(admin.ModelAdmin):
 
 
 # Additionally, if you want a separate admin for CustomerProfile
-@admin.register(CustomerProfile)
-class CustomerProfileAdmin(admin.ModelAdmin):
-    list_display = ("id", 'customer', 'address', 'phone')
-    search_fields = (
-        'customer__first_name',
-        'customer__last_name',
-        'customer__email',
-        'phone',
-        'address'
-    )
+# @admin.register(CustomerProfile)
+# class CustomerProfileAdmin(admin.ModelAdmin):
+#     list_display = ("id", 'customer', 'address', 'phone')
+#     search_fields = (
+#         'customer__first_name',
+#         'customer__last_name',
+#         'customer__email',
+#         'phone',
+#         'address'
+#     )
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -59,6 +63,7 @@ class MaterialAdmin(admin.ModelAdmin):
 
 # admin.site.unregister(User)
 admin.site.register(AppUser, AppUserAdmin)
+admin.site.register(ContactRequest, ContactRequestAdmin)
 admin.site.register(Address, AddressAdmin)
 
 admin.site.register(Product, ProductAdmin)

@@ -1,3 +1,5 @@
+import os
+
 from django.conf import settings
 from django.contrib.auth import password_validation
 from django.contrib.auth.base_user import BaseUserManager
@@ -57,14 +59,14 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 
 
 # ==========================  User Profile  ==================================================
-class CustomerProfile(models.Model):
-    # cus
-    customer = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # delete user will delete user profile, not vice verse
-    address = models.TextField(null=True, blank=True)
-    phone = models.CharField(null=True, blank=True, max_length=20)
-
-    def __str__(self):
-        return self.customer.email
+# class CustomerProfile(models.Model):
+#     # cus
+#     customer = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # delete user will delete user profile, not vice verse
+#     address = models.TextField(null=True, blank=True)
+#     phone = models.CharField(null=True, blank=True, max_length=20)
+#
+#     def __str__(self):
+#         return self.customer.email
 
 
 class Address(models.Model):
@@ -92,6 +94,41 @@ class Address(models.Model):
 
         # Now save (or update) the current instance
         super(Address, self).save(*args, **kwargs)
+
+
+# ================================= Contact ==================================================
+class ContactRequest(models.Model):
+    sender = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='sent_contact_requests')
+    receiver_email = models.EmailField()
+    # related_name:  can access a user's sent requests using user.sent_contact_requests.all()
+    # Add a field to specify the receiver's email
+    subject = models.CharField(max_length=255)
+    message = models.TextField()
+    # attachments = models.ManyToManyField('Attachment', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Contact Request form {self.sender.email}'
+
+
+# def user_attachment_path(instance, filename):
+#     # Define the upload path for attachment files
+#     # The filename will be user_<user_id>_attachment.ext
+#     return f'contact_request_attachments/user_{instance.user.id}/{os.path.splitext(filename)[1]}'
+#
+#
+# def validate_file_size(value):
+#     # Set the maximum file size (in bytes) you want to allow
+#     max_file_size = 5 * 1024 * 1024  # 5 MB
+#
+#
+# class Attachment(models.Model):
+#     user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='attachments')
+#     file = models.FileField(upload_to='contact_request_attachments/')
+#     uploaded_at = models.DateTimeField(auto_now_add=True)
+#
+#     def __str__(self):
+#         return self.file.name
 # =============================================================================================
 
 
