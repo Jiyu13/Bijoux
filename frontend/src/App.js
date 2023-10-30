@@ -24,6 +24,7 @@ import {Login} from "./login-logout/js/Login";
 import {CreateAccount} from "./account/CreateAccount";
 import {AccountPage} from "./account/AccountPage";
 import {AddressesPage} from "./addresses/js/AddressesPage";
+import {ContactForm} from "./contact/ContactForm";
 
 
 
@@ -100,6 +101,13 @@ function App() {
                             element={
                                 <ShopAllPage products={products}/>
                             }
+                        >
+                        </Route>
+
+                        <Route
+                            exact
+                            path='/contact'
+                            element={<ContactForm />}
                         >
                         </Route>
 
