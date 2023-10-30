@@ -98,11 +98,21 @@ class Address(models.Model):
 
 # ================================= Contact ==================================================
 class ContactRequest(models.Model):
+    SUBJECT_CHOICES = (
+        ('Order issues', 'Order status'),
+        ('Product question', 'Product question'),
+        ('Report an issue', 'Report an issue'),
+        ('Request refund or discount', 'Request refund or discount'),
+        ('Feedback', 'Feedback'),
+        ('Other', 'Other'),
+        # Add more options as needed
+    )
+
     sender = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='sent_contact_requests')
     receiver_email = models.EmailField()
     # related_name:  can access a user's sent requests using user.sent_contact_requests.all()
     # Add a field to specify the receiver's email
-    subject = models.CharField(max_length=255)
+    subject = models.CharField(max_length=255, choices=SUBJECT_CHOICES)
     message = models.TextField()
     # attachments = models.ManyToManyField('Attachment', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
