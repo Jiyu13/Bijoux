@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+import backend.env as env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -165,17 +166,27 @@ STATIC_URL = 'static/'
 MEDIA_ROOT = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-
+# ============================================== smtp ===========================================
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+# print("Before reading env.py file:")
+# print("EMAIL_HOST:", env.config('EMAIL_HOST'))
+# print("EMAIL_HOST_USER:", config('EMAIL_HOST_USER'))
+# print("EMAIL_HOST_PASSWORD:", config('EMAIL_HOST_PASSWORD'))
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your_email@gmail.com'  # Your Gmail email address
-EMAIL_HOST_PASSWORD = 'your_email_password'  # Your Gmail email password or an app-specific password
-DEFAULT_FROM_EMAIL = 'Your Name <your_email@gmail.com>'
+
+EMAIL_HOST = env.EMAIL_HOST
+EMAIL_HOST_USER = env.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = env.EMAIL_HOST_PASSWORD
+
+# print("After reading env.py file:")
+# print("EMAIL_HOST:", EMAIL_HOST)
+# print("EMAIL_HOST_USER:", EMAIL_HOST_USER)
+# print("EMAIL_HOST_PASSWORD:", EMAIL_HOST_PASSWORD)
