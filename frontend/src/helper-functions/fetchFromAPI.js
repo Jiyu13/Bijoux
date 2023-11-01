@@ -1,12 +1,14 @@
 import axios from "axios";
 
+export const API_URL = "http://127.0.0.1:8000"
+
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true
 
 export const client = axios.create({
-    baseURL: "http://127.0.0.1:8000/",
+    baseURL: `${API_URL}/`,
     xsrfHeaderName: "X-CSRFToken",
     xsrfCookieName: "csrftoken",
     withCredentials: true,  // Important! This sends cookies with requests.
@@ -16,7 +18,6 @@ export const client = axios.create({
 
 // const cors = require('cors');
 
-export const API_URL = "http://127.0.0.1:8000"
 export function fetchFromAPI(endpoint, setter) {
     // async function fetchData() {
     //     // console.log(`${API_URL}${endpoint}`)
