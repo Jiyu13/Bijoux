@@ -11,8 +11,8 @@ import {
     FormLabel,
     FormPageContainer,
     FormWrapper,
-    SubmitInputButton
 } from "../components/formStyles";
+import {SubmitInputButton} from "../components/buttons";
 
 export function CreateAccount() {
 

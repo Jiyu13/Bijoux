@@ -1,11 +1,12 @@
-
-import styled from "styled-components";
-import {CancelButton, FieldBox, FormInput, FormLabel, SubmitInputButton, FormHeader, NameFieldBox} from "../../components/formStyles";
-import '../css/address.css'
-
 import {useContext, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import {client} from "../../helper-functions/fetchFromAPI";
+
+
+import styled from "styled-components";
+import {FieldBox, FormInput, FormLabel, FormHeader, NameFieldBox} from "../../components/formStyles";
+import '../css/address.css'
+import {CancelButton, SubmitInputButton} from "../../components/buttons";
 
 export function NewAddress({setNewAddress,onAddNewAddress}) {
 

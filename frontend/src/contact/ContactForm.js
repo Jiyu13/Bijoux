@@ -1,19 +1,17 @@
-import {PasswordRestrictions} from "../account/PasswordRestrictions";
-import {DarkButton, LightButton} from "../components/buttons";
-import styled from "styled-components";
 import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../global/user-context/UserContext";
+import {client} from "../helper-functions/fetchFromAPI";
+import {MessageSentSuccessfully} from "./MessageSentSuccessfully";
 import {
-    CancelButton,
     FieldBox,
     Form,
     FormInput,
     FormLabel, FormPageContainer,
     NameFieldBox, OptionBox, SelectBox,
-    SubmitInputButton
 } from "../components/formStyles";
-import {client} from "../helper-functions/fetchFromAPI";
-import {MessageSentSuccessfully} from "./MessageSentSuccessfully";
+import {CancelButton, DarkButton, SubmitInputButton} from "../components/buttons";
+import {ModalContent, ModalFooter} from "../components/popupStyles";
+
 
 export function ContactForm() {
 
@@ -85,6 +83,15 @@ export function ContactForm() {
 
         }
         postContactRequest()
+        setFormData({
+            sender: currentUser? currentUser.user_id : null,
+            full_name: "",
+            sender_email: "",
+            subject: "",
+            message: "",
+            // attachments: "",
+        })
+
     }
 
 
@@ -93,10 +100,7 @@ export function ContactForm() {
 
     return (
         <>
-            {isSent ?
-                <MessageSentSuccessfully />
-                :
-                <FormPageContainer>
+            <FormPageContainer>
                 <div style={{padding: "50px 0 35px",}}>
                     <h1>Contact Us</h1>
                 </div>
@@ -105,6 +109,9 @@ export function ContactForm() {
                     className='contact-form'
                     onSubmit={handleSubmitContactForm}
                 >
+
+                    {isSent && (<MessageSentSuccessfully />)}
+
                     <NameFieldBox
                         style={{
                             flexDirection: flexDirection,
@@ -185,9 +192,8 @@ export function ContactForm() {
                         />
                         <CancelButton type="button" onClick={handleCancel}>Cancel</CancelButton>
                     </div>
-                 </Form>
+                </Form>
             </FormPageContainer>
-            }
         </>
     )
 }
