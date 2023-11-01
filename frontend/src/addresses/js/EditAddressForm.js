@@ -6,7 +6,8 @@ import {UserContext} from "../../global/user-context/UserContext";
 
 import styled from "styled-components";
 import '../css/address.css'
-import {CancelButton, FieldBox, FormInput, FormLabel, SubmitInputButton, FormHeader, NameFieldBox} from "../../components/formStyles";
+import {FieldBox, FormInput, FormLabel, FormHeader, NameFieldBox} from "../../components/formStyles";
+import {CancelButton, SubmitInputButton} from "../../components/buttons";
 
 
 export function EditAddressForm({address, setEditingAddressId, onUpdateAddress}) {
