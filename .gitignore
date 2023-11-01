@@ -3,3 +3,4 @@ __pycache__
 *.pyc
 *.idea
 /backend/media
+backend/backend/env.py
