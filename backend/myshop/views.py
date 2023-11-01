@@ -139,34 +139,70 @@ class UserView(APIView):
 #     serializer_class = CustomerProfileSerializer
 
 
-# ============================= User Address  =============================
+# ============================= Contact Request  =============================
 class CreateContactRequestView(CreateAPIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = ()
     queryset = ContactRequest.objects.all()
     serializer_class = ContactRequestSerializer
 
     def create(self, request, *args, **kwargs):
 
-        response = super().create(request, *args, **kwargs)  # Create the ContactRequest
+        # ========validate input data from contact form before creating a "ContactRequest" object=======================
+        # send_mail(
+        #     subject, message, from_email, recipient_list, fail_silently=False, auth_user=None,
+        #     auth_password=None, connection=None, html_message=None
+        # )
 
-        # Get the created ContactRequest object
-        contact_request = response.data
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        # Compose the email content
-        subject = "Contact Request Sent"
-        message = f"Your contact request with subject '{contact_request['subject']}' has been sent successfully."
-        sender_email = "your_email@example.com"  # Set the sender's email address
-        receiver_email = contact_request['sender']  # Get the sender's email from the ContactRequest data
+        # ============================================Create the ContactRequest & save to db============================
+        contact_request = serializer.save()
+        # =========================================Compose the email content============================================
+        notification_subject = contact_request.full_name + "-" + contact_request.subject
+        user_email = contact_request.sender_email
+        notification_message = (f'From: {user_email}\n\n'
+                                f'Subject: {notification_subject}\n\n'
+                                f'{contact_request.message}'
+        )
 
-        # Create a URL to view the details of the ContactRequest (optional)
-        request_url = request.build_absolute_uri(reverse('contact-request-detail', args=[contact_request['id']]))
+        try:
+            # # =================Send a notification email =============================================================
+            send_mail(
+                notification_subject,
+                notification_message,
+                settings.EMAIL_HOST_USER,
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False
+            )
+            # ==================Send a auto-reply email to user ========================================================
+            auto_reply_subject = "Ticket Received" + " - " + contact_request.subject
+            auto_reply_message = (
+                f"We would like to acknowledge that we have received your request and a ticket has been created. "
+                f"A support representative will be reviewing your request and will send you a personal response shortly.\n\n"
+                f"Thank you for your patience. \n\n"
+                f"Sincerely,\n\n"
+                f"Made by Ziru"
+            )
 
-        # Include the request URL in the email message (optional)
-        message += f"\nYou can view the details of your request here: {request_url}"
+            # Specify the email address where you want to receive notifications
+            autor_reply_receiver_email = user_email
 
-        # Send the email
-        send_mail(subject, message, sender_email, [receiver_email])
+            # Send the notification email
+            send_mail(
+                auto_reply_subject,
+                auto_reply_message,
+                settings.EMAIL_HOST_USER,
+                [autor_reply_receiver_email],
+                fail_silently=False
+            )
 
-        return response
+        except Exception as e:
+            # Handle email sending errors
+            print(e)
+            return Response({'error': 'Failed to send email.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class ListContactRequestsView(ListAPIView):
