@@ -63,16 +63,14 @@ const buttons = styled.a`
 `
 
 const YesButton = styled(buttons)`
-  background-color: rgb(245,62,62);
+  background-color: rgba(235, 77, 75, 0.8); //rgb(245,62,62, 0.7);
   border: none;
   margin-right: 0px;
-  color: whitesmoke;
+  color: #2c3445;
 
-  &:hover {
-    //background-color: rgb(245,62,62);
-            //#f5b800;
-    color: #2c3445;
-  }
+  //&:hover {
+  //  color: #2c3445;
+  //}
 
 `
 
