@@ -89,3 +89,17 @@ export const CustomLink = styled.a`
         text-decoration-thickness: 2px;
     }
 `
+
+// ============== select & options ===========================
+export const SelectBox = styled.select`
+    margin-bottom: 1rem;
+    padding: 12px 12px;
+    font-size: 1.2rem;
+    border-radius: 4px;
+    border-width: 1px;
+    font-size: 0.9rem;
+`
+
+export const OptionBox = styled.option`
+    font-size: 0.8rem;
+`
