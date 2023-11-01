@@ -101,6 +101,7 @@ class ContactRequest(models.Model):
     SUBJECT_CHOICES = (
         ('Order issues', 'Order status'),
         ('Product question', 'Product question'),
+        ('General Inquiry', 'General Inquiry'),
         ('Report an issue', 'Report an issue'),
         ('Request refund or discount', 'Request refund or discount'),
         ('Feedback', 'Feedback'),
@@ -108,8 +109,15 @@ class ContactRequest(models.Model):
         # Add more options as needed
     )
 
-    sender = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='sent_contact_requests')
-    receiver_email = models.EmailField()
+    sender = models.ForeignKey(
+        AppUser,
+        on_delete=models.CASCADE,
+        related_name='sent_contact_requests',
+        null=True,
+        default=None
+    )
+    full_name = models.CharField(max_length=255, null=True)
+    sender_email = models.EmailField(null=True)
     # related_name:  can access a user's sent requests using user.sent_contact_requests.all()
     # Add a field to specify the receiver's email
     subject = models.CharField(max_length=255, choices=SUBJECT_CHOICES)
@@ -118,7 +126,7 @@ class ContactRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Contact Request form {self.sender.email}'
+        return f'Contact Request form {self.sender}'
 
 
 # def user_attachment_path(instance, filename):
