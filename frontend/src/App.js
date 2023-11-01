@@ -50,14 +50,18 @@ function App() {
     }, [isLogin]);
 
     useEffect(() => {
-        client.get('/user/', {withCredentials: true})
-            .then(res => {
-                const user = res.data.user
-                if (user) {
+        async function getUser(){
+               try {
+                   const res = await client.get('/user/', {withCredentials: true})
+                   // console.log(res)
+                   const user = res.data.user
                     setCurrentUser(user)
-                }
-            })
-            .catch(err => console.log(err))
+               } catch (error) {
+                   console.log(error.response)
+               }
+
+        }
+        getUser()
     }, [])
 
     useEffect(() => {
@@ -107,7 +111,7 @@ function App() {
                         <Route
                             exact
                             path='/contact'
-                            element={<ContactForm />}
+                            element={<ContactForm/>}
                         >
                         </Route>
 
