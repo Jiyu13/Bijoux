@@ -160,7 +160,7 @@ class CreateContactRequestView(CreateAPIView):
         # ============================================Create the ContactRequest & save to db============================
         contact_request = serializer.save()
         # =========================================Compose the email content============================================
-        notification_subject = contact_request.full_name + "-" + contact_request.subject
+        notification_subject = "New Ticket" + " -- " + contact_request.full_name + " - " + contact_request.subject
         user_email = contact_request.sender_email
         notification_message = (f'From: {user_email}\n\n'
                                 f'Subject: {notification_subject}\n\n'
