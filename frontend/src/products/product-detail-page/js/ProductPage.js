@@ -1,10 +1,11 @@
 import {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {fetchFromAPI} from "../../helper-functions/fetchFromAPI";
+import {fetchFromAPI} from "../../../helper-functions/fetchFromAPI";
 import styled from "styled-components";
 import {ProductDetails} from "./ProductDetails";
-import {RelatedProducts} from "../related-products/RelatedProducts";
-import {UserContext} from "../../global/user-context/UserContext";
+import {RelatedProducts} from "../../related-products/RelatedProducts";
+import {UserContext} from "../../../global/user-context/UserContext";
+import {ProductImagesSection} from "./ProductImagesSection";
 
 export function ProductPage() {
 
@@ -18,7 +19,7 @@ export function ProductPage() {
         fetchFromAPI(`/products/${id.id}/`, setProductDetail)
     }, [id])
 
-
+    // console.log(productDetail)
     return (
         <DetailPageContainer>
             {/* =================== Product details =================== */}
@@ -27,9 +28,15 @@ export function ProductPage() {
 
                     <div style={{display: "flex", flexDirection: isMobile ? "column" : "row"}}>
                         {/*=================== Product Image ===================*/}
-                        <div style={{flex: "1", width: isMobile ? "100%" : "50%"}}>
-                            <img src={productDetail?.image} style={{width: "100%"}}/>
-                        </div>
+                        <ProductImagesSection
+                            coverImage={productDetail?.image}
+                            otherImages={productDetail?.product_images}
+                        />
+
+                        {/*<div >*/}
+                        {/*    <img src={productDetail?.image} style={{width: "100%"}}/>*/}
+                        {/*</div>*/}
+
                         {/*=================== Detail and order ================*/}
                         <ProductDetails productDetail={productDetail}/>
                     </div>

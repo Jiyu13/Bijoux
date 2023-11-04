@@ -15,7 +15,7 @@ class MaterialSerializer(serializers.ModelSerializer):
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
-        fields = ["id", "product", "image_name"]
+        fields = '__all__'
 
 
 # ============================= Single Product Detail =============================

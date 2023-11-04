@@ -19,7 +19,7 @@ import {ShopAllPage} from "./components/ShopAllPage";
 
 import {Provider} from "react-redux";
 import store from "./filter/filter-redux/store/store";
-import {ProductPage} from "./products/product-detail-page/ProductPage";
+import {ProductPage} from "./products/product-detail-page/js/ProductPage";
 import {Login} from "./login-logout/js/Login";
 import {CreateAccount} from "./account/CreateAccount";
 import {AccountPage} from "./account/AccountPage";
