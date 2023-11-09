@@ -11,13 +11,18 @@ import {UserContext} from "../global/user-context/UserContext";
 
 export function Accessibility() {
 
-    const { isLogin } = useContext(UserContext)
+    const { isLogin, openCart, setOpenCart } = useContext(UserContext)
 
     let navigate = useNavigate()
     function handleLogin() {
         {isLogin ? navigate('/account') : navigate('/login')}
     }
 
+
+    function handleToCartPage() {
+        // navigate('/cart')
+        setOpenCart(!openCart)
+    }
 
     return (
         <Container>
@@ -31,7 +36,7 @@ export function Accessibility() {
                 {/*</UserName>*/}
                 {/*<Img src={expand_more_black_24} alt="dropdown icon"/>*/}
             </ContainerItem>
-            <ContainerItem>
+            <ContainerItem onClick={handleToCartPage}>
                 <Img src={shopping_bag_black} alt="cart icon"/>
             </ContainerItem>
         </Container>
