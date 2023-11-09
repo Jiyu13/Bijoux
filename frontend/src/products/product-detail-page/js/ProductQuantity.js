@@ -1,19 +1,13 @@
 import styled from "styled-components";
-import {useState} from "react";
 
-export function ProductQuantity() {
+export function ProductQuantity({ quantity, setQuantity }) {
 
-    const [quantity, setQuantity] = useState(1)
 
     function handleDecrease() {
         setQuantity(prev => prev - 1)
     }
     function handleIncrease() {
         setQuantity(prev => prev + 1)
-    }
-
-    function handleQuantityChange(e) {
-
     }
 
     return(
