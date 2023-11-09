@@ -15,23 +15,34 @@ export const client = axios.create({
 
 })
 
+function getCSRFToken() {
+    // split all cookies into an array of key-value pairs
+    const cookies = document.cookie.split(';').map((cookie) => cookie.trim())
 
-// const cors = require('cors');
+    // loop through the cookies and find the one with the name 'csrftoken'
+    for (const cookie of cookies) {
+        const [name, value] = cookie.split("=")
+        if (name === "csrftoken") {
+            return decodeURIComponent(value)
+        }
+    }
+    // If the "csrftoken" cookie is not found, return null or handle it as needed
+    return null
+}
+client.interceptors.request.use((config) => {
+    // Get the CSRF token from the cookie
+    const csrfToken = getCSRFToken();
+
+    // Add the CSRF token to the request headers
+    if (csrfToken) {
+        config.headers["X-CSRFToken"] = csrfToken;
+    }
+
+    return config;
+})
 
 export function fetchFromAPI(endpoint, setter) {
-    // async function fetchData() {
-    //     // console.log(`${API_URL}${endpoint}`)
-    //     try {
-    //         const response = await axios.get(`${API_URL}${endpoint}`)
-    //         return response
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-    // fetchData().then(res => {
-    //     // console.log(res)
-    //     setter(res.data)
-    // })
+
     client.get(`${endpoint}`, { withCredentials: true })
         .then(res => {
             // console.log(res)
