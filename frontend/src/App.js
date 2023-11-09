@@ -25,6 +25,7 @@ import {CreateAccount} from "./account/CreateAccount";
 import {AccountPage} from "./account/AccountPage";
 import {AddressesPage} from "./addresses/js/AddressesPage";
 import {ContactForm} from "./contact/ContactForm";
+import {CartPage} from "./cart/js/CartPage";
 
 
 
@@ -38,6 +39,10 @@ function App() {
     const [products, setProducts] = useState(null)
     const [carousels, setCarousels] = useState(null)
     const [collections, setCollections] = useState(null)
+
+    const [cart, setCart] = useState(null)
+    const [openCart, setOpenCart] = useState(false)
+    const [cartItems, setCartItems] = useState(null)
 
     const isLargeScreen = useMediaQuery({maxWidth: DeviceSize.desktop})
     const isSmallLaptop = useMediaQuery({maxWidth: DeviceSize.small_laptop})
@@ -78,15 +83,30 @@ function App() {
     }, []);
 
 
+    useEffect(() => {
+        async function getCart() {
+            try {
+                const res = await client.get('/cart/', {withCredentials: true})
+                console.log("cart", res.data)
+                setCart(res.data)
+            } catch (error) {
+                console.log(error.response)
+            }
+        }
+        getCart()
+    }, []);
+
     const userContextValue = {
         setCurrentUser, currentUser, isLogin, setIsLogin,
         isMobile, isTablet, isSmallLaptop, isLargeScreen,
-        carousels, products, collections}
+        carousels, products, collections,
+        cart, setCart, setOpenCart, openCart
+    }
 
     return (
         <UserContext.Provider value={userContextValue}>
             <Provider store={store}>
-
+            <CartPage />
             <div className="App">
                 <NavBar />
                 <Main className="main-container">
@@ -95,7 +115,7 @@ function App() {
                             exact
                             path='/products/:id'
                             element={
-                                <ProductPage />
+                                <ProductPage/>
                             }
                         >
                         </Route>
@@ -149,6 +169,15 @@ function App() {
                             }
                         >
                         </Route>
+
+                        {/*<Route*/}
+                        {/*    exact*/}
+                        {/*    path='/cart'*/}
+                        {/*    element={*/}
+                        {/*        <CartPage />*/}
+                        {/*    }*/}
+                        {/*>*/}
+                        {/*</Route>*/}
 
                         <Route
                             exact
