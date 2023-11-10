@@ -87,8 +87,25 @@ function App() {
         async function getCart() {
             try {
                 const res = await client.get('/cart/', {withCredentials: true})
-                console.log("cart", res.data)
-                setCart(res.data)
+                // res.data = [{id: 23, cart_items: Array(0), session_key: '', user: 4}]
+                const cart = res.data
+                if (cart.length > 0) {
+                    setCart(res.data)
+                    // setCartItems(res.data[0].cart_items)
+                }
+                else {
+                    try {
+                        // Attempt to create a new cart with a POST request
+                        const newCartResponse = await client.post('/cart/');
+                        // console.log("New cart created:", newCartResponse.data);
+                        setCart(newCartResponse.data)
+                        // setCartItems(newCartResponse.data[0].cart_items)
+                    } catch (createCartError) {
+                        console.log("Error creating cart:", createCartError.response);
+                        // Handle the validation error here, e.g., show a message to the user
+                    }
+                }
+
             } catch (error) {
                 console.log(error.response)
             }
@@ -96,11 +113,26 @@ function App() {
         getCart()
     }, []);
 
+    // console.log(cart)
+    // console.log(cartItems)
+    useEffect(() => {
+        async function getCartItems() {
+            try {
+                const res = await client.get('/cart-items/')
+                setCartItems(res.data)
+            } catch(error) {
+                console.log(error.response)
+            }
+        }
+        getCartItems()
+    }, [])
+
+    console.log(cartItems)
     const userContextValue = {
         setCurrentUser, currentUser, isLogin, setIsLogin,
         isMobile, isTablet, isSmallLaptop, isLargeScreen,
         carousels, products, collections,
-        cart, setCart, setOpenCart, openCart
+        cart, setCart, setOpenCart, openCart, cartItems, setCartItems
     }
 
     return (
