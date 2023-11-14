@@ -124,3 +124,37 @@ class CarouselSerializer(serializers.ModelSerializer):
         fields = ["theme", "caption", "image"]
 
 
+# ===============================  Cart ===================================
+class CartItemSerializer(serializers.ModelSerializer):
+    # product = ProductSerializer(read_only=True)
+    # product_2 = serializers.PrimaryKeyRelatedField(source="product", queryset=Product.objects.all(), write_only=True)
+
+    class Meta:
+        model = CartItem
+        fields = '__all__'
+
+
+class CartSerializer(serializers.ModelSerializer):
+    cart_items = CartItemSerializer(many=True, read_only=True)
+    # [{...},...] => {id, cart_items:Array, session_key, user}
+    # without cart_items, [{...},...], {id, session_key, user}
+
+    class Meta:
+        model = Cart
+        fields = '__all__'  # ['id', 'user', 'cart_items']
+
+
+# ============================= Order =========================================
+# class OrderItemSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = OrderItem
+#         fields = '__all__'
+#
+#
+# class OrderSerializer(serializers.ModelSerializer):
+#     items = OrderItemSerializer(many=True)
+#
+#     class Meta:
+#         model = Order
+#         fields = '__all__'
+
