@@ -12,7 +12,7 @@ import {client} from "./helper-functions/fetchFromAPI"
 
 import {Footer} from './global/footer/js/Footer'
 import {NavBar} from "./global/navbar/js/NavBar";
-import {MobileNavBar} from "./global/navbar/js/MobileNavBar";
+import {MobileAccessibility} from "./accessibility/MobileAccessibility";
 import {fetchFromAPI} from "./helper-functions/fetchFromAPI";
 import {Home} from "./components/Home";
 import {ShopAllPage} from "./components/ShopAllPage";
@@ -273,7 +273,7 @@ function App() {
 
                 <Footer/>
 
-                {isMobile || isTablet  ? <MobileNavBar /> : ""}
+                {/*{isMobile || isTablet  ? <MobileAccessibility /> : ""}*/}
             </div>
             </Provider>
         </UserContext.Provider>

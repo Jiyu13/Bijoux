@@ -1,13 +1,13 @@
 import {useContext} from "react";
-import {UserContext} from "../../user-context/UserContext";
-import shopping_bag_black_24 from "../icons/shopping_bag_black_24dp.svg";
-import search_black_24dp from "../../search-bar/icons/search_black_24dp.svg";
-import home_black_24 from "../icons/home_black_24dp.svg"
-import account_circle_black_24 from "../icons/account_circle_black_24dp.svg"
-import storefront_black_24dp from "../icons/storefront_black_24dp.svg"
+import {UserContext} from "../global/user-context/UserContext";
+import shopping_bag_black_24 from "../global/navbar/icons/shopping_bag_black_24dp.svg";
+import search_black_24dp from "../global/search-bar/icons/search_black_24dp.svg";
+import home_black_24 from "../global/navbar/icons/home_black_24dp.svg"
+import account_circle_black_24 from "../global/navbar/icons/account_circle_black_24dp.svg"
+import storefront_black_24dp from "../global/navbar/icons/storefront_black_24dp.svg"
 import styled from "styled-components";
 
-export function MobileNavBar() {
+export function MobileAccessibility() {
 
     const {isMobile, isTablet, isSmallLaptop, isLargeScreen} = useContext(UserContext)
 
