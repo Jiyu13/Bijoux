@@ -61,6 +61,19 @@ class MaterialAdmin(admin.ModelAdmin):
     list_display = ("id", "material_name",)
 
 
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('id',)
+    # 'user_id', )
+
+    # @admin.display(description='user id')
+    # def user_id(self, object):
+    #     return object.user.user_id
+
+
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ("id", 'cart', 'product', 'quantity',)
+
+
 # admin.site.unregister(User)
 admin.site.register(AppUser, AppUserAdmin)
 admin.site.register(ContactRequest, ContactRequestAdmin)
@@ -71,3 +84,5 @@ admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(Carousel, CarouselAdmin)
 admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Material, MaterialAdmin)
+admin.site.register(Cart, CartAdmin)
+admin.site.register(CartItem, CartAdmin)
