@@ -1,12 +1,16 @@
 import styled from "styled-components";
-import person_black_24 from "./icons/person_black_24dp.svg"
+import user_icon from "./icons/user_icon.svg"
+import shopping_bag from './icons/shopping_bag.svg'
+import search_icon from './icons/search_icon.svg'
+
 // import expand_more_black_24 from "./icons/expand_more_black_24dp.svg"
-import shopping_bag_black from "./icons/shopping_bag_black_24dp.svg"
 // import {SearchBar} from "../global/search-bar/SearchBar";
-import search_black_24dp from "../global/search-bar/icons/search_black_24dp.svg";
+// import search_icon from "../global/search-bar/icons/search_black_24dp.svg";
+
 import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import {UserContext} from "../global/user-context/UserContext";
+import {CartCountBubble} from "../cart/js/CartCountBubble";
 
 
 export function Accessibility() {
@@ -20,24 +24,24 @@ export function Accessibility() {
 
 
     function handleToCartPage() {
-        // navigate('/cart')
         setOpenCart(!openCart)
     }
 
     return (
         <Container>
             <ContainerItem>
-                <Img src={search_black_24dp} alt="search icon"/>
+                <Img src={search_icon} alt="search icon"/>
             </ContainerItem>
             <ContainerItem style={{display: "flex"}} onClick={handleLogin}>
-                <Img src={person_black_24} alt="account icon" />
+                <Img src={user_icon} alt="account icon" />
                 {/*<UserName>*/}
                     {/*{currentUser ? ""}*/}
                 {/*</UserName>*/}
                 {/*<Img src={expand_more_black_24} alt="dropdown icon"/>*/}
             </ContainerItem>
-            <ContainerItem onClick={handleToCartPage}>
-                <Img src={shopping_bag_black} alt="cart icon"/>
+            <ContainerItem onClick={handleToCartPage} style={{position: "relative"}}>
+                <Img src={shopping_bag} alt="cart icon"/>
+                <CartCountBubble />
             </ContainerItem>
         </Container>
     )
@@ -60,6 +64,8 @@ const ContainerItem = styled.li`
 `
 
 const Img = styled.img`
+    width: 28px;
+    height: 28px;
 `
 
 const UserName = styled.div`
