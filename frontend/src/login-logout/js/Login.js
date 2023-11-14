@@ -46,7 +46,6 @@ export function Login() {
                 setIsLogin(true)
                 setLoginError(null)
                 const user = res.data
-                // console.log(user)
                 setCurrentUser(user)
                 window.location.href = "/account"
             } catch (error) {
@@ -56,7 +55,6 @@ export function Login() {
         }
 
         postLogin()
-
         // client.post(`/login/`, loginUser, { withCredentials: true })
         //     .then(res => {
         //         setIsLogin(true)
@@ -75,7 +73,6 @@ export function Login() {
         //         setLoginError(err.response.data)
         //     })
     }
-
 
     return (
         <FormPageContainer>
