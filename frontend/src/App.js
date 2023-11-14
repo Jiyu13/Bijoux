@@ -28,10 +28,11 @@ import {ContactForm} from "./contact/ContactForm";
 import {CartPage} from "./cart/js/CartPage";
 
 
-
-
 function App() {
     const [currentUser, setCurrentUser] = useState(null)
+
+    // const storeCartItems = JSON.parse(localStorage.getItem('shopping_cart_items'))
+    const [shoppingCartItems, setShoppingCartItems] = useState(null)
 
     const storeIsLogin = localStorage.getItem("isLogin") === "true"
     const [isLogin, setIsLogin] = useState(storeIsLogin)
@@ -43,96 +44,141 @@ function App() {
     const [cart, setCart] = useState(null)
     const [openCart, setOpenCart] = useState(false)
     const [cartItems, setCartItems] = useState(null)
+    const [cartItemQuantity, setCartItemQuantity] = useState(0)
 
     const isLargeScreen = useMediaQuery({maxWidth: DeviceSize.desktop})
     const isSmallLaptop = useMediaQuery({maxWidth: DeviceSize.small_laptop})
     const isTablet = useMediaQuery({ maxWidth: DeviceSize.tablet })
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
+    // ========================== set "isLogin" localStorage =========================
     useEffect(() => {
         // stays at this top level
         localStorage.setItem("isLogin", isLogin)
     }, [isLogin]);
 
+    // ========================== get "shopping_cart_items" localStorage =============
     useEffect(() => {
-        async function getUser(){
-               try {
-                   const res = await client.get('/user/', {withCredentials: true})
-                   // console.log(res)
-                   const user = res.data.user
-                    setCurrentUser(user)
-               } catch (error) {
-                   console.log(error.response)
-               }
+        // Check for a logged-in user here
+        const storedCartItems = JSON.parse(localStorage.getItem('shopping_cart_items')) || [];
+        setShoppingCartItems(storedCartItems);
 
+        const itemQuantity = storedCartItems.reduce((accumulator, currentItem) => {
+            return accumulator + currentItem.quantity;
+        }, 0)
+        setCartItemQuantity(itemQuantity)
+
+    }, []);
+
+    // ========================== get cart  ==========================
+    useEffect(() => {
+        if (isLogin) {
+            async function getCart() {
+                try {
+                    const res = await client.get('/cart/', {withCredentials: true})
+                    // res.data = [{cart_id: 23, user_id: 4, total_quantity: 10}]
+                    const cart = res.data
+                    setCart(cart)
+                    setCartItemQuantity(cart[0].total_quantity)
+                    // check if cart exists
+                } catch (error) {
+                    console.log(error.response)
+                }
+            }
+            getCart()
         }
-        getUser()
-    }, [])
+    }, [isLogin])
 
+    // ========================== get user ==========================
+    useEffect(() => {
+        if (isLogin) {
+            async function getUser() {
+                try {
+                    const res = await client.get('/user/', {withCredentials: true})
+                    const user = res.data.user
+                    setCurrentUser(user)
+                } catch (error) {
+                    console.log(error.response)
+                }
+            }
+            getUser()
+        }
+    }, [isLogin])
+
+    // ========================== get products ==========================
     useEffect(() => {
         fetchFromAPI("/products/", setProducts)
     }, [])
 
+    // ========================== get collections ==========================
     useEffect(() => {
         fetchFromAPI("/collections/", setCollections)
     }, []);
 
 
+    // ========================== get carousels ==========================
     useEffect(() => {
         fetchFromAPI("/carousels/", setCarousels)
     }, []);
 
+    // useEffect(() => {
+    //     async function getCart() {
+    //         try {
+    //             const res = await client.get('/cart/', {withCredentials: true})
+    //             // res.data = [{cart_id: 23, user_id: 4, total_quantity: 10}]
+    //             const cart = res.data
+    //             console.log("93", cart)
+    //
+    //             if (cart.length > 0) {
+    //                 console.log("cart.length > 0")
+    //                 setCart(res.data)
+    //                 // console.log(res.data)
+    //                 setCartItemQuantity(res.data[0].total_quantity)
+    //             }
+    //             else {
+    //                 console.log("cart empty", cart)
+    //                             console.log("hi " + ++hi);
+    //
+    //                 try {
+    //                     // Attempt to create a new cart with a POST request
+    //                     const newCartResponse = await client.post('/cart/');
+    //                     console.log("New cart created:", newCartResponse.data);
+    //                     setCart(newCartResponse.data)
+    //                     setCartItemQuantity(res.data[0].total_quantity)
+    //                 } catch (createCartError) {
+    //                     console.log("Error creating cart:", createCartError.response);
+    //                 }
+    //             }
+    //
+    //         } catch (error) {
+    //             console.log(error.response)
+    //         }
+    //     }
+    //     getCart()
+    // }, []);
 
+    // ========================== get cart items ==========================
     useEffect(() => {
-        async function getCart() {
-            try {
-                const res = await client.get('/cart/', {withCredentials: true})
-                // res.data = [{id: 23, cart_items: Array(0), session_key: '', user: 4}]
-                const cart = res.data
-                if (cart.length > 0) {
-                    setCart(res.data)
-                    // setCartItems(res.data[0].cart_items)
+        if (isLogin) {
+            async function getCartItems() {
+                try {
+                    const res = await client.get('/cart-items/')
+                    setCartItems(res.data)
+                } catch (error) {
+                    console.log(error.response)
                 }
-                else {
-                    try {
-                        // Attempt to create a new cart with a POST request
-                        const newCartResponse = await client.post('/cart/');
-                        // console.log("New cart created:", newCartResponse.data);
-                        setCart(newCartResponse.data)
-                        // setCartItems(newCartResponse.data[0].cart_items)
-                    } catch (createCartError) {
-                        console.log("Error creating cart:", createCartError.response);
-                        // Handle the validation error here, e.g., show a message to the user
-                    }
-                }
-
-            } catch (error) {
-                console.log(error.response)
             }
-        }
-        getCart()
-    }, []);
 
-    // console.log(cart)
-    // console.log(cartItems)
-    useEffect(() => {
-        async function getCartItems() {
-            try {
-                const res = await client.get('/cart-items/')
-                setCartItems(res.data)
-            } catch(error) {
-                console.log(error.response)
-            }
+            getCartItems()
         }
-        getCartItems()
-    }, [])
+    }, [isLogin])
 
-    console.log(cartItems)
     const userContextValue = {
         setCurrentUser, currentUser, isLogin, setIsLogin,
         isMobile, isTablet, isSmallLaptop, isLargeScreen,
         carousels, products, collections,
-        cart, setCart, setOpenCart, openCart, cartItems, setCartItems
+        cart, setCart, setOpenCart, openCart, cartItems, setCartItems,
+        setCartItemQuantity, cartItemQuantity, shoppingCartItems, setShoppingCartItems
     }
 
     return (

@@ -4,18 +4,106 @@ import {ProductQuantity} from "./ProductQuantity";
 import {ProductAddToCart} from "./ProductAddToCart";
 import {ProductDescription} from "./ProductDescription";
 import styled from "styled-components";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {UserContext} from "../../../global/user-context/UserContext";
+import {client} from "../../../helper-functions/fetchFromAPI";
+
 export function ProductDetails({productDetail}) {
 
-    const {isMobile} = useContext(UserContext)
+    const {
+        isLogin, isMobile, cart,
+        cartItems, setCartItems,
+        setCartItemQuantity,
+        shoppingCartItems, setShoppingCartItems
+    } = useContext(UserContext)
+
+    const [quantity, setQuantity] = useState(1)
+
+    function handleUpdateShoppingCartItems(updatedObject) {
+        // =============== for anonymous user =============================
+        const updatedShoppingCartItems = shoppingCartItems?.map(item => {
+            console.log("updatedObject?.product_id", updatedObject?.product.id)
+            console.log("item", item)
+            if (item?.product.id === updatedObject?.product.id) {
+                return {...item, quantity: updatedObject.quantity}
+            }
+            return item
+        })
+        return updatedShoppingCartItems
+    }
+
+    function handleUpdateCartItems(updatedObject) {
+        // =============== for logged in user =============================
+        const updatedCartItems = shoppingCartItems?.map(item => {
+            // console.log("updatedObject?.product_id", updatedObject?.product_id)
+            // console.log("item", item)
+            if (item?.product.id === updatedObject?.product_id) {
+                return {...item, quantity: updatedObject.quantity}
+            }
+            return item
+        })
+        return updatedCartItems
+    }
+
+    function handleAddToCartSubmit(e) {
+        e.preventDefault()
+        if (!isLogin) {
+            const targetItem = shoppingCartItems?.filter(item => {
+                return item.product.id === productDetail?.id
+            })
+            if (targetItem?.length > 0) {
+                // ==================== item in localstorage ==============================
+                const shoppingCartObject = {
+                    product: productDetail,
+                    quantity: targetItem[0]?.quantity + quantity,
+                }
+                const updated = handleUpdateShoppingCartItems(shoppingCartObject)
+                setShoppingCartItems(updated)
+                localStorage.setItem('shopping_cart_items', JSON.stringify(updated))
+
+            }  else {
+
+                // ==================== item doesn't in localstorage ======================
+                const newShoppingCartObject = {
+                    product: productDetail,
+                    quantity: quantity,
+                }
+
+                const newShoppingCartItems = [...shoppingCartItems, newShoppingCartObject]
+
+                setShoppingCartItems(newShoppingCartItems)
+                localStorage.setItem('shopping_cart_items', JSON.stringify(newShoppingCartItems));
+
+            }
+            setCartItemQuantity(prev => prev + quantity)
+        } else {
+            // console.log("logged in")
+            const newCartItem = {
+                // product_2: productDetail?.id,
+                product_id: productDetail?.id,
+                quantity: quantity,
+                cart: cart[0]?.cart_id,
+            }
+
+            client.post('/cart-item/add/', newCartItem)
+            .then(res => {
+                // res.data returns: cart_item = {id: ..., product_id: ..., quantity: ... }
+                const updated = handleUpdateCartItems(res.data)
+                setCartItems([...cartItems, updated])
+                // !!!!!!!!!!!!!!!!!!!!!!!!need to check if new item exists before updating the cartItems state
+                setCartItemQuantity(prev => prev + quantity)
+            })
+            .catch(error => console.log(error))
+        }
+    }
+
 
     return (
         <div style={{
-                flex: "1",
-                width: isMobile ? "100%" : "50%",
-                paddingLeft: isMobile ? "0" : "30px"
-            }}
+            flex: "1",
+            width: isMobile ? "100%" : "50%",
+            paddingLeft: isMobile ? "0" : "30px"
+        }}
         >
             <div style={{}}>
                 <ProductTitle>{productDetail?.title}</ProductTitle>
@@ -23,21 +111,21 @@ export function ProductDetails({productDetail}) {
 
             <div>${productDetail?.price}</div>
             <div>
-                <form>
+                <form onSubmit={handleAddToCartSubmit}>
 
                     {/*==================== material section =======================*/}
                     {/*=================== get from productDetail.material =========*/}
-                    <ProductMaterial />
+                    <ProductMaterial/>
 
                     {/*==================== quantity buttons ===================*/}
-                    <ProductQuantity />
+                    <ProductQuantity quantity={quantity} setQuantity={setQuantity}/>
 
                     {/*=================== submit button =======================*/}
-                    <ProductAddToCart />
+                    <ProductAddToCart/>
 
                     {/*=================== product description =======================*/}
                     {/*=================== get from productDetail.description ========*/}
-                    <ProductDescription />
+                    <ProductDescription/>
                 </form>
 
             </div>
