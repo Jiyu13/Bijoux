@@ -1,9 +1,13 @@
+import json
+
 from django.contrib.auth import login, logout
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.http import JsonResponse, Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework.authentication import SessionAuthentication
 
 from .serializers import *
@@ -99,8 +103,10 @@ class UserLogout(APIView):
     authentication_classes = ()
 
     def post(self, request):
-        request.session['user'] = None
+        print("104", self.request.user)
+        self.request.user = None
         logout(request)
+        print(self.request.user)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -254,7 +260,9 @@ class AddressDetailView(APIView):
         address.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 # ============================= Product  =============================
+# @method_decorator(ensure_csrf_cookie, name='dispatch')
 class ProductListView(APIView):
     permission_classes = [IsSuperUserOrReadOnly]
 
@@ -284,6 +292,157 @@ class ProductDetailView(APIView):
             response = {"error": "product not found"}
 
         return Response(response)
+
+
+# ============================= Cart =============================
+class CartView(APIView):
+    """ list & create carts, only create cart when user is logged in """
+    permission_classes = (permissions.AllowAny,)
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class = CartSerializer
+
+    def get(self, request):
+        # Get the cart for the current user (not using session)
+        user = self.request.user  # if self.request.user.is_authenticated else None
+        carts = Cart.objects.filter(user=user.user_id)
+        # list() converts a QuerySet to a Python list
+        # .values() retrieves specific fields from the QuerySet
+        cart_items = list(CartItem.objects.filter(cart=carts.first()).values())
+
+        cart_data = []
+        for cart in carts:
+            total_quantity = cart.total_quantity()
+            cart_data.append({
+                'cart_id': cart.id,
+                'user_id': cart.user.user_id,
+                'total_quantity': total_quantity,
+                "cart_items": cart_items
+            })
+        return Response(cart_data)
+
+    def post(self, request):
+        # Set the user or session key on the new cart
+        user = self.request.user if self.request.user.is_authenticated else None
+        session_key = self.request.session.session_key if self.request.session.session_key else None
+
+        serializer = CartSerializer(data={
+            'user': user.user_id,
+            'session_key': session_key
+        })
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AddToCartView(CreateAPIView):
+    """ add items to the cart """
+    serializer_class = CartItemSerializer
+    permission_classes = (permissions.AllowAny,)
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # authentication_classes = (SessionAuthentication,)
+
+    def post(self, request, *args, **kwargs):
+
+        product_id = request.data.get('product_id')
+        quantity = request.data.get('quantity')
+        user = request.user if request.user.is_authenticated else None
+        session_key = request.session.session_key if request.session.session_key else None
+
+        cart = Cart.objects.get(user=user)
+
+        product = Product.objects.get(pk=product_id)
+
+        try:
+            cart_item = CartItem.objects.get(cart=cart, product=product)
+            cart_item.quantity += int(quantity)
+            cart_item.save()
+
+        except CartItem.DoesNotExist:
+            cart_item = CartItem(cart=cart, product=product, quantity=int(quantity))
+            cart_item.save()
+        cart_item_data = {
+            'id': cart_item.id,
+            'product_id': cart_item.product.id,
+            'quantity': cart_item.quantity
+        }
+
+        return JsonResponse(cart_item_data)
+
+        # cart, created = Cart.objects.get_or_create(
+        #     user=request.user if request.user.is_authenticated else None,
+        #     session_key=request.session.session_key or request.session.create()
+        # )
+        # serializer = CartItemSerializer(data=request.data)
+        # if serializer.is_valid():
+        #     serializer.save(cart=cart)
+        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CartItemListView(ListAPIView):
+    queryset = CartItem.objects.all()
+    serializer_class = CartItemSerializer
+
+    def get_queryset(self):
+        # Get the cart based on user & session_key
+        user = self.request.user if self.request.user.is_authenticated else None
+        session_key = self.request.session.session_key
+        cart = None
+
+        if user:
+            # Logic to retrieve cart based on the authenticated user
+            cart = Cart.objects.filter(user=user).first()
+        elif session_key:
+            # Logic to retrieve cart based on the session_key
+            cart = Cart.objects.filter(session_key=session_key).first()
+
+        if cart:
+            # If cart exists, filter CartItem objects by the cart
+            queryset = CartItem.objects.filter(cart=cart)
+        else:
+            # If cart doesn't exist, return an empty queryset
+            queryset = CartItem.objects.none()
+
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+
+class CartItemView(APIView):
+    serializer_class = CartItemSerializer
+
+    def get_object(self, pk):
+        return get_object_or_404(CartItem, pk=pk)
+
+    def get(self, request, pk):
+        # print("455", request)  # 455 <rest_framework.request.Request: GET '/cart-item/1/'>
+        cart_item = self.get_object(pk)
+        serializer = CartItemSerializer(cart_item)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        cart_item = self.get_object(pk)
+        print("358", cart_item)   # 358 1 x Bracelets - ziru.fish@gmail.com - zou zou
+        serializer = CartItemSerializer(cart_item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk):
+        try:
+            cart_item = self.get_object(pk)
+        except CartItem.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = CartItemSerializer(cart_item, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
 # ============================= Carousel =============================
