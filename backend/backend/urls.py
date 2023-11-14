@@ -58,5 +58,10 @@ urlpatterns = [
     # path('profiles/', CustomerProfileListView.as_view(), name="customer-profiles"),
     # path('profiles/<int:pk>/', CustomerProfileListView.as_view(), name="customer-profile-detail"),
 
+    path('cart/', CartView.as_view(), name='cart'),
+    path('cart-items/', CartItemListView.as_view(), name='cart-items'),
+    path('cart-item/<int:pk>/', CartItemView.as_view(), name='cart-item'),
+    path('cart-item/add/', AddToCartView.as_view(), name='add-cart-item'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
