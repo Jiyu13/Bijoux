@@ -54,8 +54,15 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['first_name', 'last_name']
     objects = AppUserManager()
 
+    # is_active = models.BooleanField(default=True)
+
     def __str__(self):
         return f"{self.email} - {self.last_name}"
+
+    # def delete(self, *args, **kwargs):
+    #     # Instead of deleting the record, we just set the is_active flag to False
+    #     self.is_active = False
+    #     self.save()
 
 
 # ==========================  User Profile  ==================================================
@@ -150,6 +157,9 @@ class ContactRequest(models.Model):
 # =============================================================================================
 
 
+# =============================================================================================
+
+
 class Material(models.Model):
     material_name = models.CharField(max_length=255)
 
@@ -204,5 +214,70 @@ class Carousel(models.Model):
         return self.theme
 
 
+# ============================== Cart ========================================================
+class Cart(models.Model):
+    """ each user has their own cart, it can contain multiple CartItems instances """
+    user = models.OneToOneField(AppUser, on_delete=models.SET_NULL, null=True, blank=True)
+    session_key = models.CharField(max_length=40, null=True, blank=True)
+
+    def __str__(self):
+        username = f'{self.user.first_name} {self.user.last_name}' if self.user else "Guest"
+        if self.user:
+            return f'User ID: {self.user.user_id} - {username}'
+        else:
+            return f'Session Key: {self.session_key}'
+
+    def empty_cart(self):
+        self.cart_items.all().delete()
+
+    def total_price(self):
+        # cart_items is defined as reverse relation to CartItem model
+        return sum(item.product.price * item.quantity for item in self.cart_items.all())
+
+    def total_quantity(self):
+        return sum(item.quantity for item in self.cart_items.all())
 
 
+class CartItem(models.Model):
+    """ items within a shopping cart - a cart contains multiple cartitems; a cartitem belongs to only one cart """
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='cart_items')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f'{self.quantity} x {self.product} - {self.cart.user} {self.cart.user.last_name}'
+
+
+# ============================== order ========================================================
+# class Order(models.Model):
+#     """ a user can place multiple orders over time, but each order is linked to only 1 user """
+#     user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='cart_items')
+#     # address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
+#     # on_delete=models.SET_NULL ensures that if the associated address is deleted, the reference in the order will be set to NULL instead of deleting the order itself.
+#     # null=True allows the address field to be empty, which could represent scenarios where an order has not yet been assigned a shipping address
+#     total = models.DecimalField(max_digits=10, decimal_places=2)
+#     status = models.CharField(
+#         choices=[
+#             ('processing', 'Processing'),
+#             ('shipped', 'Shipped'),
+#             ('cancelled', 'Cancelled')
+#         ],
+#         default='processing',
+#         max_length=10
+#     )
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+#
+#     def __str__(self):
+#         return f'Order {self.id} for {self.user.first_name} {self.user.last_name}'
+#
+#
+# class OrderItem(models.Model):
+#     """ an individual item within an order """
+#     order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)  # related_name, create reverse relationship, allow access from 'order' model to its items with 'order_items' property
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     quantity = models.PositiveIntegerField()
+#     price = models.DecimalField(max_digits=10, decimal_places=2)
+#
+#     def __str__(self):
+#         return f"{self.order.id} - {self.quantity} x {self.product.name}"
