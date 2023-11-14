@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {PasswordRestrictions} from "./PasswordRestrictions";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {client} from "../helper-functions/fetchFromAPI";
 import {UserContext} from "../global/user-context/UserContext";
 import {
@@ -16,7 +16,7 @@ import {SubmitInputButton} from "../components/buttons";
 
 export function CreateAccount() {
 
-    const {setCurrentUser, setIsLogin} = useContext(UserContext)
+    const {setCurrentUser, setIsLogin, shoppingCartItems} = useContext(UserContext)
 
     const [firstNameError, setFirstNameError] = useState(null)
     const [lastNameError, setLastNameError] = useState(null)
@@ -52,10 +52,9 @@ export function CreateAccount() {
         client.post('/register/', createAccountData, { withCredentials: true })
             .then(res => {
                 const user = res.data.user
-                // console.log(user)
                 setCurrentUser(user)
 
-                // perform the login
+                // ================================= perform the login ===============
                 const loginUser = {
                     email: formData.email,
                     password: formData.password
@@ -63,10 +62,17 @@ export function CreateAccount() {
                 return client.post('/login/', loginUser, { withCredentials: true })
             })
             .then((res) => {
-                // login successful
+                // ============== login successful & create cart =================
                 setIsLogin(true)
                 const user = res.data
                 setCurrentUser(user)
+
+                return client.post('/cart/')
+            })
+            .then(res => {
+                // ============== create cart successful & create cart items using localStorage shopping items================
+                // console.log(res.data)
+                handleAddLocalStorageToCart()
                 window.location.href = "/account"
             })
             .catch(err => {
@@ -99,6 +105,21 @@ export function CreateAccount() {
                     setAlphabeticError(error["alphabetic"])
                 }
             })
+    }
+
+    // function handleCreateCartForNewUser() {
+    //     return client.post('/cart/')
+    // }
+
+    function handleAddLocalStorageToCart(user) {
+        for (const item of shoppingCartItems) {
+            const newCartItem = {
+                product_id: item?.product.id,
+                quantity: item?.quantity,
+            }
+            client.post('/cart-item/add/', newCartItem)
+            .then(res => {console.log(res.data)})
+        }
     }
 
     const disabledButton = !formData.first_name || !formData.last_name || !formData.email || !formData.password
