@@ -33,7 +33,6 @@ class UserRegister(APIView):
 
     def post(self, request):
         validated_data = custom_validation(request.data)
-        print(validated_data)
         if 'errors' in validated_data:
             return Response(validated_data['errors'], status=status.HTTP_400_BAD_REQUEST)
 
@@ -83,7 +82,6 @@ class UserLogin(APIView):
         serializer = UserLoginSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.check_user(data)
-            # print(user.user_id, user.first_name, user.last_name, user.email)
             login(request, user)
 
             user_data = {
@@ -103,10 +101,8 @@ class UserLogout(APIView):
     authentication_classes = ()
 
     def post(self, request):
-        print("104", self.request.user)
         self.request.user = None
         logout(request)
-        print(self.request.user)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -206,7 +202,6 @@ class CreateContactRequestView(CreateAPIView):
 
         except Exception as e:
             # Handle email sending errors
-            print(e)
             return Response({'error': 'Failed to send email.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -331,6 +326,7 @@ class CartView(APIView):
         })
         if serializer.is_valid():
             serializer.save()
+            # print("created cart successfully")
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -349,18 +345,25 @@ class AddToCartView(CreateAPIView):
         user = request.user if request.user.is_authenticated else None
         session_key = request.session.session_key if request.session.session_key else None
 
-        cart = Cart.objects.get(user=user)
-
+        # cart = Cart.objects.get(user=user)
+        cart = Cart.objects.filter(user=user.user_id).first()
         product = Product.objects.get(pk=product_id)
-
-        try:
-            cart_item = CartItem.objects.get(cart=cart, product=product)
+        cart_item = CartItem.objects.filter(cart=cart, product=product).first()
+        if cart_item:
             cart_item.quantity += int(quantity)
             cart_item.save()
-
-        except CartItem.DoesNotExist:
+        else:
             cart_item = CartItem(cart=cart, product=product, quantity=int(quantity))
             cart_item.save()
+        # try:
+        #     cart_item = CartItem.objects.filter(cart=cart.first(), product=product).first()
+        #     print("360 cart_item", cart_item)
+        #     cart_item.quantity += int(quantity)
+        #     cart_item.save()
+        #
+        # except CartItem.DoesNotExist:
+        #     cart_item = CartItem(cart=cart, product=product, quantity=int(quantity))
+        #     cart_item.save()
         cart_item_data = {
             'id': cart_item.id,
             'product_id': cart_item.product.id,
@@ -419,14 +422,12 @@ class CartItemView(APIView):
         return get_object_or_404(CartItem, pk=pk)
 
     def get(self, request, pk):
-        # print("455", request)  # 455 <rest_framework.request.Request: GET '/cart-item/1/'>
         cart_item = self.get_object(pk)
         serializer = CartItemSerializer(cart_item)
         return Response(serializer.data)
 
     def put(self, request, pk):
         cart_item = self.get_object(pk)
-        print("358", cart_item)   # 358 1 x Bracelets - ziru.fish@gmail.com - zou zou
         serializer = CartItemSerializer(cart_item, data=request.data)
         if serializer.is_valid():
             serializer.save()
