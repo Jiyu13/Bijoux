@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 
 export function AccountPage() {
 
-    const { currentUser, setCurrentUser, setIsLogin, isMobile} = useContext(UserContext)
+    const { currentUser, setCurrentUser, setIsLogin, isMobile, setCartItemQuantity} = useContext(UserContext)
 
 
     const userFullName = currentUser?.first_name + " " + currentUser?.last_name
@@ -19,6 +19,9 @@ export function AccountPage() {
             .then(res => {
                 setIsLogin(false)
                 setCurrentUser(null)
+                localStorage.setItem('shopping_cart_items', JSON.stringify([]))
+                setCartItemQuantity(0)
+                // window.location.href = "/login"
                 navigate('/login')
 
             })
