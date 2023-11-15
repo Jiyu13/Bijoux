@@ -17,37 +17,12 @@ export function NavBar() {
 
     return (
         <>
-            {/*<NavBarContainer className="navbar">*/}
-            {/*    <LogoSection>*/}
-            {/*        <Link to="/" >*/}
-            {/*            <Logo>Company Logo</Logo>*/}
-            {/*        </Link>*/}
-
-            {/*    </LogoSection>*/}
-
-            {/*    {isMobile || isTablet || isSmallLaptop ? "" :*/}
-            {/*            <LinksSection style={{marginRight: marginRight}}>*/}
-            {/*                <NavLinks />*/}
-            {/*            </LinksSection>*/}
-            {/*    }*/}
-
-            {/*    <SearchBarSection style={{marginRight: marginRight}}>*/}
-            {/*        <SearchBar />*/}
-            {/*    </SearchBarSection>*/}
-
-            {/*    {isMobile || isTablet || isSmallLaptop  ? "" :*/}
-            {/*        <AccountSection>*/}
-            {/*            <Accessibility />*/}
-            {/*        </AccountSection>*/}
-            {/*    }*/}
-            {/*</NavBarContainer>*/}
-
             <NavBarContainer>
-                <LogoSection>
-                    <Link to="/" >
-                        <Logo>CompanyLogo</Logo>
-                    </Link>
-                </LogoSection>
+                {/*<LogoSection>*/}
+                {/*    <Link to="/" >*/}
+                {/*        <Logo>CompanyLogo</Logo>*/}
+                {/*    </Link>*/}
+                {/*</LogoSection>*/}
 
                 {isMobile || isTablet ? "" :(
                     <LinksSection>
@@ -69,7 +44,7 @@ const NavBarContainer = styled.div`
   z-index: 999;
   position: sticky;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
+  //box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
   
   display: flex;
   align-items: center;

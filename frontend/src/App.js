@@ -26,6 +26,7 @@ import {AccountPage} from "./account/AccountPage";
 import {AddressesPage} from "./addresses/js/AddressesPage";
 import {ContactForm} from "./contact/ContactForm";
 import {CartPage} from "./cart/js/CartPage";
+import {Header} from "./global/header/Header";
 
 
 function App() {
@@ -186,8 +187,11 @@ function App() {
             <Provider store={store}>
             <CartPage />
             <div className="App">
-                <NavBar />
-                <Main className="main-container">
+                <Header/>
+
+                <Main
+                    // className="main-container"
+                >
                     <Routes>
                         <Route
                             exact
@@ -284,6 +288,6 @@ function App() {
 export default App;
 
 
-const Main = styled.div`
+const Main = styled.main`
   margin: 0 auto;
 `

@@ -28,36 +28,33 @@ export function Accessibility() {
     }
 
     return (
-        <Container>
+        <AccessibilityContainer>
             <ContainerItem>
                 <Img src={search_icon} alt="search icon"/>
             </ContainerItem>
             <ContainerItem style={{display: "flex"}} onClick={handleLogin}>
                 <Img src={user_icon} alt="account icon" />
-                {/*<UserName>*/}
-                    {/*{currentUser ? ""}*/}
-                {/*</UserName>*/}
-                {/*<Img src={expand_more_black_24} alt="dropdown icon"/>*/}
             </ContainerItem>
             <ContainerItem onClick={handleToCartPage} style={{position: "relative"}}>
                 <Img src={shopping_bag} alt="cart icon"/>
                 <CartCountBubble />
             </ContainerItem>
-        </Container>
+        </AccessibilityContainer>
     )
 }
 
-const Container = styled.ul`
-    margin-left: 25px;
+const AccessibilityContainer = styled.ul`
     list-style: none;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-self: end;
     justify-content: space-between;
+    grid-area: icons;
 `
 
 const ContainerItem = styled.li`
-  padding-left: 24px;
+  padding-left: 12px;
   display: flex;
   align-items: center;
   
@@ -67,47 +64,3 @@ const Img = styled.img`
     width: 28px;
     height: 28px;
 `
-
-const UserName = styled.div`
-    white-space: nowrap;
-`
-
-// export function Accessibility() {
-//     return (
-//         <Container>
-//             <ContainerItem>
-//                 <Img src={account_circle_black_24} alt="account icon" />
-//                 <UserName>Hi, ziru!</UserName>
-//                 {/*<Img src={expand_more_black_24} alt="dropdown icon"/>*/}
-//             </ContainerItem>
-//             <ContainerItem>
-//                 <Img src={shopping_cart_black} alt="cart icon"/>
-//             </ContainerItem>
-//         </Container>
-//     )
-// }
-//
-// const Container = styled.div`
-//     width: 100%;
-//     display: flex;
-//     justify-content: flex-end;
-//     align-items: center;
-// `
-//
-// const ContainerItem = styled.div`
-//     margin-right: 12px;
-//     display: flex;
-// `
-//
-// const Img = styled.img`
-//   transition: all .2s ease-in-out;
-//   width: 32px;
-//   &:hover {
-//     transform: scale(1.2);
-//   }
-// `
-//
-// const UserName = styled.div`
-//   margin: auto 10px;
-//   white-space: nowrap;
-// `
