@@ -61,6 +61,7 @@ const NavLinksContainer = styled.ul`
   display: flex;
   padding-left: 0;
   align-items: center;
+  margin: 0;
 `
 
 const LinkItem = styled.li`

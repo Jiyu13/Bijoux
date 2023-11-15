@@ -12,8 +12,6 @@ export function Header() {
 
     const {isMobile, isTablet} = useContext(UserContext)
 
-    console.log(isMobile, isTablet)
-
     return (
         <HeaderContainer className="heading">
             {/* ============================== header menu section ============================== */}
@@ -44,14 +42,16 @@ export function Header() {
 
 const HeaderContainer = styled.header`
   display: grid;
-  box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
-
+  //box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
+  position: relative;
+  z-index: 999999;
+  height: 68px;
 `
 
 const LogoSection = styled.div`
   grid-area: logo;
   margin: auto 0;
-`;
+`
 
 const LinksSection = styled.div`
   margin: auto 0;

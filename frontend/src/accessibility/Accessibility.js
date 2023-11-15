@@ -51,6 +51,7 @@ const AccessibilityContainer = styled.ul`
     justify-self: end;
     justify-content: space-between;
     grid-area: icons;
+    margin: 0;
 `
 
 const ContainerItem = styled.li`

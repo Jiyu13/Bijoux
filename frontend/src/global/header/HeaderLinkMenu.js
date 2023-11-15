@@ -1,10 +1,20 @@
 import menu_icon from "./icons/menu_icon.svg"
+import close_menu_icon from './icons/close_icon.svg'
 import styled from "styled-components";
+import {useContext, useEffect} from "react";
+import {UserContext} from "../user-context/UserContext";
 
 export function HeaderLinkMenu() {
+
+    const {isMenuOpen, setMenuOpen} = useContext(UserContext)
+    function handleOpenMenu() {
+        console.log("isclicked")
+        setMenuOpen(!isMenuOpen)
+    }
+
     return (
-        <MenuContainer>
-            <Img src={menu_icon} alt='menu_icon'/>
+        <MenuContainer onClick={handleOpenMenu}>
+            {isMenuOpen ? <Img src={close_menu_icon} alt="close menu icon" /> : <Img src={menu_icon} alt='menu_icon'/>}
         </MenuContainer>
     )
 }
@@ -17,6 +27,6 @@ const MenuContainer = styled.div`
 `
 
 const Img = styled.img`
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
 `
