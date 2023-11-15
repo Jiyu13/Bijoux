@@ -33,7 +33,7 @@ export function Carousels() {
     }
 
     return (
-        <>
+        <div>
 
             <CarouselContainer1 className="carousel-container">
                 <CarouselInner1 className="carousel-viewport">
@@ -76,7 +76,17 @@ export function Carousels() {
             {/*    <Dot className="dot">2</Dot>*/}
             {/*    <Dot className="dot">3</Dot>*/}
             {/*</CarouselDots>*/}
-        </>
+
+            <div
+                style={{
+                    textAlign: "center",
+                    margin: "4rem 1.8rem"
+                }}
+            >
+                <h2 style={{fontSize: "1.3rem"}}>Discover Your Signature</h2>
+                 Find your signature piece that reflects your style and personality. It's time to shine your way.
+            </div>
+        </div>
 
 
 

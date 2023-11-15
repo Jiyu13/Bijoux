@@ -13,7 +13,6 @@ export function FeaturedItem() {
 
             {isMobile && (
                 <>
-                    <>
                     <MobileCollectionItem style={{ width: "80%", backgroundImage: `url(${ring})`}}>
                         <MobileSloganContainer style={{left: "10%"}} >
                             <MobileSloganText>Hot Summer Collection</MobileSloganText>
@@ -35,7 +34,6 @@ export function FeaturedItem() {
                         </MobileSloganContainer>
                         {/*<MobileImg src={necklace} alt="necklace collection"/>*/}
                     </MobileCollectionItem>
-                </>
                 </>
             )}
 
