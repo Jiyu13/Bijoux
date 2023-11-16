@@ -295,6 +295,6 @@ export default App;
 
 
 const Main = styled.main`
-  margin: 0 auto;
+  margin: 108px auto 0;
   box-sizing: border-box;
 `

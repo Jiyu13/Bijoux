@@ -42,10 +42,14 @@ export function Header() {
 
 const HeaderContainer = styled.header`
   display: grid;
-  //box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
-  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
+  position: fixed;
   z-index: 999999;
   height: 68px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #fff;
 `
 
 const LogoSection = styled.div`
