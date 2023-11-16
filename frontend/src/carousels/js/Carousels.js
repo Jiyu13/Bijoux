@@ -33,7 +33,7 @@ export function Carousels() {
     }
 
     return (
-        <>
+        <div>
 
             <CarouselContainer1 className="carousel-container">
                 <CarouselInner1 className="carousel-viewport">
@@ -47,7 +47,7 @@ export function Carousels() {
                                     <Img src={`${API_URL}${carousel.image}`} alt={carousel.theme}/>
                                      <SloganText>
                                          <Text>{carousel.caption}</Text>
-                                         <Button>Shop Now</Button>
+                                         <ShopButton>Shop Now</ShopButton>
                                     </SloganText>
                                 </CarouselItem>
                         )})}
@@ -76,7 +76,17 @@ export function Carousels() {
             {/*    <Dot className="dot">2</Dot>*/}
             {/*    <Dot className="dot">3</Dot>*/}
             {/*</CarouselDots>*/}
-        </>
+
+            <div
+                style={{
+                    textAlign: "center",
+                    margin: "5rem 1.8rem"
+                }}
+            >
+                <h2 style={{fontSize: "1.3rem"}}>Discover Your Signature</h2>
+                 Find your signature piece that reflects your style and personality. It's time to shine your way.
+            </div>
+        </div>
 
 
 
@@ -91,9 +101,10 @@ const CarouselContainer1 = styled.div`
   place-items: center;
   place-content: center;
   overflow: hidden;
-  //max-height: clamp(450px, 50vh, 600px);
+  max-height: clamp(450px, 50vh, 700px);
   margin: 0 auto;
   width: 100%;
+  //height: 100%;
   //color: white;
 `
 const CarouselInner1 = styled.div`
@@ -110,6 +121,7 @@ const CarouselItems = styled.ul`
   transition: transform 500ms cubic-bezier(0.25, 1, 0.5, 1);
   list-style-type: none;
   padding: 0;
+  margin: 0;
 `
 
 const CarouselItem = styled.li`
@@ -140,38 +152,40 @@ const SloganText = styled.div`
 `
 
 const Text = styled.div`
-    font-size: 2rem; /* You can customize this value */
+    font-size: 1.5rem; /* You can customize this value */
     font-weight: bolder;
-    line-height: 3rem;
+    line-height: 1.5rem;
 `
 
-const  Button = styled.div`
+const  ShopButton = styled.div`
     color: white;
     background-color: rgba(40,44,52, 0.6);
-    width: 30%;
-    padding: 12px;
+    //width: 30%;
+    display: inline-block;
+    padding: 12px 20px;
     margin: 32px auto 0;
     cursor: pointer;
+    font-size: 0.9rem;
     
     &:hover{
       background-color: rgba(40,44,52, 0.9);
     }
-
-}
-    
 `
 
 const LeftArrow1 = styled.button`
+    margin: 0;
     place-self: center left;
 `
 
 const RightArrow1 = styled.button`
+  margin: 0;
   place-self: center right;
 `
 const ArrowImg = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 60%;
+  height: 60%;
   pointer-events: none;
+  margin: auto 0
 `
 
 // const CarouselDots = styled.ol`

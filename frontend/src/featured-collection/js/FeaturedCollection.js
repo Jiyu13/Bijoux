@@ -16,30 +16,30 @@ export function FeaturedCollection() {
     return (
         <FeatureCollectionContainer>
             <CollectionItemList style={{ flexDirection: isMobile ? "column" : " row"}}>
-                {/*<CollectionItem style={{ width: isMobile ? "80%" : "30%" }}>*/}
-                {/*    <SloganContainer style={{left: "10%"}}>*/}
-                {/*        <SloganText>Hot Summer Collection</SloganText>*/}
-                {/*        <SloganButton>Shop Now</SloganButton>*/}
-                {/*    </SloganContainer>*/}
-                {/*    <Img src={ring} alt="ring collection"/>*/}
-                {/*</CollectionItem>*/}
-                {/*<CollectionItem*/}
-                {/*    style={{ width: isMobile ? "80%" : "30%" }}>*/}
-                {/*    <SloganContainer style={{left: "40%"}}>*/}
-                {/*        <SloganText>Hot Summer Collection</SloganText>*/}
-                {/*        <SloganButton>Shop Now</SloganButton>*/}
-                {/*    </SloganContainer>*/}
-                {/*    <Img src={earring} alt="earring collection"/>*/}
+                <CollectionItem style={{ width: isMobile ? "80%" : "30%" }}>
+                    <SloganContainer style={{left: "10%"}}>
+                        <SloganText>Hot Summer Collection</SloganText>
+                        <SloganButton>Shop Now</SloganButton>
+                    </SloganContainer>
+                    <Img src={ring} alt="ring collection"/>
+                </CollectionItem>
+                <CollectionItem
+                    style={{ width: isMobile ? "80%" : "30%" }}>
+                    <SloganContainer style={{left: "40%"}}>
+                        <SloganText>Hot Summer Collection</SloganText>
+                        <SloganButton>Shop Now</SloganButton>
+                    </SloganContainer>
+                    <Img src={earring} alt="earring collection"/>
 
-                {/*</CollectionItem>*/}
-                {/*<CollectionItem style={{ width: isMobile ? "80%" : "30%" }}>*/}
-                {/*    <SloganContainer style={{left: "60%"}}>*/}
-                {/*        <SloganText>Hot Summer Collection</SloganText>*/}
-                {/*        <SloganButton>Shop Now</SloganButton>*/}
-                {/*    </SloganContainer>*/}
+                </CollectionItem>
+                <CollectionItem style={{ width: isMobile ? "80%" : "30%" }}>
+                    <SloganContainer style={{left: "60%"}}>
+                        <SloganText>Hot Summer Collection</SloganText>
+                        <SloganButton>Shop Now</SloganButton>
+                    </SloganContainer>
 
-                {/*    <Img src={necklace} alt="necklace collection"/>*/}
-                {/*</CollectionItem>*/}
+                    <Img src={necklace} alt="necklace collection"/>
+                </CollectionItem>
                 <FeaturedItem />
 
             </CollectionItemList>

@@ -42,7 +42,7 @@ class AddressAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "description", "price", "image")
+    list_display = ("id", "title", "collection", "price", "image")
 
 
 class ProductImageAdmin(admin.ModelAdmin):

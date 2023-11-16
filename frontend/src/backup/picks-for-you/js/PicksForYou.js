@@ -1,4 +1,4 @@
-import {SliderTemplate} from "../../../item-sliders-template/js/SliderTemplate";
+import {SliderTemplate} from "../../../item-sliders-template/js/SliderTemplate1";
 
 export function PicksForYou( {products} ) {
     return (

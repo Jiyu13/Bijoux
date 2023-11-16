@@ -23,7 +23,7 @@ const BubbleContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    left: 2.3rem;
+    left: 1.5rem;
     top: 0.8rem;
     font-size: 0.6rem;
     box-sizing: border-box;

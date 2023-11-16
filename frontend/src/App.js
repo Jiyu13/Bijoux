@@ -26,6 +26,8 @@ import {AccountPage} from "./account/AccountPage";
 import {AddressesPage} from "./addresses/js/AddressesPage";
 import {ContactForm} from "./contact/ContactForm";
 import {CartPage} from "./cart/js/CartPage";
+import {Header} from "./global/header/Header";
+import {MenuSlide} from "./global/header/MenuSlide";
 
 
 function App() {
@@ -45,6 +47,9 @@ function App() {
     const [openCart, setOpenCart] = useState(false)
     const [cartItems, setCartItems] = useState(null)
     const [cartItemQuantity, setCartItemQuantity] = useState(0)
+
+
+    const [isMenuOpen, setMenuOpen] = useState(false)
 
     const isLargeScreen = useMediaQuery({maxWidth: DeviceSize.desktop})
     const isSmallLaptop = useMediaQuery({maxWidth: DeviceSize.small_laptop})
@@ -178,16 +183,21 @@ function App() {
         isMobile, isTablet, isSmallLaptop, isLargeScreen,
         carousels, products, collections,
         cart, setCart, setOpenCart, openCart, cartItems, setCartItems,
-        setCartItemQuantity, cartItemQuantity, shoppingCartItems, setShoppingCartItems
+        setCartItemQuantity, cartItemQuantity, shoppingCartItems, setShoppingCartItems,
+        isMenuOpen, setMenuOpen
     }
 
     return (
         <UserContext.Provider value={userContextValue}>
             <Provider store={store}>
             <CartPage />
+            <MenuSlide />
             <div className="App">
-                <NavBar />
-                <Main className="main-container">
+                <Header/>
+
+                <Main
+                    // className="main-container"
+                >
                     <Routes>
                         <Route
                             exact
@@ -284,6 +294,7 @@ function App() {
 export default App;
 
 
-const Main = styled.div`
+const Main = styled.main`
   margin: 0 auto;
+  box-sizing: border-box;
 `

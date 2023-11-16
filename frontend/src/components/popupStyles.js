@@ -5,13 +5,14 @@ export const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
   position: fixed;
-  top: 0;
+  top: 108px;
   right: 0;
   bottom: 0;
   left: 0;
   background: rgba(83, 92, 104, 0.8);
   z-index: 1000;
   opacity: 1;
+  box-sizing: border-box;
 `
 export const ModalDialog = styled.div`
   position: relative;
@@ -20,7 +21,7 @@ export const ModalDialog = styled.div`
   transform: translate(-50%, -50%); // ????
   background-color: white;
   border-radius: 4px;
-  max-width: 600px;
+  //max-width: 600px;
   z-index: 1001;
   // font-size: 20px;
   line-weight: 1.6;
@@ -30,14 +31,14 @@ export const ModalContent = styled.div`
   margin: auto;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, .2);
+  //border: 1px solid rgba(0, 0, 0, .2);
   border-radius: 6px;
   outline: 0;
 `
 
 export const ModalHeader = styled.div`
   padding: 5px 15px;
-  border-bottom: 1px solid #e5e5e5;
+  //border-bottom: 1px solid #e5e5e5;
 `
 export const HeaderText = styled.h3`
   text-align: center;
