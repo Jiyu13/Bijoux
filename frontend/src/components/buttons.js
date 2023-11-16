@@ -68,3 +68,20 @@ export const LightButton = styled.button`
       box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px, rgb(51, 51, 51) 0px 0px 0px 2px;
     }
 `
+
+export const ShopButtonLink = styled.a`
+    color: white;
+    background-color: rgba(40,44,52, 0.6);
+    width: 136px;
+    display: inline-block;
+    padding: 12px 0;
+    margin: 32px auto 0;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-align: center;
+  
+    
+    &:hover{
+      background-color: rgba(40,44,52, 0.9);
+    }
+`
