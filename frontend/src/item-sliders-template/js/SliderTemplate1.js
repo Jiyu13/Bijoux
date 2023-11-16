@@ -8,7 +8,7 @@ import {useContext, useEffect, useRef, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import {ProductPrice, ProductTitle} from "../../products/related-products/RelatedProducts";
 
-export function SliderTemplate1( props ) {
+export function SliderTemplate( props ) {
 
     const {isMobile, isTablet} = useContext(UserContext)
     const {products, sectionContent} = props
@@ -66,10 +66,10 @@ export function SliderTemplate1( props ) {
     return (
         <ComponentContainer>
             <ComponentWrapper>
-                 {/*<TitleWrapper style={{marginLeft: isMobile || isTablet ? "8px" : ""}}>*/}
-                 {/*   <Title>collection / {sectionContent}</Title>*/}
-                 {/*    <a href="/shop" style={{fontSize: "14px", textDecoration: "none", color: "#0097e6"}}>view all</a>*/}
-                 {/*</TitleWrapper>*/}
+                 <TitleWrapper style={{marginLeft: isMobile || isTablet ? "8px" : ""}}>
+                    <Title>collection / {sectionContent}</Title>
+                     <a href="/shop" style={{fontSize: "14px", textDecoration: "none", color: "#0097e6"}}>view all</a>
+                 </TitleWrapper>
 
 
                 <SliderContainer >
@@ -111,81 +111,56 @@ export function SliderTemplate1( props ) {
                             })
                         }
 
-                        {/*<SliderButton*/}
-                        {/*    style={{*/}
-                        {/*        left: "0.5rem",*/}
-                        {/*        // display: isDisplay,*/}
-                        {/*        backgroundColor: buttonBackground*/}
-                        {/*}}*/}
-                        {/*    className={prevDisable ? "disabled" : "slider-btn"}*/}
-                        {/*    aria-disabled={prevDisable}*/}
-                        {/*    onClick={handleScrollLeft}*/}
+                        <SliderButton
+                            style={{
+                                left: "0.5rem",
+                                // display: isDisplay,
+                                backgroundColor: buttonBackground
+                        }}
+                            className={prevDisable ? "disabled" : "slider-btn"}
+                            aria-disabled={prevDisable}
+                            onClick={handleScrollLeft}
 
-                        {/*>*/}
-                        {/*    <img src={arrow_back_ios_white_24dp} alt="previouse arrow button"/>*/}
-                        {/*</SliderButton>*/}
-                        {/*<SliderButton*/}
-                        {/*    style={{*/}
-                        {/*        right: "0.5rem",*/}
-                        {/*        // display: isDisplay,*/}
-                        {/*        backgroundColor: buttonBackground*/}
-                        {/*}}*/}
-                        {/*    className={nextDisable ? "disabled" : "slider-btn"}*/}
-                        {/*    aria-disabled={nextDisable}*/}
-                        {/*    onClick={handleScrollRight}*/}
-                        {/*>*/}
-                        {/*    <img src={arrow_forward_ios_white_24dp} alt="next arrow button"/>*/}
-                        {/*</SliderButton>*/}
+                        >
+                            <img src={arrow_back_ios_white_24dp} alt="previouse arrow button"/>
+                        </SliderButton>
+                        <SliderButton
+                            style={{
+                                right: "0.5rem",
+                                // display: isDisplay,
+                                backgroundColor: buttonBackground
+                        }}
+                            className={nextDisable ? "disabled" : "slider-btn"}
+                            aria-disabled={nextDisable}
+                            onClick={handleScrollRight}
+                        >
+                            <img src={arrow_forward_ios_white_24dp} alt="next arrow button"/>
+                        </SliderButton>
 
                     </SliderWrapper>
                 </SliderContainer>
-                <SliderButton
-                    style={{
-                        left: "35%",
-                        // display: isDisplay,
-                        backgroundColor: buttonBackground
-                }}
-                    className={prevDisable ? "disabled" : "slider-btn"}
-                    aria-disabled={prevDisable}
-                    onClick={handleScrollLeft}
-
-                >
-                    <img src={arrow_back_ios_white_24dp} alt="previouse arrow button"/>
-                </SliderButton>
-                <SliderButton
-                    style={{
-                        right: "35%",
-                        // display: isDisplay,
-                        backgroundColor: buttonBackground
-                }}
-                    className={nextDisable ? "disabled" : "slider-btn"}
-                    aria-disabled={nextDisable}
-                    onClick={handleScrollRight}
-                >
-                    <img src={arrow_forward_ios_white_24dp} alt="next arrow button"/>
-                </SliderButton>
             </ComponentWrapper>
         </ComponentContainer>
     )
 }
 
-
+//
 const ComponentContainer = styled.div`
     margin: 24px auto;
 `
 const ComponentWrapper = styled.div``
 
-// const TitleWrapper = styled.div`
-//     display: grid;
-//     grid-template-columns: 1fr auto;
-//     align-items: baseline;
-//     gap: 0px;
-// `
-// const Title = styled.div`
-//     font-size: 12px;
-//     white-space: nowrap;
-//     text-decoration: underline;
-// `
+const TitleWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 0px;
+`
+const Title = styled.div`
+    font-size: 12px;
+    white-space: nowrap;
+    text-decoration: underline;
+`
 
 // Slider Styling
 const SliderContainer = styled.div`
@@ -253,13 +228,11 @@ const ItemTitle = styled.div`
 `
 
 const SliderButton = styled.div`
-    //margin-left: 8px;
-    //margin-right: 8px;
-    //top: 42%;
-    
+    margin-left: 8px;
+    margin-right: 8px;
     z-index: 1;
     position: absolute;
-    margin: 8px;
+    top: 42%;
     transform: translateY(-50%);
     display: flex;
     height: 48px;
