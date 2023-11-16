@@ -9,13 +9,9 @@ import {ProductPrice, ProductTitle} from "../../products/related-products/Relate
 
 export function SliderTemplate( props ) {
 
-    const {isMobile, isTablet} = useContext(UserContext)
     const {products, sectionContent} = props
 
-    // let className = sectionContent.split(" ").join("-")
-
-    const [buttonBackground, setBackground] = useState("none")
-    // const [isDisplay, setDisplay] = useState("none")
+    const [pagination, setPagination] = useState(1)
     const [prevDisable, setPrevDisable] = useState(true)
     const [nextDisable, setNextDisable] = useState(false);
     const sliderRef = useRef(null);
@@ -33,12 +29,22 @@ export function SliderTemplate( props ) {
     }
 
     function handleScrollLeft() {
+
+        if (pagination > 1) {
+            setPagination(pre => pre - 1)
+        }
+
         if (sliderRef.current) {
             sliderRef.current.scrollLeft -= sliderRef.current.offsetWidth / 2;
             checkButtons();
         }
     }
     function handleScrollRight() {
+
+        if (pagination < 7) {
+            setPagination(pre => pre + 1)
+        }
+
          if (sliderRef.current) {
              sliderRef.current.scrollLeft += sliderRef.current.offsetWidth / 2;
              checkButtons();
@@ -57,14 +63,15 @@ export function SliderTemplate( props ) {
                     <SliderWrapper ref={sliderRef}>
                         {
                             products?.map((product, index) => {
-                                return (
-                                    <SliderItem key={index}>
-                                        <Link href={`/products/${product.id}/`} >
-                                            <Img
-                                                src={`${API_URL}${product.image}`}
-                                                alt={`${product.title} image`}
-                                                className="item-image"
-                                            />
+                                if (index <= 7) {
+                                    return (
+                                        <SliderItem key={index}>
+                                            <Link href={`/products/${product.id}/`}>
+                                                <Img
+                                                    src={`${API_URL}${product.image}`}
+                                                    alt={`${product.title} image`}
+                                                    className="item-image"
+                                                />
                                                 <ProductTitle
                                                     style={{
                                                         margin: "12px 0"
@@ -75,32 +82,47 @@ export function SliderTemplate( props ) {
                                                         fontSize: "1rem",
                                                     }}
                                                 >${product.price}</ProductPrice>
-                                        </Link>
+                                            </Link>
 
-                                    </SliderItem>
-                                )
+                                        </SliderItem>
+                                    )
+                                }
                             })
                         }
 
                     </SliderWrapper>
                 </SliderContainer>
-                <SliderButton
-                    style={{left: "35%",backgroundColor: buttonBackground}}
-                    className={prevDisable ? "disabled" : "slider-btn"}
-                    aria-disabled={prevDisable}
-                    onClick={handleScrollLeft}
+                <div
+                    style={{
+                        position: "absolute",
+                        display: "flex",
+                        width: "100%",
+                        justifyContent: "center",
+                        fontSize: "0.8rem"
+                    }}
+                >
+                    <SliderButton
+                        className={prevDisable ? "disabled" : "slider-btn"}
+                        aria-disabled={prevDisable}
+                        onClick={handleScrollLeft}
 
-                >
-                    <img src={arrow_back_ios_white_24dp} alt="previouse arrow button"/>
-                </SliderButton>
-                <SliderButton
-                    style={{right: "35%", backgroundColor: buttonBackground}}
-                    className={nextDisable ? "disabled" : "slider-btn"}
-                    aria-disabled={nextDisable}
-                    onClick={handleScrollRight}
-                >
-                    <img src={arrow_forward_ios_white_24dp} alt="next arrow button"/>
-                </SliderButton>
+                    >
+                        <ButtonImg src={arrow_back_ios_white_24dp} alt="previouse arrow button"/>
+                    </SliderButton>
+                    <Pagination>
+                        <span> {pagination} </span>
+                        <span> / </span>
+                        <span> 7 </span>
+                    </Pagination>
+                    <SliderButton
+                        className={nextDisable ? "disabled" : "slider-btn"}
+                        aria-disabled={nextDisable}
+                        onClick={handleScrollRight}
+                    >
+                        <ButtonImg src={arrow_forward_ios_white_24dp} alt="next arrow button"/>
+                    </SliderButton>
+                </div>
+
             </ComponentWrapper>
         </ComponentContainer>
     )
@@ -112,7 +134,7 @@ const ComponentContainer = styled.div`
 `
 const ComponentWrapper = styled.div``
 
-// Slider Styling
+// ============================== Slider Styling ==============================
 const SliderContainer = styled.div`
     position: relative;
 `
@@ -162,17 +184,24 @@ const Img = styled.img`
 
 const SliderButton = styled.div`
     z-index: 1;
-    position: absolute;
-    margin: 8px;
+    margin: 2rem 0;
+    padding: 2rem;
     transform: translateY(-50%);
     display: flex;
-    height: 48px;
     align-items: center;
     justify-content: center;
     transition: opacity 300ms ease 0s;
-    border-radius: 50%;
     border: none;
-    width: 48px;
+    width: 24px;
+    height: 24px;
+
     cursor: pointer;
-    background-color: rgba(0,0,0, 0.6);
+`
+const ButtonImg = styled.img`
+  width: 50%;
+  height: 50%;
+`
+
+const Pagination = styled.div`
+    margin: 1.5rem 0;
 `

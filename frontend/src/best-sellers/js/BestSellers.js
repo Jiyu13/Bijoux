@@ -15,7 +15,6 @@ export function BestSellers() {
         }
     })
 
-    console.log(bestSellerlist)
 
     return (
         <BestSellerContainer className='best-seller'>
