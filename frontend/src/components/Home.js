@@ -5,6 +5,7 @@ import {NewArrivals} from "../new-arrivals/js/NewArrivals";
 import {FeaturedCollection} from "../featured-collection/js/FeaturedCollection";
 import {useState} from "react";
 import {Collections2} from "../categories/js/Collections2";
+import {BestSellers} from "../best-sellers/js/BestSellers";
 
 export function Home({collections, products}) {
 
@@ -23,6 +24,7 @@ export function Home({collections, products}) {
             {/*<ToggleCollectionProducts products={products} isSelected={isSelected}/>*/}
             {/*/!*<NewArrivals products={products}/>*!/*/}
             <Collections2 />
+            <BestSellers />
         </>
     )
 }
