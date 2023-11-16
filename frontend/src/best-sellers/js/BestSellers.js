@@ -13,6 +13,7 @@ export function BestSellers() {
         if (item.collection.collection_name === "Best Sellers") {
             return item
         }
+        return null
     })
 
 
@@ -39,6 +40,7 @@ export function BestSellers() {
                                 </BestSellerItem>
                             )
                         }
+                        return null
                     })}
                 </BestSellerItems>
 
