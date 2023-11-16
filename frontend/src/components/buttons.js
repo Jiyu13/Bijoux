@@ -75,7 +75,7 @@ export const ShopButtonLink = styled.a`
     width: 136px;
     display: inline-block;
     padding: 12px 0;
-    margin: 32px auto 0;
+    margin: 0 auto;
     cursor: pointer;
     font-size: 0.9rem;
     text-align: center;

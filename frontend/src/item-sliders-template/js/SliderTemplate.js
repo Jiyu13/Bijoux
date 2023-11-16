@@ -3,13 +3,12 @@ import arrow_forward_ios_white_24dp from "../arrows/arrow_forward_ios_white_24dp
 
 import styled from "styled-components"
 import {API_URL} from "../../helper-functions/fetchFromAPI";
-import {useContext, useEffect, useRef, useState} from "react";
-import {UserContext} from "../../global/user-context/UserContext";
-import {ProductPrice, ProductTitle} from "../../products/related-products/RelatedProducts";
+import { useEffect, useRef, useState} from "react";
+import {ProductContent} from "../../best-sellers/js/BestSellers";
 
 export function SliderTemplate( props ) {
 
-    const {products, sectionContent} = props
+    const {products} = props
 
     const [pagination, setPagination] = useState(1)
     const [prevDisable, setPrevDisable] = useState(true)
@@ -72,16 +71,17 @@ export function SliderTemplate( props ) {
                                                     alt={`${product.title} image`}
                                                     className="item-image"
                                                 />
-                                                <ProductTitle
-                                                    style={{
-                                                        margin: "12px 0"
-                                                    }}
-                                                >{product.title}</ProductTitle>
-                                                <ProductPrice
-                                                    style={{
-                                                        fontSize: "1rem",
-                                                    }}
-                                                >${product.price}</ProductPrice>
+                                                <ProductContent>
+                                                    <h3
+                                                        style={{
+                                                            fontSize: "14px", margin: "6px 0"
+                                                        }}
+                                                    >
+                                                        {product.title}
+                                                    </h3>
+                                                    <div style={{ fontSize: "1rem", }}>
+                                                    ${product.price}</div>
+                                                </ProductContent>
                                             </Link>
 
                                         </SliderItem>
@@ -94,11 +94,12 @@ export function SliderTemplate( props ) {
                 </SliderContainer>
                 <div
                     style={{
-                        position: "absolute",
                         display: "flex",
                         width: "100%",
+                        height: "60px",
                         justifyContent: "center",
-                        fontSize: "0.8rem"
+                        fontSize: "0.8rem",
+                        margin: "0 auto",
                     }}
                 >
                     <SliderButton
@@ -130,7 +131,7 @@ export function SliderTemplate( props ) {
 
 
 const ComponentContainer = styled.div`
-    margin: 24px auto;
+    margin: 24px auto 0;
 `
 const ComponentWrapper = styled.div``
 
@@ -168,7 +169,6 @@ const Link = styled.a`
     flex-direction: column;
     cursor: pointer;
     text-decoration: none;
-    color: #656565;
 `
 const Img = styled.img`
     height: 100%;
@@ -184,17 +184,13 @@ const Img = styled.img`
 
 const SliderButton = styled.div`
     z-index: 1;
-    margin: 2rem 0;
+    margin: 2rem 0 0;
     padding: 2rem;
     transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: opacity 300ms ease 0s;
     border: none;
     width: 24px;
     height: 24px;
-
     cursor: pointer;
 `
 const ButtonImg = styled.img`
@@ -203,5 +199,5 @@ const ButtonImg = styled.img`
 `
 
 const Pagination = styled.div`
-    margin: 1.5rem 0;
+    margin: 1.5rem 0 0;
 `

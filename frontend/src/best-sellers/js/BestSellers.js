@@ -9,7 +9,7 @@ export function BestSellers() {
 
     const {products, isMobile, isTablet} = useContext(UserContext)
 
-    const bestSellerlist = products?.filter(item => {
+    const bestSellerList = products?.filter(item => {
         if (item.collection.collection_name === "Best Sellers") {
             return item
         }
@@ -23,36 +23,33 @@ export function BestSellers() {
             {!isMobile && !isTablet ?
 
                 <BestSellerItems>
-                    {bestSellerlist?.map((item, index) => {
+                    {bestSellerList?.map((item, index) => {
                         if (index <= 8) {
 
                             return (
                                 <BestSellerItem key={index}>
-                                    <ProductImage>
+                                    <Link>
                                         <Img src={`http://localhost:8000${item.image}`}/>
-                                    </ProductImage>
-                                    <ProductContent>
-                                        <ProductTitle>{item.title}</ProductTitle>
-                                        <ProductPrice>${item.price}</ProductPrice>
-                                    </ProductContent>
+                                        <ProductContent>
+                                            <ProductTitle>{item.title}</ProductTitle>
+                                            <ProductPrice>$ {item.price}</ProductPrice>
+                                        </ProductContent>
+                                    </Link>
+
                                 </BestSellerItem>
                             )
                         }
                     })}
-
-                    <div style={{display: "flex", margin: "0 auto"}}>
-                        <ShopButtonLink href='#' style={{textDecoration: "none"}}>See All</ShopButtonLink>
-                    </div>
                 </BestSellerItems>
 
                 :
 
-                <SliderTemplate
-                    products={bestSellerlist}
-                    sectionContent="New Arrivals"
-                />
+                <SliderTemplate products={bestSellerList}/>
             }
 
+            <div style={{display: "flex", margin: "2rem auto", boxSizing: "border-box"}}>
+                <ShopButtonLink href='#' style={{textDecoration: "none"}}>See All</ShopButtonLink>
+            </div>
         </BestSellerContainer>
     )
 }
@@ -82,17 +79,22 @@ const BestSellerItem = styled.li`
   width: 24%;
 `
 
-const ProductImage = styled.a`
-  position: relative;
+const Link = styled.a`
+  cursor: pointer;
 `
 const Img = styled.img`
-    cursor: pointer;
+    position: relative;
     width: 100%;
-    //max-height: 250px;
 `
 
-const ProductContent = styled.a`
-  cursor: pointer;
+export const ProductContent = styled.div`
+   display: flex;
+   flex-direction: column;
+   align-items: start;
+   padding: 0.5rem 0;
+  box-sizing: border-box;
+  color: #656565;
+
 `
 const ProductTitle = styled.h3`
   font-size: 14px;
