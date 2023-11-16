@@ -66,7 +66,7 @@ const BestSellerContainer = styled.div`
 `
 const BestSellerHeader = styled.h2`
   font-size: 1.3rem;
-  margin: 5rem auto;
+  margin: 5rem auto 1.5rem;
 `
 const BestSellerItems = styled.ul`
   list-style: none;
