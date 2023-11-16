@@ -1,7 +1,6 @@
 import arrow_back_ios_white_24dp from "../arrows/arrow_back_ios_white_24dp.svg";
 import arrow_forward_ios_white_24dp from "../arrows/arrow_forward_ios_white_24dp.svg";
 
-import "../css/slider-template.css"
 import styled from "styled-components"
 import {API_URL} from "../../helper-functions/fetchFromAPI";
 import {useContext, useEffect, useRef, useState} from "react";
