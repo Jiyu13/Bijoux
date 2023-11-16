@@ -4,6 +4,7 @@ import {ToggleCollectionProducts} from "../toggle-collection-carousel/js/ToggleC
 import {NewArrivals} from "../new-arrivals/js/NewArrivals";
 import {FeaturedCollection} from "../featured-collection/js/FeaturedCollection";
 import {useState} from "react";
+import {Collections2} from "../categories/js/Collections2";
 
 export function Home({collections, products}) {
 
@@ -17,10 +18,11 @@ export function Home({collections, products}) {
     return (
         <>
             <Carousels />
-            <FeaturedCollection />
-            <Collections collections={collections} isSelected={isSelected} handleChangeCollection={handleChangeCollection} products={products}/>
-            <ToggleCollectionProducts products={products} isSelected={isSelected}/>
-            {/*<NewArrivals products={products}/>*/}
+            {/*<FeaturedCollection />*/}
+            {/*<Collections collections={collections} isSelected={isSelected} handleChangeCollection={handleChangeCollection} products={products}/>*/}
+            {/*<ToggleCollectionProducts products={products} isSelected={isSelected}/>*/}
+            {/*/!*<NewArrivals products={products}/>*!/*/}
+            <Collections2 />
         </>
     )
 }

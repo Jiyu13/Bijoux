@@ -12,7 +12,7 @@ export function FeaturedItem() {
         <>
 
             {isMobile && (
-                <>
+                <div>
                     <MobileCollectionItem style={{ width: "80%", backgroundImage: `url(${ring})`}}>
                         <MobileSloganContainer style={{left: "10%"}} >
                             <MobileSloganText>Hot Summer Collection</MobileSloganText>
@@ -34,11 +34,11 @@ export function FeaturedItem() {
                         </MobileSloganContainer>
                         {/*<MobileImg src={necklace} alt="necklace collection"/>*/}
                     </MobileCollectionItem>
-                </>
+                </div>
             )}
 
             {!isMobile && (
-                <>
+                <div style={{display: "flex", padding: "0 1.8rem"}}>
                     <CollectionItem style={{ width: "30%"}}>
                         <SloganContainer style={{left: "10%"}}>
                             <SloganText>Hot Summer Collection</SloganText>
@@ -60,7 +60,7 @@ export function FeaturedItem() {
                         </SloganContainer>
                         <Img src={necklace} alt="necklace collection"/>
                     </CollectionItem>
-                </>
+                </div>
             )}
         </>
     )

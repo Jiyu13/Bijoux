@@ -80,7 +80,7 @@ export function Carousels() {
             <div
                 style={{
                     textAlign: "center",
-                    margin: "4rem 1.8rem"
+                    margin: "5rem 1.8rem"
                 }}
             >
                 <h2 style={{fontSize: "1.3rem"}}>Discover Your Signature</h2>
@@ -101,7 +101,7 @@ const CarouselContainer1 = styled.div`
   place-items: center;
   place-content: center;
   overflow: hidden;
-  max-height: clamp(400px, 50vh, 700px);
+  max-height: clamp(450px, 50vh, 700px);
   margin: 0 auto;
   width: 100%;
   //height: 100%;
