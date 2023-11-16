@@ -28,6 +28,9 @@ export function MenuSlide() {
         color: "#525252"
     }
 
+    function handleCloseMenu() {
+        setMenuOpen(false)
+    }
 
     return(
         <>
@@ -50,6 +53,7 @@ export function MenuSlide() {
                                                 ({ isActive}) =>
                                                 isActive ? activeStyles : normalStyles
                                             }
+                                            onClick={handleCloseMenu}
                                         >
                                             Home
                                         </NavLink>
@@ -62,6 +66,7 @@ export function MenuSlide() {
                                                 ({ isActive}) =>
                                                 isActive ? activeStyles : normalStyles
                                             }
+                                            onClick={handleCloseMenu}
                                         >
                                             Shop
                                         </NavLink>
@@ -74,6 +79,7 @@ export function MenuSlide() {
                                                 ({ isActive}) =>
                                                 isActive ? activeStyles : normalStyles
                                             }
+                                            onClick={handleCloseMenu}
                                         >
                                             Contact
                                         </NavLink>
