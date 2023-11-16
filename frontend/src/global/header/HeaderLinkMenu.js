@@ -8,7 +8,6 @@ export function HeaderLinkMenu() {
 
     const {isMenuOpen, setMenuOpen} = useContext(UserContext)
     function handleOpenMenu() {
-        console.log("isclicked")
         setMenuOpen(!isMenuOpen)
     }
 
