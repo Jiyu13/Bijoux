@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import {SubFooter} from "./SubFooter";
-import {SocialMedia} from "../../social-media/js/SocialMedia";
+import {SocialMedia} from "../social-media/js/SocialMedia";
 
 export function Footer() {
     return (

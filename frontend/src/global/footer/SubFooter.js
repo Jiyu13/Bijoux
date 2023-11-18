@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {useContext} from "react";
-import {UserContext} from "../../user-context/UserContext";
+import {UserContext} from "../user-context/UserContext";
 
 export function SubFooter() {
     const {isMobile, isTablet} = useContext(UserContext)
