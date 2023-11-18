@@ -2,13 +2,28 @@
 import {ProductList} from "../products/products-list/ProductList";
 import { FilterTriggerMenu} from "../filter/FilterTriggerMenu";
 import styled from "styled-components";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom"
+
 
 export function ShopAllPage2({products}) {
 
-
+    const [filterQuery, setFilterQuery] = useState("")
     const [selectedFilters, setSelectedFilters] = useState([])
     const [resultProducts, setResultProducts] = useState(null)
+
+    const navigate = useNavigate()
+    useEffect(() => {
+        const params = new URLSearchParams()
+        if (filterQuery) {
+            params.append("filter", filterQuery)
+        } else {
+            params.delete("filter")
+        }
+
+        navigate({pathname: "/shop", search: filterQuery === "" ? "" :`?filter=${filterQuery}`})
+    }, [filterQuery, navigate]);
+
     function handleFilterBy(e) {
         const filter = e.target.id
         if (!selectedFilters.includes(filter) ) {
@@ -19,6 +34,7 @@ export function ShopAllPage2({products}) {
                 return p.collection.collection_name === filter
             })
             setResultProducts(results)
+            setFilterQuery(filter)
 
         } else {
             const updatedFilters = selectedFilters.filter(f => {
@@ -26,6 +42,7 @@ export function ShopAllPage2({products}) {
             })
             setSelectedFilters(updatedFilters)
             setResultProducts(products)
+            setFilterQuery("")
         }
     }
     console.log(selectedFilters)
