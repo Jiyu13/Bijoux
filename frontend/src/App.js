@@ -10,12 +10,12 @@ import {UserContext} from "./global/user-context/UserContext";
 
 import {client} from "./helper-functions/fetchFromAPI"
 
-import {Footer} from './global/footer/js/Footer'
+import {Footer} from './global/footer/Footer'
 import {NavBar} from "./global/navbar/js/NavBar";
 import {MobileAccessibility} from "./accessibility/MobileAccessibility";
 import {fetchFromAPI} from "./helper-functions/fetchFromAPI";
-import {Home} from "./components/Home";
-import {ShopAllPage} from "./components/ShopAllPage";
+import {Home} from "./pages/Home";
+import {ShopAllPage} from "./pages/ShopAllPage";
 
 import {Provider} from "react-redux";
 import store from "./filter/filter-redux/store/store";
@@ -28,6 +28,7 @@ import {ContactForm} from "./contact/ContactForm";
 import {CartPage} from "./cart/js/CartPage";
 import {Header} from "./global/header/Header";
 import {MenuSlide} from "./global/header/MenuSlide";
+import {ShopAllPage2} from "./pages/ShopAllPage2";
 
 
 function App() {
@@ -211,7 +212,7 @@ function App() {
                             exact
                             path='/shop'
                             element={
-                                <ShopAllPage products={products}/>
+                                <ShopAllPage2 products={products}/>
                             }
                         >
                         </Route>
@@ -296,5 +297,7 @@ export default App;
 
 const Main = styled.main`
   margin: 108px auto 0;
+  //position: relative;
+  //top: 108px;
   box-sizing: border-box;
 `
