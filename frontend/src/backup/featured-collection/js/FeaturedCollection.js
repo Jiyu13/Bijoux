@@ -4,8 +4,8 @@ import earring from "../images/earring.jpg"
 import necklace from "../images/necklace.jpg"
 import ring from "../images/ring.jpg"
 import {useContext} from "react";
-import {UserContext} from "../../global/user-context/UserContext";
-import {FeaturedItem} from "../FeaturedItem";
+import {UserContext} from "../../../global/user-context/UserContext";
+import {FeaturedItem} from "./FeaturedItem";
 
 export function FeaturedCollection() {
 

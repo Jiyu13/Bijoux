@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import "../css/category-list.css"
+import "./category-list.css"
 
 
 export function Collections({collections, handleChangeCollection, isSelected} ) {

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import "../css/best-sellers.css"
 
-import {API_URL} from "../../helper-functions/fetchFromAPI";
+import {API_URL} from "../../../helper-functions/fetchFromAPI";
 
 export function BestSellerBk({products}) {
     return (

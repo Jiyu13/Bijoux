@@ -1,5 +1,5 @@
-import arrow_back_ios_white_24dp from "../arrows/arrow_back_ios_white_24dp.svg";
-import arrow_forward_ios_white_24dp from "../arrows/arrow_forward_ios_white_24dp.svg";
+import arrow_back_ios_white_24dp from "../../item-sliders-template/arrows/arrow_back_ios_white_24dp.svg";
+import arrow_forward_ios_white_24dp from "../../item-sliders-template/arrows/arrow_forward_ios_white_24dp.svg";
 
 import styled from "styled-components"
 import {API_URL} from "../../helper-functions/fetchFromAPI";
@@ -7,7 +7,7 @@ import {useContext, useEffect, useRef, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import {ProductPrice, ProductTitle} from "../../products/related-products/RelatedProducts";
 
-export function SliderTemplate( props ) {
+export function SliderTemplate1( props ) {
 
     const {isMobile, isTablet} = useContext(UserContext)
     const {products, sectionContent} = props

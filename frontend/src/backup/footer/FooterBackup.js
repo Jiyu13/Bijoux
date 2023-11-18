@@ -1,12 +1,12 @@
 import styled from "styled-components"
-import "../../css/footer.css"
+import "./css/footer.css"
 
 import {useContext} from "react";
-import {UserContext} from "../../../user-context/UserContext";
+import {UserContext} from "../../global/user-context/UserContext";
 
-import instagram_icon from "../../../social-media/icons/instagram.svg";
-import ticktok_icon from "../../../social-media/icons/tiktok.svg";
-import facebook_icon from "../../../social-media/icons/square-facebook.svg";
+import instagram_icon from "../../global/social-media/icons/instagram.svg";
+import ticktok_icon from "../../global/social-media/icons/tiktok.svg";
+import facebook_icon from "../../global/social-media/icons/square-facebook.svg";
 
 
 export function FooterBackup() {

@@ -1,9 +1,9 @@
-import earring from "./images/earring.jpg"
-import necklace from "./images/necklace.jpg"
-import ring from "./images/ring.jpg";
+import earring from "../images/earring.jpg"
+import necklace from "../images/necklace.jpg"
+import ring from "../images/ring.jpg";
 import styled from "styled-components";
 import {useContext} from "react";
-import {UserContext} from "../global/user-context/UserContext";
+import {UserContext} from "../../../global/user-context/UserContext";
 
 export function FeaturedItem() {
 
