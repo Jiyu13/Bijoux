@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {UserContext} from "../../../user-context/UserContext";
+import {UserContext} from "../../global/user-context/UserContext";
 
 export function MobileFooterBackup() {
 
