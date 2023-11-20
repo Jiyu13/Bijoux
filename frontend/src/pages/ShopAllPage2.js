@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom"
 export function ShopAllPage2({products}) {
 
     const [filterQuery, setFilterQuery] = useState("")
-    const [selectedFilters, setSelectedFilters] = useState([])
+    const [selectedFilters, setSelectedFilters] = useState(null)
     const [resultProducts, setResultProducts] = useState(null)
 
     const navigate = useNavigate()
@@ -26,32 +26,39 @@ export function ShopAllPage2({products}) {
 
     function handleFilterBy(e) {
         const filter = e.target.id
-        if (!selectedFilters.includes(filter) ) {
-            setSelectedFilters(prev => [...prev, e.target.id])
-
-            // =================== update product list ===========================
-            const results = [...products].filter(p => {
-                return p.collection.collection_name === filter
-            })
-            setResultProducts(results)
-            setFilterQuery(filter)
-
+        console.log(selectedFilters === filter)
+        if (selectedFilters === filter) {
+            setSelectedFilters(null)
         } else {
-            const updatedFilters = selectedFilters.filter(f => {
-                return f !== filter
-            })
-            setSelectedFilters(updatedFilters)
-            setResultProducts(products)
-            setFilterQuery("")
+            console.log("set filter")
+            setSelectedFilters(filter)
         }
+        // if (!selectedFilters.includes(filter) ) {
+        //     setSelectedFilters(prev => [...prev, e.target.id])
+        //     // =================== update product list ===========================
+        //     const results = [...products].filter(p => {
+        //         return p.collection.collection_name === filter
+        //     })
+        //     setResultProducts(results)
+        //     setFilterQuery(filter)
+        //
+        // } else {
+        //     const updatedFilters = selectedFilters.filter(f => {
+        //         return f !== filter
+        //     })
+        //     setSelectedFilters(updatedFilters)
+        //     setResultProducts(products)
+        //     setFilterQuery("")
+        // }
     }
-    console.log(selectedFilters)
+    // console.log(selectedFilters)
 
     return (
         <ProductPageContainer>
             <FilterTriggerMenu
                 products={products}
                 handleFilterBy={handleFilterBy}
+                selectedFilters={selectedFilters}
             />
 
             <ProductList products={resultProducts ? resultProducts : products}/>
