@@ -50,8 +50,8 @@ const CategoryItem = styled.li`
   cursor: pointer;
   
   &:hover {
-        background-color: #f1f2f6;
-        color: black;
+        background-color: rgba(40,44,52, 0.8);
+        color: whitesmoke;
         cursor: pointer;
   } 
 `
