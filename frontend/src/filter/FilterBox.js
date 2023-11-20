@@ -1,15 +1,73 @@
 import styled from "styled-components";
 
-export function FilterBox({handleFilterBy}) {
+export function FilterBox({handleFilterBy, selectedFilters}) {
+
+    const selectedFilterBgColor = "rgba(40,44,52, 0.8)";
+    const selectedFilterFontColor = "whitesmoke"
+
     return (
         <FilterBoxContainer>
             <CategoryList>
-                <CategoryItem id="New Arrivals" onClick={handleFilterBy}>New Arrivals</CategoryItem>
-                <CategoryItem id="Best Sellers" onClick={handleFilterBy}>Best Sellers</CategoryItem>
-                <CategoryItem id="Earrings" onClick={handleFilterBy}>Earrings</CategoryItem>
-                <CategoryItem id="Rings" onClick={handleFilterBy}>Rings</CategoryItem>
-                <CategoryItem id="Necklaces" onClick={handleFilterBy}>Necklaces</CategoryItem>
-                <CategoryItem id="Bracelets" onClick={handleFilterBy}>Bracelets</CategoryItem>
+                <CategoryItem
+                    id="New Arrivals"
+                    onClick={handleFilterBy}
+                    style={{
+                        backgroundColor: selectedFilters === 'New Arrivals' ? selectedFilterBgColor : "antiquewhite",
+                        color: selectedFilters === 'New Arrivals' ? selectedFilterFontColor: "#525252"
+                    }}
+                >
+                    New Arrivals
+                </CategoryItem>
+                <CategoryItem
+                    id="Best Sellers"
+                    onClick={handleFilterBy}
+                    style={{
+                        backgroundColor: selectedFilters === 'Best Sellers' ? selectedFilterBgColor : "antiquewhite",
+                        color: selectedFilters === 'Best Sellers' ? selectedFilterFontColor: "#525252"
+                    }}
+                >
+                    Best Sellers
+                </CategoryItem>
+                <CategoryItem
+                    id="Earrings"
+                    onClick={handleFilterBy}
+                    style={{
+                        backgroundColor: selectedFilters === 'Earrings' ? selectedFilterBgColor : "antiquewhite",
+                        color: selectedFilters === 'Earrings' ? selectedFilterFontColor: "#525252"
+                    }}
+                >
+                    Earrings
+                </CategoryItem>
+                <CategoryItem
+                    id="Rings"
+                    onClick={handleFilterBy}
+                    style={{backgroundColor: selectedFilters === 'Rings' ? selectedFilterBgColor : "antiquewhite",
+                        color: selectedFilters === 'Rings' ? selectedFilterFontColor: "#525252"
+                    }}
+                >
+                    Rings
+                </CategoryItem>
+                <CategoryItem
+                    id="Necklaces"
+                    onClick={handleFilterBy}
+                    style={{
+                        backgroundColor: selectedFilters === 'Necklaces' ? selectedFilterBgColor : "antiquewhite",
+                        color: selectedFilters === 'Necklaces' ? selectedFilterFontColor: "#525252"
+                    }}
+
+                >
+                    Necklaces
+                </CategoryItem>
+                <CategoryItem
+                    id="Bracelets"
+                    onClick={handleFilterBy}
+                    style={{
+                        backgroundColor: selectedFilters === 'Bracelets' ? selectedFilterBgColor : "antiquewhite",
+                        color: selectedFilters === 'Bracelets' ? selectedFilterFontColor: "#525252"
+                    }}
+                >
+                    Bracelets
+                </CategoryItem>
             </CategoryList>
 
         </FilterBoxContainer>
@@ -39,8 +97,13 @@ const CategoryList = styled.ul`
 
 const CategoryItem = styled.li`
   padding: 0.5rem 1.5rem;
-  background-color: antiquewhite;
+  //background-color: antiquewhite;
   font-size: 14px;
   text-align: center;
   cursor: pointer;
+  
+  &:hover {
+    background-color: rgba(40,44,52, 0.8);
+    color: whitesmoke;
+  } 
 `
