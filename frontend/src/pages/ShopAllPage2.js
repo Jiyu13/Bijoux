@@ -26,12 +26,19 @@ export function ShopAllPage2({products}) {
 
     function handleFilterBy(e) {
         const filter = e.target.id
-        console.log(selectedFilters === filter)
         if (selectedFilters === filter) {
             setSelectedFilters(null)
+            setFilterQuery("")
+            setResultProducts(products)
         } else {
-            console.log("set filter")
             setSelectedFilters(filter)
+            setFilterQuery(filter)
+
+            // =================== update product list ===========================
+            const results = [...products].filter(p => {
+                return p.collection.collection_name === filter
+            })
+            setResultProducts(results)
         }
         // if (!selectedFilters.includes(filter) ) {
         //     setSelectedFilters(prev => [...prev, e.target.id])
@@ -51,7 +58,7 @@ export function ShopAllPage2({products}) {
         //     setFilterQuery("")
         // }
     }
-    // console.log(selectedFilters)
+    console.log(selectedFilters)
 
     return (
         <ProductPageContainer>
