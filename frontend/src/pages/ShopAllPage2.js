@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom"
 export function ShopAllPage2({products}) {
 
     const [filterQuery, setFilterQuery] = useState("")
+    const [selectedSort, setSelectedSort] = useState(null)
     const [selectedFilters, setSelectedFilters] = useState(null)
     const [resultProducts, setResultProducts] = useState(null)
 
@@ -24,6 +25,41 @@ export function ShopAllPage2({products}) {
         navigate({pathname: "/shop", search: filterQuery === "" ? "" :`?filter=${filterQuery}`})
     }, [filterQuery, navigate]);
 
+    function handleSort(e) {
+        const sort = e.target.id
+        // console.log(sort)
+        setSelectedSort(sort)
+
+        let sortedProducts
+        if (sort === "Lowest Price") {
+            if (resultProducts) {
+                sortedProducts = resultProducts?.sort((a, b) => {
+                    // console.log(a)
+                    return a.price - b.price
+                })
+            } else {
+                sortedProducts = [...products].sort((a, b) => {
+                    // console.log(a)
+                    return a.price - b.price
+                })
+            }
+        } else {
+            if (resultProducts) {
+                sortedProducts = resultProducts?.sort((a, b) => {
+                    // console.log(a)
+                    return b.price - a.price
+                })
+            } else {
+                sortedProducts = [...products].sort((a, b) => {
+                    // console.log(a)
+                    return b.price - a.price
+                })
+            }
+        }
+        setResultProducts(sortedProducts)
+        // console.log(sortedProducts)
+        // console.log(products)
+    }
     function handleFilterBy(e) {
         const filter = e.target.id
         if (selectedFilters === filter) {
@@ -58,12 +94,16 @@ export function ShopAllPage2({products}) {
         //     setFilterQuery("")
         // }
     }
-    console.log(selectedFilters)
+    // console.log("resultProducts", resultProducts)
+    // console.log("sort", selectedSort)
+
+
 
     return (
         <ProductPageContainer>
             <FilterTriggerMenu
                 products={products}
+                handleSort={handleSort}
                 handleFilterBy={handleFilterBy}
                 selectedFilters={selectedFilters}
             />
