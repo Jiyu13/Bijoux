@@ -4,7 +4,7 @@ import {useState} from "react";
 import {FilterBox} from "./FilterBox";
 import {SortBox} from "./SortBox";
 
-export function FilterTriggerMenu({products, handleFilterBy, selectedFilters}) {
+export function FilterTriggerMenu({products, handleSort, handleFilterBy, selectedFilters}) {
 
 
     const [isOpenFilter, setOpenFilter] = useState(false)
@@ -50,7 +50,7 @@ export function FilterTriggerMenu({products, handleFilterBy, selectedFilters}) {
                         {/* should be the length of results*/}
                         {products?.length} results
                     </TotalResultNumber>
-                    {isOpenSort && (<SortBox/>)}
+                    {isOpenSort && (<SortBox handleSort={handleSort}/>)}
                 </Wrapper>
 
             </FilterTriggerContainer>
