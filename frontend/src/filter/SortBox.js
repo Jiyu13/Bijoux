@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export function SortBox() {
+export function SortBox({handleSort}) {
     return (
         <FilterBoxContainer>
             {/*<CategoryList>*/}
-                <CategoryItem>New Arrivals</CategoryItem>
-                <CategoryItem>Best Sellers</CategoryItem>
-                <CategoryItem>Lowest Price</CategoryItem>
-                <CategoryItem>Highest Price</CategoryItem>
+            {/*    <CategoryItem id="New Arrivals" onClick={handleSort}>New Arrivals</CategoryItem>*/}
+            {/*    <CategoryItem id="Best Sellers" onClick={handleSort}>Best Sellers</CategoryItem>*/}
+                <CategoryItem id="Lowest Price" onClick={handleSort}>Lowest Price</CategoryItem>
+                <CategoryItem id="Highest Price" onClick={handleSort}>Highest Price</CategoryItem>
             {/*</CategoryList>*/}
 
         </FilterBoxContainer>
@@ -30,17 +30,17 @@ const FilterBoxContainer = styled.ul`
   z-index: 1000;
 `
 
-const CategoryList = styled.ul`
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  column-gap: 6px;
-  row-gap: 6px;
-  list-style: none;
-  flex-wrap: wrap;
-  width: fit-content;
-`
+// const CategoryList = styled.ul`
+//   padding: 0;
+//   margin: 0;
+//   display: flex;
+//   flex-direction: column;
+//   column-gap: 6px;
+//   row-gap: 6px;
+//   list-style: none;
+//   flex-wrap: wrap;
+//   width: fit-content;
+// `
 
 const CategoryItem = styled.li`
   padding: 0.5rem;
