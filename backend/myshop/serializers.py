@@ -36,7 +36,7 @@ class CollectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Collection
-        fields = ["collection_name", "cover_image", "products"]
+        fields = ["id", "collection_name", "cover_image", "products"]
 
 
 # ============================= Product List =============================
