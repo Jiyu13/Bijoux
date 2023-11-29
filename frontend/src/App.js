@@ -14,8 +14,8 @@ import {Footer} from './global/footer/Footer'
 import {NavBar} from "./global/navbar/js/NavBar";
 import {MobileAccessibility} from "./accessibility/MobileAccessibility";
 import {fetchFromAPI} from "./helper-functions/fetchFromAPI";
-import {Home} from "./pages/Home";
-import {ShopAllPage} from "./pages/ShopAllPage";
+import {Home} from "./pages/js/Home";
+import {ShopAllPage} from "./pages/js/ShopAllPage";
 
 import {Provider} from "react-redux";
 import store from "./filter/filter-redux/store/store";
@@ -28,7 +28,8 @@ import {ContactForm} from "./contact/ContactForm";
 import {CartPage} from "./cart/js/CartPage";
 import {Header} from "./global/header/Header";
 import {MenuSlide} from "./global/header/MenuSlide";
-import {ShopAllPage2} from "./pages/ShopAllPage2";
+import {ShopAllPage2} from "./pages/js/ShopAllPage2";
+import {Carousels} from "./carousels/js/Carousels";
 
 
 function App() {
@@ -196,9 +197,7 @@ function App() {
             <div className="App">
                 <Header/>
 
-                <Main
-                    // className="main-container"
-                >
+                <Main>
                     <Routes>
                         <Route
                             exact

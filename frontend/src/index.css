@@ -17,33 +17,6 @@
 
 }
 
-/*mobile devices*/
-@media only screen and (min-width: 640px) and (max-width: 767px) {
-    .main-container {
-       width: 95%;
-    }
-}
-
-/* ipads & tablets / smaller */
-@media only screen and (min-width: 768px) {
-    .main-container {
-        width: 90%;
-    }
-}
-
- /*laptops*/
-@media only screen and (min-width: 990px) {
-    .main-container {
-        width: 80%;
-    }
-}
-
-/* desktops */
-@media only screen and (min-width: 1280px) {
-    .main-container {
-       width: 70%;
-    }
-}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
