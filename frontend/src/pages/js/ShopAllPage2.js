@@ -1,9 +1,11 @@
 
-import {ProductList} from "../products/products-list/ProductList";
-import { FilterTriggerMenu} from "../filter/FilterTriggerMenu";
-import styled from "styled-components";
+import {ProductList} from "../../products/products-list/ProductList";
+import { FilterTriggerMenu} from "../../filter/FilterTriggerMenu";
 import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom"
+
+import styled from "styled-components";
+import "../css/shop-all-page.css"
 
 
 export function ShopAllPage2({products}) {
@@ -100,7 +102,7 @@ export function ShopAllPage2({products}) {
 
 
     return (
-        <ProductPageContainer>
+        <ProductPageContainer className='shop-all-page'>
             <FilterTriggerMenu
                 products={products}
                 handleSort={handleSort}
