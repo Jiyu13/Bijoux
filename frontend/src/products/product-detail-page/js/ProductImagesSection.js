@@ -14,7 +14,7 @@ export function ProductImagesSection({coverImage,otherImages}) {
     const showcaseImage  = currentImage === null ? coverImage : currentImage
 
     return (
-        <ProductImagesSectionBox style={{ width: isMobile ? "100%" : "50%" }} >
+        <ProductImagesSectionBox style={{ width: isMobile ? "100%" : "65%" }} >
 
             {/*================= main image ==================================*/}
             <div>
