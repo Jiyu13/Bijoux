@@ -100,8 +100,8 @@ export function ProductDetails({productDetail}) {
 
     return (
         <div style={{
-            flex: "1",
-            width: isMobile ? "100%" : "50%",
+            // flex: "1",
+            width: isMobile ? "100%" : "35%",
             paddingLeft: isMobile ? "0" : "30px"
         }}
         >
