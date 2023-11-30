@@ -34,16 +34,16 @@ const Title = styled.div`
     font-size: 0.9rem;
 `
 const MaterialOptions = styled.div`
-    display: flex; 
+    display: flex;
+    gap: 6px;
     margin: 6px 0 24px;
 `
 
 const OptionWrapper = styled.div`
     //background-color: rgba(40,44,52, 0.8);
     padding: 8px 12px;
-    margin-right: 12px;
-    //color: white;
     border: solid 1px;
+    //width: fit-content;
     &:hover {
       background-color: rgba(40,44,52, 1);
       color: whitesmoke;
