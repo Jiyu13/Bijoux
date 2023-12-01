@@ -1,8 +1,10 @@
 import json
+import random
 
 from django.contrib.auth import login, logout
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
+from django.db.models import Q
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -257,6 +259,28 @@ class AddressDetailView(APIView):
 
 
 # ============================= Product  =============================
+class ProductByCollectionListView(APIView):
+    permission_classes = [IsSuperUserOrReadOnly]
+
+    def get(self, request, pk, *args, **kwargs):
+        collection_name = self.kwargs["collection_name"]
+        # product1 = Product.objects.filter(collection__collection_name=collection_name)
+        products = Product.objects.filter(Q(collection__collection_name=collection_name) & ~Q(pk=pk))
+        serialized_products = [
+            {
+                'id': product.id,
+                'title': product.title,
+                'price': product.price,
+                'image': product.image.url,
+                'collection_name': product.collection.collection_name
+            } for product in products
+        ]
+        if len(products) > 4:
+            return Response(random.sample(serialized_products, 4))
+
+        return Response(serialized_products)
+
+
 # @method_decorator(ensure_csrf_cookie, name='dispatch')
 class ProductListView(APIView):
     permission_classes = [IsSuperUserOrReadOnly]
