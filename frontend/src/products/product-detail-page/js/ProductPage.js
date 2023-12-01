@@ -32,7 +32,7 @@ export function ProductPage() {
     return (
         <DetailPageContainer className='product-detail-page'>
             {/* =================== Product details =================== */}
-            <section>
+            <section style={{marginTop: "32px"}}>
                 <section style={{padding: "8px 0"}}>
 
                     <div style={{display: "flex", flexDirection: isMobile ? "column" : "row"}}>
@@ -61,6 +61,8 @@ export function ProductPage() {
 
 const DetailPageContainer = styled.main`
   box-sizing: border-box;
-  margin: 32px auto 0;
+  margin: 0 auto;
+  max-width: 1440px;
   //padding: 0 15px;
+  transition: margin-top 2s ease-in-out .5s;
 `
