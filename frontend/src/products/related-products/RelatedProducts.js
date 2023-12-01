@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import {useContext, useEffect, useState} from "react";
-import {UserContext} from "../../global/user-context/UserContext";
-import {fetchFromAPI} from "../../helper-functions/fetchFromAPI";
+import './relative-products.css'
 
 export function RelatedProducts({relatedProducts}) {
 
@@ -18,10 +16,10 @@ export function RelatedProducts({relatedProducts}) {
                 Related Products
             </RelatedProductsHeader>
 
-            <RelatedProductsList>
+            <RelatedProductsList className='related-products-container'>
                 {relatedProducts?.map((rp, index) => {
                     return (
-                         <RelatedProduct key={index}>
+                         <RelatedProduct key={index} className='related-product-item-li'>
                             <Link href={`/products/${rp.id}`}>
                                 <ImageWrapper>
                                     <Img src={rp?.image}/>
@@ -91,14 +89,12 @@ const RelatedProductsHeader = styled.div`
   //color: #c1c1c1;
 `
 const RelatedProductsList = styled.ul`
-  display: flex;
   list-style: none;
   padding-left: 0;
   gap: 12px;
 `
-const RelatedProduct = styled.li`
-    width: 25%;
-`
+const RelatedProduct = styled.li``
+
 const Link = styled.a`
   text-decoration: none;
   color: #282c34;
