@@ -19,7 +19,16 @@ export function ProductPage() {
 
     useEffect(() => {
         fetchFromAPI(`/products/${id.id}/`, setProductDetail)
-    }, [id])
+    }, [])
+
+    const [relatedProducts, setRelatedProducts] = useState(null)
+
+    useEffect(() => {
+        if (productDetail && productDetail?.collection.collection_name) {
+            fetchFromAPI(`/product/${id.id}/${productDetail?.collection.collection_name}/`, setRelatedProducts)
+        }
+    }, [productDetail]);
+    console.log(relatedProducts)
 
     // console.log(productDetail)
     return (
@@ -46,7 +55,7 @@ export function ProductPage() {
             </section>
 
             {/* =================== Related Products ===================*/}
-            <RelatedProducts productDetail={productDetail}/>
+            <RelatedProducts relatedProducts={relatedProducts}/>
 
         </DetailPageContainer>
     )

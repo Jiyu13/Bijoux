@@ -1,14 +1,16 @@
 import styled from "styled-components";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
+import {fetchFromAPI} from "../../helper-functions/fetchFromAPI";
 
-export function RelatedProducts({productDetail}) {
+export function RelatedProducts({relatedProducts}) {
 
-    const {products} = useContext(UserContext)
-    const relatedProducts = products?.filter(product =>
-        product?.collection["collection_name"] === productDetail?.collection["collection_name"]
-        // && product?.id !== productDetail?.id
-    )
+
+
+    // const {products} = useContext(UserContext)
+    // const relatedProducts = products?.filter(product =>
+    //     product?.collection.id === productDetail?.collection.id
+    // )
 
     return (
         <RelatedProductsContainer>
