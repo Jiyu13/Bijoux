@@ -28,9 +28,7 @@ export function ProductPage() {
             fetchFromAPI(`/product/${id.id}/${productDetail?.collection.collection_name}/`, setRelatedProducts)
         }
     }, [productDetail]);
-    console.log(relatedProducts)
 
-    // console.log(productDetail)
     return (
         <DetailPageContainer className='product-detail-page'>
             {/* =================== Product details =================== */}
