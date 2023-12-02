@@ -44,7 +44,7 @@ const HeaderContainer = styled.header`
   display: grid;
   box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
   position: fixed;
-  z-index: 9999;
+  z-index: 1000;
   height: 108px;
   width: 100%;
   top: 0;
