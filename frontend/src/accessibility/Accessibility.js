@@ -15,7 +15,7 @@ import {CartCountBubble} from "../cart/js/CartCountBubble";
 
 export function Accessibility() {
 
-    const { isLogin, openCart, setOpenCart } = useContext(UserContext)
+    const { isLogin, openCart, setOpenCart, setMenuOpen} = useContext(UserContext)
 
     let navigate = useNavigate()
     function handleLogin() {
@@ -25,6 +25,7 @@ export function Accessibility() {
 
     function handleToCartPage() {
         setOpenCart(!openCart)
+        setMenuOpen(false)
     }
 
     return (
