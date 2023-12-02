@@ -5,8 +5,9 @@ export const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
   position: fixed;
-  right: 0;
-  bottom: 0;
+  top: 0;
+  //right: 0;
+  //bottom: 0;
   background: rgba(83, 92, 104, 0.5);
   opacity: 1;
   box-sizing: border-box;
@@ -32,19 +33,25 @@ export const ModalContent = styled.div`
 `
 
 export const ModalHeader = styled.div`
-  padding: 5px 15px;
+  padding: 20px 15px 5px;
   //border-bottom: 1px solid #e5e5e5;
 `
 export const HeaderText = styled.h3`
   text-align: center;
   font-size: 1.5rem;
   line-height: 1.5em;
-  margin: 10px 0;
+  margin: 0;
   color: #6d6e70;
 `
 export const ModalBody = styled.div`
-    position: relative;
-    padding: 15px;
+    //height: calc(100% - 160px);
+    //overflow-y: scroll;
+    //position: relative;
+    //display: flex;
+    //flex-direction: column;
+    //flex: 1 1 auto;
+    padding: 0 15px 15px;
+    //overflow-y: visible; not working
 `
 export const BodyText = styled.p`
   margin: 0 0 10px;
@@ -55,9 +62,15 @@ export const BodyText = styled.p`
 `
 
 export const ModalFooter = styled.div`
-  border-radius: 0 0 4px 4px;
-  padding: 14px 15px 15px;
+  box-sizing: border-box;
+  //border-radius: 0 0 4px 4px;
+  padding: 20px 16px;
   margin-bottom: 0;
-  text-align: right;
-  border-top: 1px solid #ddd;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  //height: 180px;
+  background-color: white;
+  //text-align: right;
+  //border-top: 1px solid #ddd;
 `
