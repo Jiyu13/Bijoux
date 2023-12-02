@@ -1,21 +1,18 @@
-import {useContext} from "react";
-import {UserContext} from "../../global/user-context/UserContext";
 import styled from "styled-components";
 
 import delete_icon from "../icons/delete.svg"
 import {CartItemQuantity} from "./CartItemQuantity";
 
-export function CartItemList() {
-    const {cart, shoppingCartItems} = useContext(UserContext)
+export function CartItemList({displayCartItems}) {
+    // const {cart, shoppingCartItems} = useContext(UserContext)
 
     // console.log(cart?.length === 0)
     // console.log(shoppingCartItems)
 
-    const displayCartItems = cart ? cart : shoppingCartItems
 
     return (
         <CartItemListContainer>
-            <ul style={{listStyle: "none", paddingLeft: "0", margin: "0px"}}>
+            {/*<ul style={{listStyle: "none", paddingLeft: "0", margin: "0px"}}>*/}
                 {displayCartItems?.map((item, index) => {
                     return (
                         <CartItemWrapper key={index}>
@@ -39,18 +36,26 @@ export function CartItemList() {
                         </CartItemWrapper>
                     )})
                 }
-            </ul>
+            {/*</ul>*/}
         </CartItemListContainer>
     )
 }
 
-const CartItemListContainer = styled.div``
+const CartItemListContainer = styled.ul`
+  list-style: none;
+  padding-left: 0;
+  margin: 0px;
+  
+  box-sizing: border-box;
+  //height: calc(100% - 74px);
+  //overflow-y: scroll;
+`
 const CartItemWrapper = styled.li`
   display: flex;
   gap: 12px;
   //margin: 12px 0;
-  padding: 16px 0;
-  border-bottom: 1px solid black;
+  padding: 16px 0px;
+  border-bottom: 1px solid rgb(234, 234, 234);
   
   &:last-child {
     border-bottom: none;
