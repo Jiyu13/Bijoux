@@ -9,8 +9,7 @@ import {
     FormLabel, FormPageContainer,
     NameFieldBox, OptionBox, SelectBox,
 } from "../components/formStyles";
-import {CancelButton, DarkButton, SubmitInputButton} from "../components/buttons";
-import {ModalContent, ModalFooter} from "../components/popupStyles";
+import {CancelButton, SubmitInputButton} from "../components/buttons";
 
 
 export function ContactForm() {
