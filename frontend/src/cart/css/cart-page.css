@@ -1,0 +1,12 @@
+/* ipads & tablets / smaller */
+@media only screen and (max-width: 767px) {
+    .cart-page {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .cart-page {
+        width: 420px;
+    }
+}
