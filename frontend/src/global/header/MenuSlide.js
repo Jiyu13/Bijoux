@@ -1,6 +1,6 @@
 import {useContext, useEffect} from "react";
 import {UserContext} from "../user-context/UserContext";
-import {HeaderText, ModalBody, ModalContainer, ModalHeader} from "../../components/popupStyles";
+import {ModalBody, ModalContainer} from "../../components/popupStyles";
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 
@@ -38,12 +38,10 @@ export function MenuSlide() {
         {
             isMenuOpen && (isMenuOpen || isTablet) ?
 
-                <ModalContainer>
+                <ModalContainer style={{zIndex: "1000", top:"108px"}}>
                     <MenuModalDialog style={{width: ModalDialogWidth}}>
                         <div style={{position: "relative", display: "flex", flexDirection: "column" }}>
-                            <ModalBody style={{
-                                padding: "0"
-                            }}>
+                            <ModalBody style={{padding: "0"}}>
                                 <ul style={{listStyle: "none", margin: "0", padding: 0}}>
                                     <MenuLinkList style={{marginBottom: "0.2rem"}}>
                                         <NavLink
@@ -102,20 +100,29 @@ export function MenuSlide() {
 const MenuModalDialog = styled.div`
   box-sizing: border-box;
   position: fixed;
-  //transform: translate(-50%, -50%); // ????
   background-color: white;
-  //max-width: calc(100% - 20px);
-  
-  top: 108px;
+
   left: 0;
   height: 100%;
-  transition: right .25s ease-in-out;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
   z-index: 999;
   overflow: hidden;
+  
+  // slide the popup from left to right
+  transform: translateX(-100%);
+  animation: slideRight 0.3s ease forwards;
+  
+  @keyframes slideRight {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(0%);
+      }
+  }
 `
 
 const MenuLinkList = styled.li`
