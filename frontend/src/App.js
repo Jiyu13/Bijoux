@@ -201,9 +201,10 @@ function App() {
     return (
         <UserContext.Provider value={userContextValue}>
             <Provider store={store}>
-            <CartPage />
-            <MenuSlide />
-            <div className="App">
+
+            {/*<div className="App">*/}
+                <CartPage />
+                <MenuSlide />
                 <Header/>
 
                 <Main>
@@ -293,7 +294,7 @@ function App() {
                 <Footer/>
 
                 {/*{isMobile || isTablet  ? <MobileAccessibility /> : ""}*/}
-            </div>
+            {/*</div>*/}
             </Provider>
         </UserContext.Provider>
 
