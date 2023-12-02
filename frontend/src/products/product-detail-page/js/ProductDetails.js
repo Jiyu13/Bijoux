@@ -14,16 +14,13 @@ export function ProductDetails({productDetail}) {
         isLogin, isMobile, cart,
         cartItems, setCartItems,
         setCartItemQuantity,
-        shoppingCartItems, setShoppingCartItems
+        shoppingCartItems, setShoppingCartItems,
+        quantity,
     } = useContext(UserContext)
-
-    const [quantity, setQuantity] = useState(1)
 
     function handleUpdateShoppingCartItems(updatedObject) {
         // =============== for anonymous user =============================
         const updatedShoppingCartItems = shoppingCartItems?.map(item => {
-            console.log("updatedObject?.product_id", updatedObject?.product.id)
-            console.log("item", item)
             if (item?.product.id === updatedObject?.product.id) {
                 return {...item, quantity: updatedObject.quantity}
             }
@@ -35,8 +32,6 @@ export function ProductDetails({productDetail}) {
     function handleUpdateCartItems(updatedObject) {
         // =============== for logged in user =============================
         const updatedCartItems = shoppingCartItems?.map(item => {
-            // console.log("updatedObject?.product_id", updatedObject?.product_id)
-            // console.log("item", item)
             if (item?.product.id === updatedObject?.product_id) {
                 return {...item, quantity: updatedObject.quantity}
             }
@@ -100,7 +95,6 @@ export function ProductDetails({productDetail}) {
 
     return (
         <div style={{
-            // flex: "1",
             width: isMobile ? "100%" : "35%",
             paddingLeft: isMobile ? "0" : "30px"
         }}
@@ -118,7 +112,7 @@ export function ProductDetails({productDetail}) {
                     <ProductMaterial/>
 
                     {/*==================== quantity buttons ===================*/}
-                    <ProductQuantity quantity={quantity} setQuantity={setQuantity}/>
+                    <ProductQuantity />
 
                     {/*=================== submit button =======================*/}
                     <ProductAddToCart/>

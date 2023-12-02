@@ -1,7 +1,10 @@
 import styled from "styled-components";
+import {useContext} from "react";
+import {UserContext} from "../../../global/user-context/UserContext";
 
-export function ProductQuantity({ quantity, setQuantity }) {
+export function ProductQuantity() {
 
+    const {quantity, setQuantity} = useContext(UserContext)
 
     function handleDecrease() {
         setQuantity(prev => prev - 1)
