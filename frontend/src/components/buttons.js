@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 
+// ===== ContactForm, newAddressForm, EditAddressForm, CreateAccount ====
 export const SubmitInputButton = styled.input`
     background-color: rgba(40,44,52, 1);
     color: whitesmoke;
@@ -20,6 +21,7 @@ export const SubmitInputButton = styled.input`
     }
 `
 
+// ==== ContactForm, NewAddress, EditAddressForm =====
 export const CancelButton = styled.button`
     background: none;
     color: rgb(82, 82, 82);
@@ -38,6 +40,7 @@ export const CancelButton = styled.button`
     }
 `
 
+// ===== AddressesPage(add new)
 export const DarkButton = styled.button`
     background-color: rgba(40,44,52, 1);
     color: whitesmoke;
@@ -52,6 +55,7 @@ export const DarkButton = styled.button`
     }
 `
 
+// ======== address (edit/delete) ========================
 export const LightButton = styled.button`
     background: none;
     color: rgb(82, 82, 82);
@@ -69,6 +73,7 @@ export const LightButton = styled.button`
     }
 `
 
+// ====== category(homepage) ===============
 export const ShopButtonLink = styled.a`
     color: white;
     background-color: rgba(40,44,52, 0.6);
