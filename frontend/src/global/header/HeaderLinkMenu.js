@@ -6,9 +6,10 @@ import {UserContext} from "../user-context/UserContext";
 
 export function HeaderLinkMenu() {
 
-    const {isMenuOpen, setMenuOpen} = useContext(UserContext)
+    const {isMenuOpen, setMenuOpen, setOpenCart, openCart} = useContext(UserContext)
     function handleOpenMenu() {
         setMenuOpen(!isMenuOpen)
+        setOpenCart(false)
     }
 
     return (
