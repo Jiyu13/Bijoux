@@ -49,7 +49,7 @@ function App() {
     const [openCart, setOpenCart] = useState(false)
     const [cartItems, setCartItems] = useState(null)
     const [cartItemQuantity, setCartItemQuantity] = useState(0)
-
+    const [quantity, setQuantity] = useState(1)
 
     const [isMenuOpen, setMenuOpen] = useState(false)
 
@@ -180,11 +180,20 @@ function App() {
         }
     }, [isLogin])
 
+    // ========== edit body overflow value when cart is open ==============
+    useEffect(() => {
+        if (openCart) {
+            document.body.style.overflowY = "hidden"
+        } else {
+            document.body.style.overflowY = "visible"
+        }
+    }, [openCart])
+
     const userContextValue = {
         setCurrentUser, currentUser, isLogin, setIsLogin,
         isMobile, isTablet, isSmallLaptop, isLargeScreen,
         carousels, products, collections,
-        cart, setCart, setOpenCart, openCart, cartItems, setCartItems,
+        cart, setCart, setOpenCart, openCart, cartItems, setCartItems, quantity, setQuantity,
         setCartItemQuantity, cartItemQuantity, shoppingCartItems, setShoppingCartItems,
         isMenuOpen, setMenuOpen
     }
