@@ -241,11 +241,24 @@ class Cart(models.Model):
 class CartItem(models.Model):
     """ items within a shopping cart - a cart contains multiple cartitems; a cartitem belongs to only one cart """
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='cart_items')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="cart_product")
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return f'{self.quantity} x {self.product} - {self.cart.user} {self.cart.user.last_name}'
+
+    def get_product_details(self):
+        # Access the associated product and extract product details
+        product = self.product
+        product_details = {
+            "cart_item_id": self.id,
+            "product_image": product.image.url,
+            # without "url" -> UnicodeDecodeError -> <ImageFieldFile: images/2_c3vyDIH.jpeg>
+            "product_title": product.title,
+            "product_price": product.price,
+        }
+
+        return product_details
 
 
 # ============================== order ========================================================
