@@ -326,16 +326,41 @@ class CartView(APIView):
         carts = Cart.objects.filter(user=user.user_id)
         # list() converts a QuerySet to a Python list
         # .values() retrieves specific fields from the QuerySet
-        cart_items = list(CartItem.objects.filter(cart=carts.first()).values())
+
+        # cart_items = CartItem.objects.filter(cart=carts.first())
+        # cart_items_serialized = CartItemSerializer(cart_items, many=True).data
+
+        # print(carts)
+        # print(cart_items_serialized)
+        # cart_items = list(CartItem.objects.filter(cart=carts.first()).values())
 
         cart_data = []
         for cart in carts:
             total_quantity = cart.total_quantity()
+            cart_items = CartItem.objects.filter(cart=cart)
+            cart_items_serialized = []
+            for cart_item in cart_items:
+                cart_item_data = CartItemSerializer(cart_item).data
+                # print("=============cart_item", cart_item_data)  # {'id': 1, 'quantity': 19, 'cart': 10, 'product': 3}
+                # cart_item_data['product_details'] = cart_item.get_product_details()
+                # cart_items_serialized.append(cart_item_data)
+                # # print("==========cart_items_serialized", cart_items_serialized)
+                # print(cart_item_data["id"])
+                formatted_cart_item_data = {
+                    # "cart_item_id": cart_item_data["id"],
+                    "product_id": cart_item_data["product"],
+                    "quantity": cart_item_data["quantity"],
+                    "product_image": cart_item.get_product_details()["product_image"],
+                    "product_title": cart_item.get_product_details()["product_title"],
+                    "product_price": cart_item.get_product_details()["product_price"],
+                }
+
+                cart_items_serialized.append(formatted_cart_item_data)
             cart_data.append({
                 'cart_id': cart.id,
                 'user_id': cart.user.user_id,
                 'total_quantity': total_quantity,
-                "cart_items": cart_items
+                "cart_items": cart_items_serialized  #cart_items
             })
         return Response(cart_data)
 
