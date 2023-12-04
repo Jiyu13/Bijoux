@@ -8,21 +8,19 @@ import '../css/cart-page.css'
 
 import close_black_24dp from "../icons/close_black_24dp.svg"
 
-import {CartItemList} from "./CartItemList";
+import {UserAnonymousCartBody} from "./UserAnonymousCartBody";
 import {EmptyCart} from "./EmptyCart";
 import {CartPayment} from "./CartPayment";
+import {UserCartBody} from "./UserCartBody";
 
 
 export function CartPage() {
 
-    const {cart, openCart, setOpenCart, shoppingCartItems} = useContext(UserContext)
+    const {isLogin, cart, openCart, setOpenCart, shoppingCartItems} = useContext(UserContext)
 
     function handleCloseCart() {
         setOpenCart(!openCart)
     }
-
-    const displayCartItems = cart ? cart : shoppingCartItems
-
 
 
     return(
@@ -32,28 +30,34 @@ export function CartPage() {
 
                     <ModalContainer style={{zIndex: "9999"}} >
                         <CartModalDialog className='cart-page'>
-                                <ModalHeader style={{display: "flex", flex: "0 0 auto", alignItems: "center"}}>
-                                    <HeaderText>Your Cart</HeaderText>
-                                    <button
-                                        style={{
-                                            border: "none",
-                                            background: "none",
-                                            position: "absolute",
-                                            right: "10px",
-                                            cursor: "pointer",
-                                        }}
-                                        onClick={handleCloseCart}
-                                    >
-                                        <img src={close_black_24dp} alt='close cart'/>
-                                    </button>
-                                </ModalHeader>
+                            <ModalHeader style={{display: "flex", flex: "0 0 auto", alignItems: "center"}}>
+                                <HeaderText>Your Cart</HeaderText>
+                                <button
+                                    style={{
+                                        border: "none",
+                                        background: "none",
+                                        position: "absolute",
+                                        right: "10px",
+                                        cursor: "pointer",
+                                    }}
+                                    onClick={handleCloseCart}
+                                >
+                                    <img src={close_black_24dp} alt='close cart'/>
+                                </button>
+                            </ModalHeader>
 
-                                <ModalBody style={{height: "calc(100% - 200px)", overflowY: "scroll"}}>
-                                     {cart?.length === 0 || shoppingCartItems.length === 0 ? <EmptyCart /> : <CartItemList displayCartItems={displayCartItems}/>}
-                                </ModalBody>
-                                <ModalFooter>
-                                    <CartPayment displayCartItems={displayCartItems}/>
-                                </ModalFooter>
+                            <ModalBody style={{height: "calc(100% - 200px)", overflowY: "scroll"}}>
+
+                                {isLogin ?
+                                    <UserCartBody cart={cart}/>
+                                    :
+                                    <UserAnonymousCartBody shoppingCartItems={shoppingCartItems}/>
+                                }
+
+                            </ModalBody>
+                            <ModalFooter>
+                                <CartPayment displayCartItems={shoppingCartItems}/>
+                            </ModalFooter>
 
                         </CartModalDialog>
                     </ModalContainer>
