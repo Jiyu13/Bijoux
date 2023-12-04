@@ -1,14 +1,17 @@
 import {EmptyCart} from "./EmptyCart";
-import {UserAnonymousCartItems} from "./UserAnonymousCartItems";
-import {UserCartItems} from "./UserCartitems";
+import {UserAnonymousCartItemsList} from "./UserAnonymousCartItemsList";
+import {UserCartItemsList} from "./UserCartItemsList";
 
-export function UserCartIBody({cart}) {
+export function UserCartBody({cart}) {
+
+    // console.log(cart)
+
     return (
         <>
-            {cart.cart_items?.length === 0 ?
+            {cart[0]?.length === 0 ?
                 <EmptyCart/>
                 :
-                <UserCartItems cartItems={cart.cartItems}/>
+                <UserCartItemsList cartItems={cart[0]?.cart_items} />
             }
         </>
 

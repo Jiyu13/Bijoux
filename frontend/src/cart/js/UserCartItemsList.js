@@ -2,17 +2,21 @@ import delete_icon from "../icons/delete.svg";
 import {CartItemQuantity} from "./CartItemQuantity";
 import styled from "styled-components";
 
-export function UserCartItems({cartItems}) {
+export function UserCartItemsList({cartItems}) {
+
+    // console.log(cartItems)
+
     return (
         <CartItemsContainer>
 
             {cartItems?.map((item, index) => {
+                // console.log(item)
                 return (
                     <CartItemWrapper key={index}>
-                        <CartItemImg src={item.product.image} alt=""/>
+                        <CartItemImg src={item.product_image} alt=""/>
                         <CartItemDetail>
                             <DetailRow >
-                                <RowLeft style={{fontSize: "1rem"}}>{item.product.title}</RowLeft>
+                                <RowLeft style={{fontSize: "1rem"}}>{item.product_title}</RowLeft>
                                 <RowRight style={{width: "20px"}}>
                                     <img src={delete_icon} alt="delete icon" style={{width: "100%"}}/>
                                 </RowRight>
@@ -22,7 +26,7 @@ export function UserCartItems({cartItems}) {
                                 <RowLeft>
                                     <CartItemQuantity cartProductQuantity={item.quantity}/>
                                 </RowLeft>
-                                <RowRight>${item.product.price * item.quantity}</RowRight>
+                                <RowRight>${item.product_price * item.quantity}</RowRight>
                             </DetailRow>
                         </CartItemDetail>
 
@@ -34,7 +38,7 @@ export function UserCartItems({cartItems}) {
     )
 }
 
-const CartItemsContainer = styled.ul`
+export const CartItemsContainer = styled.ul`
   list-style: none;
   padding-left: 0;
   margin: 0px;
@@ -43,7 +47,7 @@ const CartItemsContainer = styled.ul`
   //height: calc(100% - 74px);
   //overflow-y: scroll;
 `
-const CartItemWrapper = styled.li`
+export const CartItemWrapper = styled.li`
   display: flex;
   gap: 12px;
   //margin: 12px 0;
@@ -54,26 +58,26 @@ const CartItemWrapper = styled.li`
     border-bottom: none;
   }
 `
-const CartItemImg = styled.img`
+export const CartItemImg = styled.img`
   width: 78px;
   height: 78px;
 `
 
-const CartItemDetail = styled.div`
+export const CartItemDetail = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   margin: auto 0;
   gap: 12px;
 `
-const DetailRow = styled.div`
+export const DetailRow = styled.div`
   display: flex;
   justify-content: space-between;
 `
 
-const RowLeft = styled.div`
+export const RowLeft = styled.div`
   //left: 0;
 `
-const RowRight = styled.div`
+export const RowRight = styled.div`
   //right: 0;
 `
