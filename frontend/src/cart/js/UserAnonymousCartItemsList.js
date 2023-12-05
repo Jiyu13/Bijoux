@@ -18,10 +18,10 @@ export function UserAnonymousCartItemsList({shoppingCartItems}) {
             {shoppingCartItems?.map((item, index) => {
                 return (
                     <CartItemWrapper key={index}>
-                        <CartItemImg src={item.product.image} alt=""/>
+                        <CartItemImg src={item.product.product_img} alt=""/>
                         <CartItemDetail>
                             <DetailRow >
-                                <RowLeft style={{fontSize: "1rem"}}>{item.product.title}</RowLeft>
+                                <RowLeft style={{fontSize: "1rem"}}>{item.product.product_title}</RowLeft>
                                 <RowRight style={{width: "20px"}}>
                                     <img src={delete_icon} alt="delete icon" style={{width: "100%"}}/>
                                 </RowRight>
@@ -31,7 +31,7 @@ export function UserAnonymousCartItemsList({shoppingCartItems}) {
                                 <RowLeft>
                                     <CartItemQuantity cartProductQuantity={item.quantity}/>
                                 </RowLeft>
-                                <RowRight>${item.product.price * item.quantity}</RowRight>
+                                <RowRight>${item.product.product_price * item.quantity}</RowRight>
                             </DetailRow>
                         </CartItemDetail>
 
@@ -42,43 +42,3 @@ export function UserAnonymousCartItemsList({shoppingCartItems}) {
         </CartItemsContainer>
     )
 }
-
-// const CartItemsContainer = styled.ul`
-//   list-style: none;
-//   padding-left: 0;
-//   margin: 0px;
-//
-//   box-sizing: border-box;
-//   //height: calc(100% - 74px);
-//   //overflow-y: scroll;
-// `
-// const CartItemWrapper = styled.li`
-//   display: flex;
-//   gap: 12px;
-//   //margin: 12px 0;
-//   padding: 16px 0px;
-//   border-bottom: 1px solid rgb(234, 234, 234);
-//
-//   &:last-child {
-//     border-bottom: none;
-//   }
-// `
-// const CartItemImg = styled.img`
-//   width: 78px;
-//   height: 78px;
-// `
-//
-// const CartItemDetail = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   width: 100%;
-//   margin: auto 0;
-//   gap: 12px;
-// `
-// const DetailRow = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-// `
-//
-// const RowLeft = styled.div``
-// const RowRight = styled.div``
