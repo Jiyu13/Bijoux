@@ -94,7 +94,7 @@ function App() {
             }
             getCart()
         }
-    }, [isLogin])
+    }, [isLogin, cartItemQuantity])  // update cart when adding / updating a product
 
     // ========================== get user ==========================
     useEffect(() => {
@@ -170,6 +170,7 @@ function App() {
             async function getCartItems() {
                 try {
                     const res = await client.get('/cart-items/')
+                    // console.log(res.data)
                     setCartItems(res.data)
                 } catch (error) {
                     console.log(error.response)
