@@ -35,7 +35,7 @@ export function ProductDetails({productDetail}) {
         const updatedCartItems = cartItems?.map(item => {
             // console.log("item", item) // {id: 1, quantity: 21, cart: 10, product: 3}
             // console.log("updatedObject", updatedObject)  // {id: 52, product_id: 8, quantity: 8}
-            console.log(item?.product === updatedObject?.product_id)
+            // console.log(item?.product === updatedObject?.product_id)
             if (item?.product === updatedObject?.product_id) {
                 return {...item, quantity: updatedObject.quantity}
             }
