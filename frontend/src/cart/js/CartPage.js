@@ -8,10 +8,11 @@ import '../css/cart-page.css'
 
 import close_black_24dp from "../icons/close_black_24dp.svg"
 
-import {UserAnonymousCartBody} from "./UserAnonymousCartBody";
-import {EmptyCart} from "./EmptyCart";
-import {CartPayment} from "./CartPayment";
 import {UserCartBody} from "./UserCartBody";
+import {UserCartFooter} from "./UserCartFooter";
+import {UserAnonymousCartFooter} from "./UserAnonymousCartFooter";
+import {UserAnonymousCartBody} from "./UserAnonymousCartBody";
+
 
 
 export function CartPage() {
@@ -56,7 +57,11 @@ export function CartPage() {
 
                             </ModalBody>
                             <ModalFooter>
-                                <CartPayment displayCartItems={shoppingCartItems}/>
+                                {isLogin ?
+                                    <UserCartFooter cartItems={cart[0]}/>
+                                    :
+                                    <UserAnonymousCartFooter shoppingCartItems={shoppingCartItems}/>
+                                }
                             </ModalFooter>
 
                         </CartModalDialog>
