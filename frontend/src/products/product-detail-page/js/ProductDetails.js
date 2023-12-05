@@ -18,11 +18,12 @@ export function ProductDetails({productDetail}) {
         quantity,
     } = useContext(UserContext)
 
+    // =============== update cart items for anonymous user =============================
     function handleUpdateShoppingCartItems(updatedObject) {
-        // =============== for anonymous user =============================
         const updatedShoppingCartItems = shoppingCartItems?.map(item => {
-            if (item?.product.id === updatedObject?.product.id) {
-                return {...item, quantity: updatedObject.quantity}
+            if (item?.product.product_id === updatedObject?.product.product_id) {
+                return {...item, quantity: updatedObject.quantity, total: updatedObject.total
+                }
             }
             return item
         })
@@ -31,8 +32,11 @@ export function ProductDetails({productDetail}) {
 
     function handleUpdateCartItems(updatedObject) {
         // =============== for logged in user =============================
-        const updatedCartItems = shoppingCartItems?.map(item => {
-            if (item?.product.id === updatedObject?.product_id) {
+        const updatedCartItems = cartItems?.map(item => {
+            // console.log("item", item) // {id: 1, quantity: 21, cart: 10, product: 3}
+            // console.log("updatedObject", updatedObject)  // {id: 52, product_id: 8, quantity: 8}
+            console.log(item?.product === updatedObject?.product_id)
+            if (item?.product === updatedObject?.product_id) {
                 return {...item, quantity: updatedObject.quantity}
             }
             return item
@@ -44,24 +48,34 @@ export function ProductDetails({productDetail}) {
         e.preventDefault()
         if (!isLogin) {
             const targetItem = shoppingCartItems?.filter(item => {
-                return item.product.id === productDetail?.id
+                return item.product.product_id === productDetail?.id
             })
+
+            const formattedProductDetail = {
+                product_id: productDetail?.id,
+                product_img: productDetail?.image,
+                product_title: productDetail?.title,
+                product_price: productDetail?.price,
+            }
+
+
             if (targetItem?.length > 0) {
                 // ==================== item in localstorage ==============================
                 const shoppingCartObject = {
-                    product: productDetail,
+                    product: formattedProductDetail,
                     quantity: targetItem[0]?.quantity + quantity,
+                    total: targetItem[0]?.total + productDetail?.price * quantity
                 }
                 const updated = handleUpdateShoppingCartItems(shoppingCartObject)
                 setShoppingCartItems(updated)
                 localStorage.setItem('shopping_cart_items', JSON.stringify(updated))
 
             }  else {
-
                 // ==================== item doesn't in localstorage ======================
                 const newShoppingCartObject = {
-                    product: productDetail,
+                    product: formattedProductDetail,
                     quantity: quantity,
+                    total: productDetail?.price * quantity
                 }
 
                 const newShoppingCartItems = [...shoppingCartItems, newShoppingCartObject]
@@ -72,9 +86,7 @@ export function ProductDetails({productDetail}) {
             }
             setCartItemQuantity(prev => prev + quantity)
         } else {
-            // console.log("logged in")
             const newCartItem = {
-                // product_2: productDetail?.id,
                 product_id: productDetail?.id,
                 quantity: quantity,
                 cart: cart[0]?.cart_id,
@@ -82,11 +94,32 @@ export function ProductDetails({productDetail}) {
 
             client.post('/cart-item/add/', newCartItem)
             .then(res => {
+
                 // res.data returns: cart_item = {id: ..., product_id: ..., quantity: ... }
-                const updated = handleUpdateCartItems(res.data)
-                setCartItems([...cartItems, updated])
-                // !!!!!!!!!!!!!!!!!!!!!!!!need to check if new item exists before updating the cartItems state
+                const targetCartItem = cart[0]?.cart_items.filter(item => {
+
+                    return item.product_id === productDetail?.id
+                })
+                // ==================== update frontend states =========================================
+                if (targetCartItem.length > 0) {
+                    // ======================== if item exists, update "quantity" =======================
+                    const updated = handleUpdateCartItems(res.data)
+                    //[{id: 1, quantity: 21, cart: 10, product: 3}, {…}, {…}, {…}, {…}]
+
+                    setCartItems(updated)
+                } else {
+                    // ======================== if item doesn't exist, add new one to the list  =======================
+                    const addNewCartItem = {
+                        id: res.data.id,
+                        quantity: res.data.quantity,
+                        cart: cart[0]?.cart_id,
+                        product: productDetail?.id
+                    }
+
+                    setCartItems([...cartItems, addNewCartItem])
+                }
                 setCartItemQuantity(prev => prev + quantity)
+
             })
             .catch(error => console.log(error))
         }
