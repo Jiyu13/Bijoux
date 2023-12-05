@@ -335,9 +335,12 @@ class CartView(APIView):
         # cart_items = list(CartItem.objects.filter(cart=carts.first()).values())
 
         cart_data = []
+        total_cost = 0
+
         for cart in carts:
             total_quantity = cart.total_quantity()
             cart_items = CartItem.objects.filter(cart=cart)
+
             cart_items_serialized = []
             for cart_item in cart_items:
                 cart_item_data = CartItemSerializer(cart_item).data
@@ -355,11 +358,13 @@ class CartView(APIView):
                     "product_price": cart_item.get_product_details()["product_price"],
                 }
 
+                total_cost += cart_item.get_product_details()["product_price"] * cart_item_data["quantity"]
                 cart_items_serialized.append(formatted_cart_item_data)
             cart_data.append({
                 'cart_id': cart.id,
                 'user_id': cart.user.user_id,
                 'total_quantity': total_quantity,
+                'total_cost': total_cost,
                 "cart_items": cart_items_serialized  #cart_items
             })
         return Response(cart_data)
@@ -418,7 +423,7 @@ class AddToCartView(CreateAPIView):
             'product_id': cart_item.product.id,
             'quantity': cart_item.quantity
         }
-
+        # print("post cart_item_data", cart_item_data)
         return JsonResponse(cart_item_data)
 
         # cart, created = Cart.objects.get_or_create(
