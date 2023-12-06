@@ -50,7 +50,7 @@ export function CartPage() {
                             <ModalBody style={{height: "calc(100% - 200px)", overflowY: "scroll"}}>
 
                                 {isLogin ?
-                                    <UserCartBody cart={cart}/>
+                                    <UserCartBody/>
                                     :
                                     <UserAnonymousCartBody shoppingCartItems={shoppingCartItems}/>
                                 }
