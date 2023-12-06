@@ -1,25 +1,108 @@
 import delete_icon from "../icons/delete.svg";
+import loading_icon from "../icons/loading_icon.svg"
+import "../css/cart-page.css"
+
 import {CartItemQuantity} from "./CartItemQuantity";
 import styled from "styled-components";
+import {useContext, useEffect, useState} from "react";
+import {UserContext} from "../../global/user-context/UserContext";
+import {client} from "../../helper-functions/fetchFromAPI";
 
-export function UserCartItemsList({cartItems}) {
+export function UserCartItemsList() {
 
-    // console.log(cartItems)
+    const {
+        cart, setCart, cartItems, setCartItems,
+        deleteLoading, setDeleteLoading, setCartItemQuantity
+    } = useContext(UserContext)
+
+
+    function handleDeleteCartItem (e) {
+        const cartItemId = e.currentTarget.value
+
+        setDeleteLoading(true)
+
+        async function deleteFromCart() {
+            try {
+                const res = await client.delete(`/cart-item/${cartItemId}/`)
+            } catch(error) {
+                console.log(error.response.data)
+            }
+        }
+
+        deleteFromCart()
+
+        setTimeout(function() {
+            setDeleteLoading(false)
+        }, 500)
+
+        onDeleteUserCartItem(cartItemId)
+    }
+
+    function onDeleteUserCartItem(deleteCartItemId) {
+
+        const updatedCartItems = cartItems?.filter(item => {
+            if (item.id !== parseInt(deleteCartItemId)) {
+                return item
+            } else {
+                setCartItemQuantity(cart[0].total_quantity - item.quantity)
+            }
+            // return item.id !== parseInt(deleteCartItemId)
+        })
+        console.log(updatedCartItems)
+        setCartItems(updatedCartItems)
+
+        // const updatedCart = cart[0]?.cart_items.filter(item => {
+        //     if (item.cart_item_id !== parseInt(deleteCartItemId)) {
+        //         return item
+        //     } else {
+        //         setCartItemQuantity(cart[0].total_quantity - item.quantity)
+        //     }
+        // })
+        // setCart(?????) // update cart_items & total_quantity)
+    }
 
     return (
         <CartItemsContainer>
 
-            {cartItems?.map((item, index) => {
-                // console.log(item)
+            {cart[0]?.cart_items.map((item, index) => {
+
                 return (
-                    <CartItemWrapper key={index}>
+                    <CartItemWrapper key={index} >
                         <CartItemImg src={item.product_image} alt=""/>
                         <CartItemDetail>
                             <DetailRow >
-                                <RowLeft style={{fontSize: "1rem"}}>{item.product_title}</RowLeft>
-                                <RowRight style={{width: "20px"}}>
-                                    <img src={delete_icon} alt="delete icon" style={{width: "100%"}}/>
-                                </RowRight>
+                                <RowLeft style={{fontSize: "1rem", margin: "auto 0"}}>{item.product_title}</RowLeft>
+
+                                {deleteLoading ?
+
+                                    <RowRight style={{width: "20px", height: "20px"}}>
+                                        <img
+                                            src={loading_icon}
+                                            alt='loading icon'
+                                            className='loading'
+                                        />
+                                    </RowRight>
+                                    :
+                                    <>
+
+                                    {/* <RowRight style={{width: "20px", height: "20px", margin: "auto 0"}}>*/}
+                                    {/*     <img*/}
+                                    {/*        src={loading_icon}*/}
+                                    {/*        alt='deleting icon'*/}
+                                    {/*        className='loading'*/}
+                                    {/*    />*/}
+                                    {/*</RowRight>*/}
+                                    <button
+                                        style={{width: "20px", height: "20px", background: "none", padding: "0", margin: "auto 0", border: "none", cursor: "pointer"}}
+                                        onClick={handleDeleteCartItem}
+                                        value={item.cart_item_id}
+                                    >
+                                        <img src={delete_icon} alt="delete icon" style={{width: "100%"}}/>
+                                    </button>
+                                    </>
+                                }
+
+
                             </DetailRow>
 
                             <DetailRow>
@@ -68,7 +151,7 @@ export const CartItemDetail = styled.div`
   flex-direction: column;
   width: 100%;
   margin: auto 0;
-  gap: 12px;
+  gap: 16px;
 `
 export const DetailRow = styled.div`
   display: flex;
@@ -80,4 +163,5 @@ export const RowLeft = styled.div`
 `
 export const RowRight = styled.div`
   //right: 0;
+  margin: auto 0
 `
