@@ -350,7 +350,7 @@ class CartView(APIView):
                 # # print("==========cart_items_serialized", cart_items_serialized)
                 # print(cart_item_data["id"])
                 formatted_cart_item_data = {
-                    # "cart_item_id": cart_item_data["id"],
+                    "cart_item_id": cart_item_data["id"],
                     "product_id": cart_item_data["product"],
                     "quantity": cart_item_data["quantity"],
                     "product_image": cart_item.get_product_details()["product_image"],
@@ -498,6 +498,11 @@ class CartItemView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        cart_item = self.get_object(pk)
+        cart_item.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # ============================= Carousel =============================
