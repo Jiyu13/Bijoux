@@ -13,6 +13,8 @@ export function CartItemQuantity({cartProductQuantity}) {
         setQuantity(prev => prev + 1)
     }
 
+    function handleQuantityInputChange() {}
+
     return(
          <QuantityContainer>
             <QuantityControl>
@@ -27,6 +29,7 @@ export function CartItemQuantity({cartProductQuantity}) {
                     type="text"
                     // defaultValue={quantity}
                     value={cartProductQuantity}
+                    onChange={handleQuantityInputChange}
                 />
                 <ControlIncrease
                     type="button"
