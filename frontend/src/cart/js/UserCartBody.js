@@ -1,17 +1,18 @@
 import {EmptyCart} from "./EmptyCart";
-import {UserAnonymousCartItemsList} from "./UserAnonymousCartItemsList";
 import {UserCartItemsList} from "./UserCartItemsList";
+import {useContext} from "react";
+import {UserContext} from "../../global/user-context/UserContext";
 
-export function UserCartBody({cart}) {
+export function UserCartBody() {
 
-    // console.log(cart)
+    const {cart, cartItems} = useContext(UserContext)
 
     return (
         <>
-            {cart[0]?.length === 0 ?
+            {cart[0]?.cart_items.length === 0 || cartItems.length === 0 ?
                 <EmptyCart/>
                 :
-                <UserCartItemsList cartItems={cart[0]?.cart_items} />
+                <UserCartItemsList cartItems={cart[0]} />
             }
         </>
 
