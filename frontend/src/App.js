@@ -47,9 +47,10 @@ function App() {
 
     const [cart, setCart] = useState(null)
     const [openCart, setOpenCart] = useState(false)
-    const [cartItems, setCartItems] = useState(null)
+    const [cartItems, setCartItems] = useState(null)  // {id:.., quantity: .., cart: .., product: ..}
     const [cartItemQuantity, setCartItemQuantity] = useState(0)
     const [quantity, setQuantity] = useState(1)
+    const [deleteLoading, setDeleteLoading] = useState(false)
 
     const [isMenuOpen, setMenuOpen] = useState(false)
 
@@ -196,7 +197,7 @@ function App() {
         carousels, products, collections,
         cart, setCart, setOpenCart, openCart, cartItems, setCartItems, quantity, setQuantity,
         setCartItemQuantity, cartItemQuantity, shoppingCartItems, setShoppingCartItems,
-        isMenuOpen, setMenuOpen
+        isMenuOpen, setMenuOpen, deleteLoading, setDeleteLoading
     }
 
     return (
