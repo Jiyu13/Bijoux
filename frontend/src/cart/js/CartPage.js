@@ -12,6 +12,7 @@ import {UserCartBody} from "./UserCartBody";
 import {UserCartFooter} from "./UserCartFooter";
 import {UserAnonymousCartFooter} from "./UserAnonymousCartFooter";
 import {UserAnonymousCartBody} from "./UserAnonymousCartBody";
+import {OverlayBackground} from "./OverlayBackground";
 
 
 
@@ -23,10 +24,6 @@ export function CartPage() {
         setOpenCart(!openCart)
     }
 
-    function handleClickOverlay(){
-        setOpenCart(false)
-    }
-
     return(
         <>
             {openCart && (
@@ -36,10 +33,7 @@ export function CartPage() {
                 <ModalContainer style={{zIndex: "9999"}} >
                     {/**/}
                     {!isMobile && !isTablet && (
-                        <OverlayBackground
-                            style={{width: "calc(100% - 420px)", height: "100%"}}
-                            onClick={handleClickOverlay}
-                        ></OverlayBackground>
+                        <OverlayBackground />
                     )}
 
                     <CartModalDialog className='cart-page'>
@@ -83,9 +77,6 @@ export function CartPage() {
         </>
     )
 }
-
-const OverlayBackground = styled.div`
-`
 
 const CartModalDialog = styled.div`
     box-sizing: border-box;
