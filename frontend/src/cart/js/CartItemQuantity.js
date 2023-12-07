@@ -4,13 +4,13 @@ import styled from "styled-components";
 
 export function CartItemQuantity({cartProductQuantity}) {
 
-    const {quantity, setQuantity} = useContext(UserContext)
+    const {addToCartQuantity, setAddToCartQuantity} = useContext(UserContext)
 
     function handleDecrease() {
-        setQuantity(prev => prev - 1)
+        setAddToCartQuantity(prev => prev - 1)
     }
     function handleIncrease() {
-        setQuantity(prev => prev + 1)
+        setAddToCartQuantity(prev => prev + 1)
     }
 
     function handleQuantityInputChange() {}

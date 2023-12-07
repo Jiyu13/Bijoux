@@ -11,7 +11,7 @@ import {client} from "../../helper-functions/fetchFromAPI";
 export function UserCartItemsList() {
 
     const {
-        cart, cartItems, setCartItems, setCartItemQuantity
+        cart, cartItems, setCartItems, setTotalCartQuantity
     } = useContext(UserContext)
 
     const [deletingItem, setDeletingItem] = useState({})
@@ -36,7 +36,7 @@ export function UserCartItemsList() {
             if (item.id !== targetId) {
                 return item
             } else {
-                setCartItemQuantity(cart[0].total_quantity - item.quantity)
+                setTotalCartQuantity(cart[0].total_quantity - item.quantity)
             }
             // return item.id !== parseInt(deleteCartItemId)
         })

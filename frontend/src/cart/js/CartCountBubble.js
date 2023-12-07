@@ -4,11 +4,11 @@ import styled from "styled-components";
 
 export function CartCountBubble() {
 
-    const {cartItemQuantity} = useContext(UserContext)
+    const {totalCartQuantity} = useContext(UserContext)
 
     return (
         <BubbleContainer>
-            <span>{cartItemQuantity}</span>
+            <span>{totalCartQuantity}</span>
         </BubbleContainer>
     )
 }

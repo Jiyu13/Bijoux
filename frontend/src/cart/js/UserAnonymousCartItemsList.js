@@ -9,7 +9,7 @@ import loading_icon from "../icons/loading_icon.svg";
 
 export function UserAnonymousCartItemsList({shoppingCartItems}) {
 
-    const {setCartItemQuantity, setShoppingCartItems} = useContext(UserContext)
+    const {setTotalCartQuantity, setShoppingCartItems} = useContext(UserContext)
 
     const [deletingItem, setDeletingItem] = useState(null)
 
@@ -37,7 +37,7 @@ export function UserAnonymousCartItemsList({shoppingCartItems}) {
             setShoppingCartItems(updatedShoppingCartItems)
             localStorage.setItem('shopping_cart_items', JSON.stringify(updatedShoppingCartItems))
 
-            setCartItemQuantity(prev => prev - deleteItemQuantity)
+            setTotalCartQuantity(prev => prev - deleteItemQuantity)
 
         } catch(error) {
             console.log("Product doesn't exist.")

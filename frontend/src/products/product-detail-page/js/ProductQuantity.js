@@ -4,13 +4,13 @@ import {UserContext} from "../../../global/user-context/UserContext";
 
 export function ProductQuantity() {
 
-    const {quantity, setQuantity} = useContext(UserContext)
+    const {addToCartQuantity, setAddToCartQuantity} = useContext(UserContext)
 
     function handleDecrease() {
-        setQuantity(prev => prev - 1)
+        setAddToCartQuantity(prev => prev - 1)
     }
     function handleIncrease() {
-        setQuantity(prev => prev + 1)
+        setAddToCartQuantity(prev => prev + 1)
     }
 
     function handleQuantityInputChange() {}
@@ -21,7 +21,7 @@ export function ProductQuantity() {
             <QuantityControl>
                 <ControlDecrease
                     type="button"
-                    disabled={quantity <= 1}
+                    disabled={addToCartQuantity <= 1}
                     onClick={handleDecrease}
                 >
                     -
@@ -29,7 +29,7 @@ export function ProductQuantity() {
                 <ControlInput
                     type="text"
                     // defaultValue={quantity}
-                    value={quantity}
+                    value={addToCartQuantity}
                     onChange={handleQuantityInputChange}
                 />
                 <ControlIncrease

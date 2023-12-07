@@ -13,9 +13,9 @@ export function ProductDetails({productDetail}) {
     const {
         isLogin, isMobile, cart,
         cartItems, setCartItems,
-        setCartItemQuantity,
+        totalCartQuantity, setTotalCartQuantity,
         shoppingCartItems, setShoppingCartItems,
-        quantity,
+        addToCartQuantity,
     } = useContext(UserContext)
 
     // =============== update cart items for anonymous user =============================
@@ -63,8 +63,8 @@ export function ProductDetails({productDetail}) {
                 // ==================== item in localstorage ==============================
                 const shoppingCartObject = {
                     product: formattedProductDetail,
-                    quantity: targetItem[0]?.quantity + quantity,
-                    total: targetItem[0]?.total + productDetail?.price * quantity
+                    quantity: targetItem[0]?.quantity + addToCartQuantity,
+                    total: targetItem[0]?.total + productDetail?.price * addToCartQuantity
                 }
                 const updated = handleUpdateShoppingCartItems(shoppingCartObject)
                 setShoppingCartItems(updated)
@@ -74,8 +74,8 @@ export function ProductDetails({productDetail}) {
                 // ==================== item doesn't in localstorage ======================
                 const newShoppingCartObject = {
                     product: formattedProductDetail,
-                    quantity: quantity,
-                    total: productDetail?.price * quantity
+                    quantity: addToCartQuantity,
+                    total: productDetail?.price * addToCartQuantity
                 }
 
                 const newShoppingCartItems = [...shoppingCartItems, newShoppingCartObject]
@@ -84,11 +84,11 @@ export function ProductDetails({productDetail}) {
                 localStorage.setItem('shopping_cart_items', JSON.stringify(newShoppingCartItems));
 
             }
-            setCartItemQuantity(prev => prev + quantity)
+            setTotalCartQuantity(prev => prev + addToCartQuantity)
         } else {
             const newCartItem = {
                 product_id: productDetail?.id,
-                quantity: quantity,
+                quantity: addToCartQuantity,
                 cart: cart[0]?.cart_id,
             }
 
@@ -118,7 +118,7 @@ export function ProductDetails({productDetail}) {
 
                     setCartItems([...cartItems, addNewCartItem])
                 }
-                setCartItemQuantity(prev => prev + quantity)
+                setTotalCartQuantity(prev => prev + addToCartQuantity)
 
             })
             .catch(error => console.log(error))

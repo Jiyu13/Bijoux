@@ -49,8 +49,8 @@ function App() {
     const [cart, setCart] = useState(null)
     const [openCart, setOpenCart] = useState(false)
     const [cartItems, setCartItems] = useState(null)  // {id:.., quantity: .., cart: .., product: ..}
-    const [cartItemQuantity, setCartItemQuantity] = useState(0)  // for logged-in / unlogged-in users
-    const [quantity, setQuantity] = useState(1)    // for updating quantity of specific item in the detail page
+    const [totalCartQuantity, setTotalCartQuantity] = useState(0)  // for logged-in / unlogged-in users
+    const [addToCartQuantity, setAddToCartQuantity] = useState(1)    // for updating quantity of specific item in the detail page
 
     const [isMenuOpen, setMenuOpen] = useState(false)
 
@@ -74,7 +74,7 @@ function App() {
         const itemQuantity = storedCartItems.reduce((accumulator, currentItem) => {
             return accumulator + currentItem.quantity;
         }, 0)
-        setCartItemQuantity(itemQuantity)
+        setTotalCartQuantity(itemQuantity)
 
     }, []);
 
@@ -87,7 +87,7 @@ function App() {
                     // res.data = [{cart_id: 23, user_id: 4, total_quantity: 10}]
                     const cart = res.data
                     setCart(cart)
-                    setCartItemQuantity(cart[0].total_quantity)
+                    setTotalCartQuantity(cart[0].total_quantity)
                     // check if cart exists
                 } catch (error) {
                     console.log(error.response)
@@ -95,7 +95,7 @@ function App() {
             }
             getCart()
         }
-    }, [isLogin, cartItemQuantity])  // update cart when adding / updating a product
+    }, [isLogin, totalCartQuantity])  // update cart when adding / updating a product
 
     // ========================== get user ==========================
     useEffect(() => {
@@ -195,8 +195,8 @@ function App() {
         setCurrentUser, currentUser, isLogin, setIsLogin,
         isMobile, isTablet, isSmallLaptop, isLargeScreen,
         carousels, products, collections,
-        cart, setCart, setOpenCart, openCart, cartItems, setCartItems, quantity, setQuantity,
-        setCartItemQuantity, cartItemQuantity,
+        cart, setCart, setOpenCart, openCart, cartItems, setCartItems, addToCartQuantity, setAddToCartQuantity,
+        totalCartQuantity, setTotalCartQuantity,
         shoppingCartItems, setShoppingCartItems, shoppingCartItemQuantity, setShoppingCartItemQuantity,
         isMenuOpen, setMenuOpen,
     }
