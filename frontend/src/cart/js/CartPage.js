@@ -17,18 +17,31 @@ import {UserAnonymousCartBody} from "./UserAnonymousCartBody";
 
 export function CartPage() {
 
-    const {isLogin, cart, openCart, setOpenCart} = useContext(UserContext)
+    const {isLogin, cart, openCart, setOpenCart, isMobile, isTablet} = useContext(UserContext)
 
     function handleCloseCart() {
         setOpenCart(!openCart)
     }
 
+    function handleClickOverlay(){
+        setOpenCart(false)
+    }
 
     return(
         <>
             {openCart && (
+                <>
+
 
                 <ModalContainer style={{zIndex: "9999"}} >
+                    {/**/}
+                    {!isMobile && !isTablet && (
+                        <OverlayBackground
+                            style={{width: "calc(100% - 420px)", height: "100%"}}
+                            onClick={handleClickOverlay}
+                        ></OverlayBackground>
+                    )}
+
                     <CartModalDialog className='cart-page'>
                         <ModalHeader style={{display: "flex", flex: "0 0 auto", alignItems: "center"}}>
                             <HeaderText>Your Cart</HeaderText>
@@ -65,10 +78,14 @@ export function CartPage() {
 
                     </CartModalDialog>
                 </ModalContainer>
+                </>
             )}
         </>
     )
 }
+
+const OverlayBackground = styled.div`
+`
 
 const CartModalDialog = styled.div`
     box-sizing: border-box;
