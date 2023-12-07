@@ -49,8 +49,8 @@ function App() {
     const [cart, setCart] = useState(null)
     const [openCart, setOpenCart] = useState(false)
     const [cartItems, setCartItems] = useState(null)  // {id:.., quantity: .., cart: .., product: ..}
-    const [cartItemQuantity, setCartItemQuantity] = useState(0)
-    const [quantity, setQuantity] = useState(1)
+    const [cartItemQuantity, setCartItemQuantity] = useState(0)  // for logged-in / unlogged-in users
+    const [quantity, setQuantity] = useState(1)    // for updating quantity of specific item in the detail page
 
     const [isMenuOpen, setMenuOpen] = useState(false)
 
