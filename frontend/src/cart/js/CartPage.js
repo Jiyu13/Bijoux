@@ -17,7 +17,7 @@ import {UserAnonymousCartBody} from "./UserAnonymousCartBody";
 
 export function CartPage() {
 
-    const {isLogin, cart, openCart, setOpenCart, shoppingCartItems} = useContext(UserContext)
+    const {isLogin, cart, openCart, setOpenCart} = useContext(UserContext)
 
     function handleCloseCart() {
         setOpenCart(!openCart)
@@ -26,51 +26,46 @@ export function CartPage() {
 
     return(
         <>
-            {
-                openCart ?
+            {openCart && (
 
-                    <ModalContainer style={{zIndex: "9999"}} >
-                        <CartModalDialog className='cart-page'>
-                            <ModalHeader style={{display: "flex", flex: "0 0 auto", alignItems: "center"}}>
-                                <HeaderText>Your Cart</HeaderText>
-                                <button
-                                    style={{
-                                        border: "none",
-                                        background: "none",
-                                        position: "absolute",
-                                        right: "10px",
-                                        cursor: "pointer",
-                                    }}
-                                    onClick={handleCloseCart}
-                                >
-                                    <img src={close_black_24dp} alt='close cart'/>
-                                </button>
-                            </ModalHeader>
+                <ModalContainer style={{zIndex: "9999"}} >
+                    <CartModalDialog className='cart-page'>
+                        <ModalHeader style={{display: "flex", flex: "0 0 auto", alignItems: "center"}}>
+                            <HeaderText>Your Cart</HeaderText>
+                            <button
+                                style={{
+                                    border: "none",
+                                    background: "none",
+                                    position: "absolute",
+                                    right: "10px",
+                                    cursor: "pointer",
+                                }}
+                                onClick={handleCloseCart}
+                            >
+                                <img src={close_black_24dp} alt='close cart'/>
+                            </button>
+                        </ModalHeader>
 
-                            <ModalBody style={{height: "calc(100% - 200px)", overflowY: "scroll"}}>
+                        <ModalBody style={{height: "calc(100% - 200px)", overflowY: "scroll"}}>
 
-                                {isLogin ?
-                                    <UserCartBody/>
-                                    :
-                                    <UserAnonymousCartBody shoppingCartItems={shoppingCartItems}/>
-                                }
+                            {isLogin ?
+                                <UserCartBody/>
+                                :
+                                <UserAnonymousCartBody/>
+                            }
 
-                            </ModalBody>
-                            <ModalFooter>
-                                {isLogin ?
-                                    <UserCartFooter cartItems={cart[0]}/>
-                                    :
-                                    <UserAnonymousCartFooter shoppingCartItems={shoppingCartItems}/>
-                                }
-                            </ModalFooter>
+                        </ModalBody>
+                        <ModalFooter>
+                            {isLogin ?
+                                <UserCartFooter cartItems={cart[0]}/>
+                                :
+                                <UserAnonymousCartFooter/>
+                            }
+                        </ModalFooter>
 
-                        </CartModalDialog>
-                    </ModalContainer>
-
-                    :
-
-                    ""
-            }
+                    </CartModalDialog>
+                </ModalContainer>
+            )}
         </>
     )
 }
