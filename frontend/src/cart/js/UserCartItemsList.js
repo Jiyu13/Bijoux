@@ -11,54 +11,36 @@ import {client} from "../../helper-functions/fetchFromAPI";
 export function UserCartItemsList() {
 
     const {
-        cart, setCart, cartItems, setCartItems,
-        deleteLoading, setDeleteLoading, setCartItemQuantity
+        cart, cartItems, setCartItems, setCartItemQuantity
     } = useContext(UserContext)
 
+    const [deletingItem, setDeletingItem] = useState({})
 
     function handleDeleteCartItem (e) {
-        const cartItemId = e.currentTarget.value
+        const targetId = parseInt(e.currentTarget.value)
+        setDeletingItem(prev => ({...prev, [targetId]: true}))
 
-        setDeleteLoading(true)
-
-        async function deleteFromCart() {
-            try {
-                const res = await client.delete(`/cart-item/${cartItemId}/`)
-            } catch(error) {
-                console.log(error.response.data)
-            }
-        }
-
-        deleteFromCart()
-
-        setTimeout(function() {
-            setDeleteLoading(false)
-        }, 500)
-
-        onDeleteUserCartItem(cartItemId)
+        client.delete(`/cart-item/${targetId}/`)
+            .then(res => {
+                setTimeout(function() {
+                    setDeletingItem(prev => ({...prev, [targetId]: false}))
+                    deleteFromUserCart(targetId)
+                }, 500)
+            })
+            .catch(error => console.log(error.response.data))
     }
 
-    function onDeleteUserCartItem(deleteCartItemId) {
+    function deleteFromUserCart(targetId) {
 
         const updatedCartItems = cartItems?.filter(item => {
-            if (item.id !== parseInt(deleteCartItemId)) {
+            if (item.id !== targetId) {
                 return item
             } else {
                 setCartItemQuantity(cart[0].total_quantity - item.quantity)
             }
             // return item.id !== parseInt(deleteCartItemId)
         })
-        console.log(updatedCartItems)
         setCartItems(updatedCartItems)
-
-        // const updatedCart = cart[0]?.cart_items.filter(item => {
-        //     if (item.cart_item_id !== parseInt(deleteCartItemId)) {
-        //         return item
-        //     } else {
-        //         setCartItemQuantity(cart[0].total_quantity - item.quantity)
-        //     }
-        // })
-        // setCart(?????) // update cart_items & total_quantity)
     }
 
     return (
@@ -73,14 +55,10 @@ export function UserCartItemsList() {
                             <DetailRow >
                                 <RowLeft style={{fontSize: "1rem", margin: "auto 0"}}>{item.product_title}</RowLeft>
 
-                                {deleteLoading ?
-
+                                {/*{deleteLoading ?*/}
+                                {deletingItem[item.cart_item_id] ?
                                     <RowRight style={{width: "20px", height: "20px"}}>
-                                        <img
-                                            src={loading_icon}
-                                            alt='loading icon'
-                                            className='loading'
-                                        />
+                                        <img src={loading_icon} alt='loading icon' className='loading'/>
                                     </RowRight>
                                     :
                                     <>
@@ -92,13 +70,9 @@ export function UserCartItemsList() {
                                     {/*        className='loading'*/}
                                     {/*    />*/}
                                     {/*</RowRight>*/}
-                                    <button
-                                        style={{width: "20px", height: "20px", background: "none", padding: "0", margin: "auto 0", border: "none", cursor: "pointer"}}
-                                        onClick={handleDeleteCartItem}
-                                        value={item.cart_item_id}
-                                    >
+                                    <DeleteButton onClick={handleDeleteCartItem} value={item.cart_item_id}>
                                         <img src={delete_icon} alt="delete icon" style={{width: "100%"}}/>
-                                    </button>
+                                    </DeleteButton>
                                     </>
                                 }
 
@@ -164,4 +138,14 @@ export const RowLeft = styled.div`
 export const RowRight = styled.div`
   //right: 0;
   margin: auto 0
+`
+
+export const DeleteButton = styled.button`
+  width: 20px;
+  height: 20px;
+  background: none;
+  padding: 0;
+  margin: auto 0;
+  border: none;
+  cursor: pointer;
 `
