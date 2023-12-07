@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import {DarkButton} from "../../components/buttons";
+import {useContext} from "react";
+import {UserContext} from "../../global/user-context/UserContext";
 
-export function UserAnonymousCartFooter({shoppingCartItems}) {
+export function UserAnonymousCartFooter() {
+
+    const {shoppingCartItems} = useContext(UserContext)
 
     const {totalQuantity, totalCost} = shoppingCartItems.reduce((accumulator, currentItem) => {
         // console.log(accumulator.totalQuantity, accumulator.totalCost)
