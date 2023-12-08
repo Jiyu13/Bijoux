@@ -76,7 +76,7 @@ function App() {
         }, 0)
         setTotalCartQuantity(itemQuantity)
 
-    }, []);
+    }, [shoppingCartItemQuantity]);
 
     // ========================== get cart  ==========================
     useEffect(() => {
