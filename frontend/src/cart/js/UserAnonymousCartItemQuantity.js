@@ -2,8 +2,9 @@ import {useContext, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import styled from "styled-components";
 import {client} from "../../helper-functions/fetchFromAPI";
+import loading_icon from "../icons/loading_icon.svg";
 
-export function UserAnonymousCartItemQuantity({item}) {
+export function UserAnonymousCartItemQuantity({item, loading_icon, updatingItem, setUpdatingItem}) {
 
     const {shoppingCartItems, setShoppingCartItems,
         shoppingCartItemQuantity, setShoppingCartItemQuantity
@@ -13,35 +14,42 @@ export function UserAnonymousCartItemQuantity({item}) {
 
     // console.log(item)
     function handleUpdateItemQuantity(action) {
-        if (action === "increase") {
-            setItemQuantity(prev => prev + 1)
 
-            const updatedItems = shoppingCartItems?.map(i => {
-                 if (i.product.product_id === item.product.product_id) {
-                    return {...i, quantity: i.quantity + 1, total: i.total + i.product.product_price}
-                }
-                return i
-            })
-            setShoppingCartItems(updatedItems)
-            localStorage.setItem('shopping_cart_items', JSON.stringify(updatedItems))
-            setShoppingCartItemQuantity(prev => prev + 1)
+        setUpdatingItem(item.product.product_id)
 
-        } else {
-            const currentQuantity = item.quantity
-            if (currentQuantity !== 1) {
-                setItemQuantity(prev => prev - 1)
+        setTimeout(function() {
+            setUpdatingItem(null)
+
+            if (action === "increase") {
+                setItemQuantity(prev => prev + 1)
 
                 const updatedItems = shoppingCartItems?.map(i => {
                      if (i.product.product_id === item.product.product_id) {
-                        return {...i, quantity: i.quantity - 1, total: i.total - i.product.product_price}
+                        return {...i, quantity: i.quantity + 1, total: i.total + i.product.product_price}
                     }
                     return i
                 })
                 setShoppingCartItems(updatedItems)
                 localStorage.setItem('shopping_cart_items', JSON.stringify(updatedItems))
                 setShoppingCartItemQuantity(prev => prev + 1)
+
+            } else {
+                const currentQuantity = item.quantity
+                if (currentQuantity !== 1) {
+                    setItemQuantity(prev => prev - 1)
+
+                    const updatedItems = shoppingCartItems?.map(i => {
+                         if (i.product.product_id === item.product.product_id) {
+                            return {...i, quantity: i.quantity - 1, total: i.total - i.product.product_price}
+                        }
+                        return i
+                    })
+                    setShoppingCartItems(updatedItems)
+                    localStorage.setItem('shopping_cart_items', JSON.stringify(updatedItems))
+                    setShoppingCartItemQuantity(prev => prev + 1)
+                }
             }
-        }
+        }, 500)
 
     }
 
