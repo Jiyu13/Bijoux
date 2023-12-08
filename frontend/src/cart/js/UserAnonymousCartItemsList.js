@@ -6,6 +6,7 @@ import { CartItemDetail, CartItemImg, CartItemsContainer, CartItemWrapper,
 import {useContext, useRef, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import loading_icon from "../icons/loading_icon.svg";
+import {UserAnonymousCartItemQuantity} from "./UserAnonymousCartItemQuantity";
 
 export function UserAnonymousCartItemsList({shoppingCartItems}) {
 
@@ -73,7 +74,7 @@ export function UserAnonymousCartItemsList({shoppingCartItems}) {
 
                             <DetailRow>
                                 <RowLeft>
-                                    <CartItemQuantity cartProductQuantity={item.quantity}/>
+                                    <UserAnonymousCartItemQuantity item={item} />
                                 </RowLeft>
                                 <RowRight>${item.product.product_price * item.quantity}</RowRight>
                             </DetailRow>
