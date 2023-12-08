@@ -26,15 +26,27 @@ export function UserAnonymousCartItemQuantity({item}) {
             localStorage.setItem('shopping_cart_items', JSON.stringify(updatedItems))
             setShoppingCartItemQuantity(prev => prev + 1)
 
+        } else {
+            const currentQuantity = item.quantity
+            if (currentQuantity !== 1) {
+                setItemQuantity(prev => prev - 1)
+
+                const updatedItems = shoppingCartItems?.map(i => {
+                     if (i.product.product_id === item.product.product_id) {
+                        return {...i, quantity: i.quantity - 1, total: i.total - i.product.product_price}
+                    }
+                    return i
+                })
+                setShoppingCartItems(updatedItems)
+                localStorage.setItem('shopping_cart_items', JSON.stringify(updatedItems))
+                setShoppingCartItemQuantity(prev => prev + 1)
+            }
         }
 
     }
 
     function handleDecrease(e) {
-        console.log(item)
-        console.log("decrease", e.target.value)
-        // console.log(item.quantity)
-        // setAddToCartQuantity(prev => prev - 1)
+        handleUpdateItemQuantity(e.target.value)
     }
     function handleIncrease(e) {
         handleUpdateItemQuantity(e.target.value)
@@ -82,6 +94,8 @@ const QuantityControl = styled.div`
     text-align: center;
     font-size: 1.5rem;
     //margin: 6px 0 24px;
+  
+    
 `
 
 const ControlIncrease = styled.button`
