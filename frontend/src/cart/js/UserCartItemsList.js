@@ -105,6 +105,7 @@ export const CartItemsContainer = styled.ul`
   //overflow-y: scroll;
 `
 export const CartItemWrapper = styled.li`
+  position: relative; /* Set position to relative */
   display: flex;
   gap: 12px;
   //margin: 12px 0;
@@ -148,4 +149,17 @@ export const DeleteButton = styled.button`
   margin: auto 0;
   border: none;
   cursor: pointer;
+`
+
+export const LoadingOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1; /* Ensure it appears on top */
 `
