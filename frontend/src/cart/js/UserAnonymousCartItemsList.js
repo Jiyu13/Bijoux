@@ -69,15 +69,15 @@ export function UserAnonymousCartItemsList({shoppingCartItems}) {
                             <DetailRow >
                                 <RowLeft style={{fontSize: "1rem"}}>{item.product.product_title}</RowLeft>
 
-                                {deletingItem === item.product.product_id ?
-                                    <RowRight style={{width: "20px", height: "20px"}}>
-                                        <img src={loading_icon} alt='loading icon' className='loading'/>
-                                    </RowRight>
-                                    :
+                                {/*{deletingItem === item.product.product_id ?*/}
+                                {/*    <RowRight style={{width: "20px", height: "20px"}}>*/}
+                                {/*        <img src={loading_icon} alt='loading icon' className='loading'/>*/}
+                                {/*    </RowRight>*/}
+                                {/*    :*/}
                                     <DeleteButton onClick={handleDeleteShoppingCartItem} value={item.product.product_id}>
                                         <img src={delete_icon} alt="delete icon" style={{width: "100%"}}/>
                                     </DeleteButton>
-                                }
+                                {/*}*/}
 
                             </DetailRow>
 
