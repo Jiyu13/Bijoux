@@ -9,9 +9,9 @@ import loading_icon from "../icons/loading_icon.svg";
 import {UserAnonymousCartItemQuantity} from "./UserAnonymousCartItemQuantity";
 import {CartItemLoadingOverlay} from "./CartItemLoadingOverlay";
 
-export function UserAnonymousCartItemsList({shoppingCartItems}) {
+export function UserAnonymousCartItemsList() {
 
-    const {setTotalCartQuantity, setShoppingCartItems} = useContext(UserContext)
+    const {setTotalCartQuantity, shoppingCartItems, setShoppingCartItems} = useContext(UserContext)
 
     const [deletingItem, setDeletingItem] = useState(null)
     const [updatingItem, setUpdatingItem] = useState(null)
