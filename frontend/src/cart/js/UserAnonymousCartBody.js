@@ -12,7 +12,7 @@ export function UserAnonymousCartBody() {
             {shoppingCartItems?.length === 0 ?
                 <EmptyCart/>
                 :
-                <UserAnonymousCartItemsList shoppingCartItems={shoppingCartItems}/>
+                <UserAnonymousCartItemsList/>
             }
         </>
 
