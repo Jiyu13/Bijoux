@@ -7,12 +7,14 @@ import {useContext, useRef, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import loading_icon from "../icons/loading_icon.svg";
 import {UserAnonymousCartItemQuantity} from "./UserAnonymousCartItemQuantity";
+import {CartItemLoadingOverlay} from "./CartItemLoadingOverlay";
 
 export function UserAnonymousCartItemsList({shoppingCartItems}) {
 
     const {setTotalCartQuantity, setShoppingCartItems} = useContext(UserContext)
 
     const [deletingItem, setDeletingItem] = useState(null)
+    const [updatingItem, setUpdatingItem] = useState(null)
 
     function handleDeleteShoppingCartItem(e) {
         const targetId =  parseInt(e.currentTarget.value)
@@ -55,6 +57,13 @@ export function UserAnonymousCartItemsList({shoppingCartItems}) {
 
                 return (
                     <CartItemWrapper key={index}>
+
+                        {updatingItem === item.product.product_id || deletingItem === item.product.product_id ?
+                            <CartItemLoadingOverlay/>
+                            :
+                            ""
+                        }
+
                         <CartItemImg src={item.product.product_img} alt=""/>
                         <CartItemDetail>
                             <DetailRow >
@@ -74,7 +83,12 @@ export function UserAnonymousCartItemsList({shoppingCartItems}) {
 
                             <DetailRow>
                                 <RowLeft>
-                                    <UserAnonymousCartItemQuantity item={item} />
+                                    <UserAnonymousCartItemQuantity
+                                        item={item}
+                                        loading_icon={loading_icon}
+                                        updatingItem={updatingItem}
+                                        setUpdatingItem={setUpdatingItem}
+                                    />
                                 </RowLeft>
                                 <RowRight>${item.product.product_price * item.quantity}</RowRight>
                             </DetailRow>
