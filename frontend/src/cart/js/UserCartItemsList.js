@@ -1,8 +1,6 @@
 import delete_icon from "../icons/delete.svg";
-import loading_icon from "../icons/loading_icon.svg"
 import "../css/cart-page.css"
 
-import {CartItemQuantity} from "./CartItemQuantity";
 import styled from "styled-components";
 import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
