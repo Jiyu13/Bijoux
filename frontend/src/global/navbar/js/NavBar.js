@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import "../css/navbar.css"
 
-import {NavLinks} from "./NavLinks"
+import {HeaderMenuLinks} from "../../header/HeaderMenuLinks"
 import {SocialMediasBackup} from "../../social-media/js/SocialMediasBackup";
 import {useContext} from "react";
 import {UserContext} from "../../user-context/UserContext";
@@ -26,7 +26,7 @@ export function NavBar() {
 
                 {isMobile || isTablet ? "" :(
                     <LinksSection>
-                        <NavLinks />
+                        <HeaderMenuLinks />
                         <Accessibility />
                     </LinksSection>
                 )}
