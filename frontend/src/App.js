@@ -28,9 +28,18 @@ import {Carousels} from "./carousels/js/Carousels";
 function App() {
     const [currentUser, setCurrentUser] = useState(null)
 
-    // const storeCartItems = JSON.parse(localStorage.getItem('shopping_cart_items'))
+    // ======================== anonymous user cart ===============================================
     const [shoppingCartItems, setShoppingCartItems] = useState(null)
     const [shoppingCartItemQuantity, setShoppingCartItemQuantity] = useState(0)
+
+    // ======================== logged in user cart ===============================================
+    const [cart, setCart] = useState(null)
+    const [openCart, setOpenCart] = useState(false)
+    const [cartItems, setCartItems] = useState(null)  // {id:.., quantity: .., cart: .., product: ..}
+    const [totalCartQuantity, setTotalCartQuantity] = useState(0)  // for logged-in / unlogged-in users
+
+    const [addToCartQuantity, setAddToCartQuantity] = useState(1)    // for updating quantity of specific item in the detail page
+    const [isMenuOpen, setMenuOpen] = useState(false)
 
     const storeIsLogin = localStorage.getItem("isLogin") === "true"
     const [isLogin, setIsLogin] = useState(storeIsLogin)
@@ -39,14 +48,7 @@ function App() {
     const [carousels, setCarousels] = useState(null)
     const [collections, setCollections] = useState(null)
 
-    const [cart, setCart] = useState(null)
-    const [openCart, setOpenCart] = useState(false)
-    const [cartItems, setCartItems] = useState(null)  // {id:.., quantity: .., cart: .., product: ..}
-    const [totalCartQuantity, setTotalCartQuantity] = useState(0)  // for logged-in / unlogged-in users
-    const [addToCartQuantity, setAddToCartQuantity] = useState(1)    // for updating quantity of specific item in the detail page
-
-    const [isMenuOpen, setMenuOpen] = useState(false)
-
+    // ====================== responsive setting =====================================
     const isLargeScreen = useMediaQuery({maxWidth: DeviceSize.desktop})
     const isSmallLaptop = useMediaQuery({maxWidth: DeviceSize.small_laptop})
     const isTablet = useMediaQuery({ maxWidth: DeviceSize.tablet })
