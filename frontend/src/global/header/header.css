@@ -1,7 +1,39 @@
+/*@media only screen and (max-width: 767px) {  !* (min-width: 640px) and   *!*/
+/*    .heading {*/
+/*        padding: 20px 1.8rem;*/
+/*        grid-template-areas: "left-icons logo icons";*/
+/*    }*/
+/*}*/
+
+/*!* ipads & tablets / smaller *!*/
+/*@media only screen and (min-width: 768px) {*/
+/*    .heading {*/
+/*        padding: 20px 3rem;*/
+/*        grid-template-areas: "logo navigation icons";*/
+/*    }*/
+/*}*/
+
+/* !*laptops*!*/
+/*@media only screen and (min-width: 990px) {*/
+/*    .heading {*/
+/*        padding: 20px 5rem;*/
+/*        grid-template-areas: "logo navigation icons";*/
+
+/*    }*/
+/*}*/
+
+/*!* desktops *!*/
+/*@media only screen and (min-width: 1280px) {*/
+/*    .heading {*/
+/*      padding: 20px 5rem;*/
+/*      column-gap: 2rem;*/
+/*      grid-template-areas: "logo navigation icons";*/
+/*    }*/
+/*}*/
+
 @media only screen and (max-width: 767px) {  /* (min-width: 640px) and   */
     .heading {
         padding: 20px 1.8rem;
-        grid-template-areas: "left-icons logo icons";
     }
 }
 
@@ -9,7 +41,6 @@
 @media only screen and (min-width: 768px) {
     .heading {
         padding: 20px 3rem;
-        grid-template-areas: "logo navigation icons";
     }
 }
 
@@ -17,8 +48,6 @@
 @media only screen and (min-width: 990px) {
     .heading {
         padding: 20px 5rem;
-        grid-template-areas: "logo navigation icons";
-
     }
 }
 
@@ -26,7 +55,5 @@
 @media only screen and (min-width: 1280px) {
     .heading {
       padding: 20px 5rem;
-      column-gap: 2rem;
-      grid-template-areas: "logo navigation icons";
     }
 }
