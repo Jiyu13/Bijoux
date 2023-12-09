@@ -1,18 +1,13 @@
 import {useContext, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import styled from "styled-components";
-import {client} from "../../helper-functions/fetchFromAPI";
-import loading_icon from "../icons/loading_icon.svg";
 
-export function UserAnonymousCartItemQuantity({item, loading_icon, updatingItem, setUpdatingItem}) {
+export function UserAnonymousCartItemQuantity({item, setUpdatingItem}) {
 
-    const {shoppingCartItems, setShoppingCartItems,
-        shoppingCartItemQuantity, setShoppingCartItemQuantity
-    } = useContext(UserContext)
+    const {shoppingCartItems, setShoppingCartItems, setShoppingCartItemQuantity} = useContext(UserContext)
 
     const [itemQuantity, setItemQuantity] = useState(item.quantity)
 
-    // console.log(item)
     function handleUpdateItemQuantity(action) {
 
         setUpdatingItem(item.product.product_id)
