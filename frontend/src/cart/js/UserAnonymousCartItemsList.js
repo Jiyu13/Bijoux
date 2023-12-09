@@ -62,10 +62,16 @@ export function UserAnonymousCartItemsList() {
                             ""
                         }
 
-                        <CartItemImg src={item.product.product_img} alt=""/>
+                        <a href={`/products/${item.product.product_id}`}>
+                            <CartItemImg src={item.product.product_img} alt={item.product.product_title}/>
+                        </a>
+
+
                         <CartItemDetail>
                             <DetailRow >
-                                <RowLeft style={{fontSize: "1rem"}}>{item.product.product_title}</RowLeft>
+                                <a href={`/products/${item.product.product_id}`} className='cart-product-title-link'>
+                                    <RowLeft style={{fontSize: "1rem"}}>{item.product.product_title}</RowLeft>
+                                </a>
 
                                 {/*{deletingItem === item.product.product_id ?*/}
                                 {/*    <RowRight style={{width: "20px", height: "20px"}}>*/}

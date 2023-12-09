@@ -54,12 +54,15 @@ export function UserCartItemsList() {
                             :
                             ""
                         }
+                        <a href={`/products/${item.product_id}`}>
+                            <CartItemImg src={item.product_image} alt={item.product_title}/>
+                        </a>
 
-                        <CartItemImg src={item.product_image} alt=""/>
                         <CartItemDetail>
                             <DetailRow >
-                                <RowLeft style={{fontSize: "1rem", margin: "auto 0"}}>{item.product_title}</RowLeft>
-
+                                <a href={`/products/${item.product_id}`} className='cart-product-title-link'>
+                                    <RowLeft style={{fontSize: "1rem", margin: "auto 0"}}>{item.product_title}</RowLeft>
+                                </a>
                                 <DeleteButton onClick={handleDeleteCartItem} value={item.cart_item_id}>
                                     <img src={delete_icon} alt="delete icon" style={{width: "100%"}}/>
                                 </DeleteButton>

@@ -29,3 +29,8 @@ button:disabled {
   cursor: not-allowed;
   pointer-events: all !important;
 }
+
+.cart-product-title-link {
+    text-decoration: none;
+    color: inherit;
+}
