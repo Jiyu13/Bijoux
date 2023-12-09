@@ -7,11 +7,7 @@ export function UserCartItemQuantity({item, setUpdatingItem}) {
     // item -> cart[0].cart_items -> {cart_item_id,  product_id, product_image,  product_price, product_title, quantity}
     // cartItems -> cartItem ->  {id, quantity, cart, product}
 
-    const {isLogin, addToCartQuantity, setAddToCartQuantity, cart,
-        cartItems, setCartItems, setTotalCartQuantity} = useContext(UserContext)
-
-
-    // console.log(item, cartItems)
+    const {cartItems, setCartItems, setTotalCartQuantity} = useContext(UserContext)
 
     const [itemQuantity, setItemQuantity] = useState(item.quantity)
 
@@ -20,29 +16,34 @@ export function UserCartItemQuantity({item, setUpdatingItem}) {
         setUpdatingItem(item.product_id)
 
         setTimeout(function() {
+            // execute "put/patch request to update cart item in the backend
             if (action === "increase") {
-                // execute "put/patch request to update cart item in the backend
                 handleIncrease()
             } else {
-                return
+                handleDecrease()
             }
 
             setUpdatingItem(null)
         }, 500)
-
-
     }
 
-    // function patchItem
-
     function handleDecrease() {
-        // console.log("decrease", e.target.value)
-        // handleUpdateItemQuantity(e.target.value)
-        // console.log(cartProductQuantity)
-        // setAddToCartQuantity(prev => prev - 1)
+        const decreasedQuantity = {quantity: item.quantity - 1}
 
+        client.patch(`cart-item/${item.cart_item_id}/`, decreasedQuantity)
+            .then(res => {
+                const updatedIncreaseQuantity = cartItems.map(i => {
+                    if (i.id === item?.cart_item_id) {
+                        return {...i, quantity: res.data}
+                    }
+                    return i
+                })
+                setCartItems(updatedIncreaseQuantity)
+            })
+            .catch(error => console.log(error))
 
-
+        setItemQuantity(prev => prev - 1)  // update target item quantity
+        setTotalCartQuantity(prev => prev - 1)  // update total quantity for all items
     }
     function handleIncrease() {
 
