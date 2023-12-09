@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {useContext, useEffect} from "react";
 import {UserContext} from "../user-context/UserContext";
 
-export function HeaderLinkMenu() {
+export function HeaderSlideMenu() {
 
     const {isMenuOpen, setMenuOpen, setOpenCart, openCart} = useContext(UserContext)
     function handleOpenMenu() {
