@@ -7,14 +7,15 @@ import styled from "styled-components";
 import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import {client} from "../../helper-functions/fetchFromAPI";
+import {UserCartItemQuantity} from "./UserCartItemQuantity";
+import {CartItemLoadingOverlay} from "./CartItemLoadingOverlay";
 
 export function UserCartItemsList() {
 
-    const {
-        cart, cartItems, setCartItems, setTotalCartQuantity
-    } = useContext(UserContext)
+    const {cart, cartItems, setCartItems, setTotalCartQuantity} = useContext(UserContext)
 
     const [deletingItem, setDeletingItem] = useState({})
+    const [updatingItem, setUpdatingItem] = useState(null)
 
     function handleDeleteCartItem (e) {
         const targetId = parseInt(e.currentTarget.value)
@@ -50,38 +51,26 @@ export function UserCartItemsList() {
 
                 return (
                     <CartItemWrapper key={index} >
+                        {updatingItem === item.product_id || deletingItem[item.cart_item_id] ?
+                            <CartItemLoadingOverlay />
+                            :
+                            ""
+                        }
+
                         <CartItemImg src={item.product_image} alt=""/>
                         <CartItemDetail>
                             <DetailRow >
                                 <RowLeft style={{fontSize: "1rem", margin: "auto 0"}}>{item.product_title}</RowLeft>
 
-                                {/*{deleteLoading ?*/}
-                                {deletingItem[item.cart_item_id] ?
-                                    <RowRight style={{width: "20px", height: "20px"}}>
-                                        <img src={loading_icon} alt='loading icon' className='loading'/>
-                                    </RowRight>
-                                    :
-                                    <>
-
-                                    {/* <RowRight style={{width: "20px", height: "20px", margin: "auto 0"}}>*/}
-                                    {/*     <img*/}
-                                    {/*        src={loading_icon}*/}
-                                    {/*        alt='deleting icon'*/}
-                                    {/*        className='loading'*/}
-                                    {/*    />*/}
-                                    {/*</RowRight>*/}
-                                    <DeleteButton onClick={handleDeleteCartItem} value={item.cart_item_id}>
-                                        <img src={delete_icon} alt="delete icon" style={{width: "100%"}}/>
-                                    </DeleteButton>
-                                    </>
-                                }
-
+                                <DeleteButton onClick={handleDeleteCartItem} value={item.cart_item_id}>
+                                    <img src={delete_icon} alt="delete icon" style={{width: "100%"}}/>
+                                </DeleteButton>
 
                             </DetailRow>
 
                             <DetailRow>
                                 <RowLeft>
-                                    <CartItemQuantity cartProductQuantity={item.quantity}/>
+                                    <UserCartItemQuantity item={item} setUpdatingItem={setUpdatingItem}/>
                                 </RowLeft>
                                 <RowRight>${item.product_price * item.quantity}</RowRight>
                             </DetailRow>
