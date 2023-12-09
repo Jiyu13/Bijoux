@@ -1,12 +1,80 @@
+// import styled from "styled-components";
+// import "./header.css"
+//
+// import {Link} from "react-router-dom";
+// import {HeaderMenuLinks} from "../navbar/js/HeaderMenuLinks";
+// import {Accessibility} from "../../accessibility/Accessibility";
+// import {useContext} from "react";
+// import {UserContext} from "../user-context/UserContext";
+// import {HeaderSlideMenu} from "./HeaderSlideMenu";
+//
+// export function Header() {
+//
+//     const {isMobile, isTablet} = useContext(UserContext)
+//
+//     return (
+//         <HeaderContainer className="heading">
+//             {/* ============================== header menu section ============================== */}
+//             {isMobile || isTablet ? <HeaderSlideMenu />: ""}
+//
+//             {/* ============================== logo section ==============================*/}
+//             <LogoSection>
+//                 <Link to="/" >
+//                     <div style={{whiteSpace: "nowrap"}}>CompanyLogo</div>
+//                 </Link>
+//             </LogoSection>
+//
+//             {/* ============================== navlinks section ==============================*/}
+//             {isMobile || isTablet ?
+//                 " "
+//                 :
+//                  <LinksSection>
+//                     <HeaderMenuLinks />
+//                 </LinksSection>
+//             }
+//
+//
+//             {/* ============================== accessibility section ============================== */}
+//             <Accessibility />
+//         </HeaderContainer>
+//     )
+// }
+//
+// const HeaderContainer = styled.header`
+//   display: grid;
+//   box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
+//   position: fixed;
+//   z-index: 1000;
+//   height: 108px;
+//   width: 100%;
+//   top: 0;
+//   left: 0;
+//   background-color: #fff;
+//   box-sizing: border-box;
+// `
+//
+// const LogoSection = styled.div`
+//   grid-area: logo;
+//   margin: auto 0;
+// `
+//
+// const LinksSection = styled.div`
+//   margin: auto 0;
+//   grid-area: navigation;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `
+
 import styled from "styled-components";
 import "./header.css"
 
 import {Link} from "react-router-dom";
-import {NavLinks} from "../navbar/js/NavLinks";
+import {HeaderMenuLinks} from "./HeaderMenuLinks";
 import {Accessibility} from "../../accessibility/Accessibility";
 import {useContext} from "react";
 import {UserContext} from "../user-context/UserContext";
-import {HeaderLinkMenu} from "./HeaderLinkMenu";
+import {HeaderSlideMenu} from "./HeaderSlideMenu";
 
 export function Header() {
 
@@ -14,54 +82,45 @@ export function Header() {
 
     return (
         <HeaderContainer className="heading">
-            {/* ============================== header menu section ============================== */}
-            {isMobile || isTablet ? <HeaderLinkMenu />: ""}
+            <HeaderNav>
+                {/* ============================== header menu section ============================== */}
+                {isMobile || isTablet ? <HeaderSlideMenu />: ""}
 
-            {/* ============================== logo section ==============================*/}
-            <LogoSection>
-                <Link to="/" >
-                    <div style={{whiteSpace: "nowrap"}}>CompanyLogo</div>
-                </Link>
-            </LogoSection>
+                {/* ============================== logo section ==============================*/}
+                <LogoSection>
+                    <Link to="/" >
+                        <div style={{whiteSpace: "nowrap"}}>CompanyLogo</div>
+                    </Link>
+                </LogoSection>
+                <Accessibility/>
+            </HeaderNav>
 
-            {/* ============================== navlinks section ==============================*/}
-            {isMobile || isTablet ?
-                " "
-                :
-                 <LinksSection>
-                    <NavLinks />
-                </LinksSection>
-            }
-
-
-            {/* ============================== accessibility section ============================== */}
-            <Accessibility />
+            {/* ============================== header menu links section ==============================*/}
+            {isMobile || isTablet ? " " : <HeaderMenuLinks />}
         </HeaderContainer>
     )
 }
 
 const HeaderContainer = styled.header`
-  display: grid;
   box-shadow: rgba(0, 0, 0, 0.04) 0px -1px 2px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 3px 4px;
   position: fixed;
   z-index: 1000;
-  height: 108px;
   width: 100%;
   top: 0;
   left: 0;
   background-color: #fff;
   box-sizing: border-box;
+  margin: auto 0;
+`
+
+const HeaderNav = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
 
 const LogoSection = styled.div`
-  grid-area: logo;
   margin: auto 0;
-`
-
-const LinksSection = styled.div`
-  margin: auto 0;
-  grid-area: navigation;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 133px;
+  height: 60px;
+  background-color: antiquewhite;
 `
