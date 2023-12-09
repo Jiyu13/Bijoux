@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import "../css/navbar.css"
+import "../navbar/css/navbar.css"
 
 import {NavLink} from "react-router-dom";
 
-export function NavLinks() {
+export function HeaderCollectionMenuLinks() {
 
     const activeStyles = {
         textDecoration: "none",
@@ -16,7 +16,7 @@ export function NavLinks() {
     }
 
     return (
-        <NavLinksContainer>
+        <MenuContainer>
             <LinkItem>
                 <NavLink
                     className="nav"
@@ -52,11 +52,11 @@ export function NavLinks() {
             </LinkItem>
 
 
-        </NavLinksContainer>
+        </MenuContainer>
     )
 }
 
-const NavLinksContainer = styled.ul`
+const MenuContainer = styled.ul`
   list-style: none;
   display: flex;
   padding-left: 0;

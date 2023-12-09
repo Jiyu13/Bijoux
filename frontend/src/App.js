@@ -303,7 +303,7 @@ export default App;
 
 
 const Main = styled.main`
-  margin: 108px auto 0;
+  margin: 140px auto 0;
   //position: relative;
   //top: 108px;
   box-sizing: border-box;
