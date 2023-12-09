@@ -1,16 +1,15 @@
 import delete_icon from "../icons/delete.svg";
-import {CartItemQuantity} from "./CartItemQuantity";
 
 import { CartItemDetail, CartItemImg, CartItemsContainer, CartItemWrapper,
     DeleteButton,  DetailRow, RowLeft, RowRight} from "./UserCartItemsList";
-import {useContext, useRef, useState} from "react";
+import {useContext, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import {UserAnonymousCartItemQuantity} from "./UserAnonymousCartItemQuantity";
 import {CartItemLoadingOverlay} from "./CartItemLoadingOverlay";
 
 export function UserAnonymousCartItemsList() {
 
-    const {setTotalCartQuantity, shoppingCartItems, setShoppingCartItems} = useContext(UserContext)
+    const {setTotalCartQuantity, shoppingCartItems, setShoppingCartItems, setShoppingCartItemQuantity} = useContext(UserContext)
 
     const [deletingItem, setDeletingItem] = useState(null)
     const [updatingItem, setUpdatingItem] = useState(null)
@@ -39,7 +38,7 @@ export function UserAnonymousCartItemsList() {
             setShoppingCartItems(updatedShoppingCartItems)
             localStorage.setItem('shopping_cart_items', JSON.stringify(updatedShoppingCartItems))
 
-            setTotalCartQuantity(prev => prev - deleteItemQuantity)
+            setShoppingCartItemQuantity(prev => prev - deleteItemQuantity)
 
         } catch(error) {
             console.log("Product doesn't exist.")

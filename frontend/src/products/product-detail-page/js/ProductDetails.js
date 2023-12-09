@@ -12,9 +12,8 @@ export function ProductDetails({productDetail}) {
 
     const {
         isLogin, isMobile, cart,
-        cartItems, setCartItems,
-        totalCartQuantity, setTotalCartQuantity,
-        shoppingCartItems, setShoppingCartItems,
+        cartItems, setCartItems,setTotalCartQuantity,
+        shoppingCartItems, setShoppingCartItems, setShoppingCartItemQuantity,
         addToCartQuantity,
     } = useContext(UserContext)
 
@@ -84,7 +83,7 @@ export function ProductDetails({productDetail}) {
                 localStorage.setItem('shopping_cart_items', JSON.stringify(newShoppingCartItems));
 
             }
-            setTotalCartQuantity(prev => prev + addToCartQuantity)
+            setShoppingCartItemQuantity(prev => prev + addToCartQuantity) // change to shoppingCartItemQuantity, setShoppingCartItemQuantity
         } else {
             const newCartItem = {
                 product_id: productDetail?.id,
