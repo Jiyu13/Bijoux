@@ -74,7 +74,7 @@ function App() {
         const itemQuantity = storedCartItems.reduce((accumulator, currentItem) => {
             return accumulator + currentItem.quantity;
         }, 0)
-        setTotalCartQuantity(itemQuantity)
+        setShoppingCartItemQuantity(itemQuantity)
 
     }, [shoppingCartItemQuantity]);
 
