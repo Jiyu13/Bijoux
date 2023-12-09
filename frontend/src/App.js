@@ -1,24 +1,17 @@
 import { useState, useEffect } from "react"
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
-
-
 import {useMediaQuery} from "react-responsive";
 import {DeviceSize} from "./global/responsive";
-import {UserContext} from "./global/user-context/UserContext";
-
+import {UserContext} from "./global/user-context/UserContext"
+import {Provider} from "react-redux";
+import store from "./filter/filter-redux/store/store";
 
 import {client} from "./helper-functions/fetchFromAPI"
 
 import {Footer} from './global/footer/Footer'
-import {NavBar} from "./global/navbar/js/NavBar";
-import {MobileAccessibility} from "./accessibility/MobileAccessibility";
 import {fetchFromAPI} from "./helper-functions/fetchFromAPI";
 import {Home} from "./pages/js/Home";
-import {ShopAllPage} from "./pages/js/ShopAllPage";
-
-import {Provider} from "react-redux";
-import store from "./filter/filter-redux/store/store";
 import {ProductPage} from "./products/product-detail-page/js/ProductPage";
 import {Login} from "./login-logout/js/Login";
 import {CreateAccount} from "./account/CreateAccount";
