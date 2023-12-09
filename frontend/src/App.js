@@ -205,7 +205,7 @@ function App() {
                 <MenuSlide />
                 <Header/>
 
-                <Main>
+                <Main style={{margin: isMobile || isTablet ? "100px auto 0" : "140px auto 0"}}>
                     <Routes>
                         <Route
                             exact
@@ -303,8 +303,5 @@ export default App;
 
 
 const Main = styled.main`
-  margin: 140px auto 0;
-  //position: relative;
-  //top: 108px;
   box-sizing: border-box;
 `

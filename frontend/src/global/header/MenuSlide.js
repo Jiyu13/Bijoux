@@ -38,7 +38,7 @@ export function MenuSlide() {
         {
             isMenuOpen && (isMenuOpen || isTablet) ?
 
-                <ModalContainer style={{zIndex: "1100", top:"108px"}}>
+                <ModalContainer style={{zIndex: "1100", top:"100px"}}>
                     <MenuModalDialog style={{width: ModalDialogWidth}}>
                         <div style={{position: "relative", display: "flex", flexDirection: "column" }}>
                             <ModalBody style={{padding: "0"}}>
