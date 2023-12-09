@@ -5,7 +5,6 @@ import { CartItemDetail, CartItemImg, CartItemsContainer, CartItemWrapper,
     DeleteButton,  DetailRow, RowLeft, RowRight} from "./UserCartItemsList";
 import {useContext, useRef, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
-import loading_icon from "../icons/loading_icon.svg";
 import {UserAnonymousCartItemQuantity} from "./UserAnonymousCartItemQuantity";
 import {CartItemLoadingOverlay} from "./CartItemLoadingOverlay";
 
@@ -85,7 +84,6 @@ export function UserAnonymousCartItemsList() {
                                 <RowLeft>
                                     <UserAnonymousCartItemQuantity
                                         item={item}
-                                        loading_icon={loading_icon}
                                         updatingItem={updatingItem}
                                         setUpdatingItem={setUpdatingItem}
                                     />
