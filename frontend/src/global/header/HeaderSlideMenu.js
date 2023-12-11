@@ -23,7 +23,6 @@ const MenuContainer = styled.div`
   grid-area: left-icons;
   display: flex;
   align-items: center;
-  grid-area: left-icons;
 `
 
 const Img = styled.img`

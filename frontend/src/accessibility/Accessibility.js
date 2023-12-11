@@ -3,9 +3,6 @@ import user_icon from "./icons/user_icon.svg"
 import shopping_bag from './icons/shopping_bag.svg'
 import search_icon from './icons/search_icon.svg'
 
-// import expand_more_black_24 from "./icons/expand_more_black_24dp.svg"
-// import {SearchBar} from "../global/search-bar/SearchBar";
-// import search_icon from "../global/search-bar/icons/search_black_24dp.svg";
 
 import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
