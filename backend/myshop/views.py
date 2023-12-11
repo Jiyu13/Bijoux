@@ -540,11 +540,14 @@ class CollectionListView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CollectionDetailView(RetrieveAPIView):
+class CollectionDetailView(APIView):
     permission_classes = [IsSuperUserOrReadOnly]
 
-    queryset = Collection.objects.all().prefetch_related("product_set")
-    serializer_class = CollectionSerializer
+    def get(self, request, *args, **kwargs):
+        collection_name = " ".join(self.kwargs["collection_name"].split("-")).title()
+        queryset = Collection.objects.filter(collection_name=collection_name).prefetch_related("product_set")
+        serializer_class = CollectionSerializer(queryset, many=True)
+        return Response(serializer_class.data)
 
 
 # ============================= Material =============================
