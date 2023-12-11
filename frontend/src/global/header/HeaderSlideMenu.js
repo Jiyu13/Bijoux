@@ -1,12 +1,12 @@
 import menu_icon from "./icons/menu_icon.svg"
 import close_menu_icon from './icons/close_icon.svg'
 import styled from "styled-components";
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import {UserContext} from "../user-context/UserContext";
 
 export function HeaderSlideMenu() {
 
-    const {isMenuOpen, setMenuOpen, setOpenCart, openCart} = useContext(UserContext)
+    const {isMenuOpen, setMenuOpen, setOpenCart} = useContext(UserContext)
     function handleOpenMenu() {
         setMenuOpen(!isMenuOpen)
         setOpenCart(false)

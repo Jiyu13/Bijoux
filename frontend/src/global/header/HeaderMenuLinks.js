@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import "../navbar/css/navbar.css"
+// import "../navbar/css/navbar.css"
 
 import {NavLink} from "react-router-dom";
 
@@ -42,7 +42,7 @@ export function HeaderMenuLinks() {
 
             <LinkItem>
                 <NavLink
-                    to="/earrings"
+                    to="/shop/earrings"
                     style={ ({ isActive}) =>
                         isActive ? activeStyles : normalStyles
                     }
@@ -52,7 +52,7 @@ export function HeaderMenuLinks() {
             </LinkItem>
             <LinkItem>
                 <NavLink
-                    to="/rings"
+                    to="/shop/rings"
                     style={ ({ isActive}) =>
                         isActive ? activeStyles : normalStyles
                     }
@@ -62,7 +62,7 @@ export function HeaderMenuLinks() {
             </LinkItem>
             <LinkItem>
                 <NavLink
-                    to="/necklaces"
+                    to="/shop/necklaces"
                     style={ ({ isActive}) =>
                         isActive ? activeStyles : normalStyles
                     }
@@ -72,7 +72,7 @@ export function HeaderMenuLinks() {
             </LinkItem>
             <LinkItem>
                 <NavLink
-                    to="/bracelets"
+                    to="/shop/bracelets"
                     style={ ({ isActive}) =>
                         isActive ? activeStyles : normalStyles
                     }
@@ -82,7 +82,7 @@ export function HeaderMenuLinks() {
             </LinkItem>
             <LinkItem>
                 <NavLink
-                    to="/new-arrivals"
+                    to="/shop/new-arrivals"
                     style={ ({ isActive}) =>
                         isActive ? activeStyles : normalStyles
                     }
@@ -92,7 +92,7 @@ export function HeaderMenuLinks() {
             </LinkItem>
             <LinkItem>
                 <NavLink
-                    to="/best-sellers"
+                    to="/shop/best-sellers"
                     style={ ({ isActive}) =>
                         isActive ? activeStyles : normalStyles
                     }
@@ -124,15 +124,13 @@ const MenuContainer = styled.ul`
   align-items: center;
   margin: 0;
   height: 40px;
+  gap: 10px;
+  justify-content: space-between;
+  //flex-wrap: wrap;
 `
 
 const LinkItem = styled.li`
-  margin: 0 10px;
   white-space: nowrap;
-  
-  &:first-child {
-    margin-left: 0;
-  }
   
   &:hover {
     text-decoration: underline;

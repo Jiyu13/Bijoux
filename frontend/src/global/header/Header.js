@@ -13,22 +13,24 @@ export function Header() {
     const {isMobile, isTablet} = useContext(UserContext)
 
     return (
-        <HeaderContainer className="heading">
-            <HeaderNav>
-                {/* ============================== header menu section ============================== */}
-                {isMobile || isTablet ? <HeaderSlideMenu />: ""}
+        <HeaderContainer className="heading-container">
+            <div className="heading-wrapper" style={{  margin: "0 auto"}}>
+                <HeaderNav>
+                    {/* ============================== header menu section ============================== */}
+                    {isMobile || isTablet ? <HeaderSlideMenu />: ""}
 
-                {/* ============================== logo section ==============================*/}
-                <LogoSection>
-                    <Link to="/" >
-                        <div style={{whiteSpace: "nowrap"}}>CompanyLogo</div>
-                    </Link>
-                </LogoSection>
-                <Accessibility/>
-            </HeaderNav>
+                    {/* ============================== logo section ==============================*/}
+                    <LogoSection>
+                        <Link to="/" >
+                            <div style={{whiteSpace: "nowrap"}}>CompanyLogo</div>
+                        </Link>
+                    </LogoSection>
+                    <Accessibility/>
+                </HeaderNav>
 
-            {/* ============================== header menu links section ==============================*/}
-            {isMobile || isTablet ? " " : <HeaderMenuLinks />}
+                {/* ============================== header menu links section ==============================*/}
+                {isMobile || isTablet ? " " : <HeaderMenuLinks />}
+            </div>
         </HeaderContainer>
     )
 }
@@ -42,7 +44,6 @@ const HeaderContainer = styled.header`
   left: 0;
   background-color: #fff;
   box-sizing: border-box;
-  margin: auto 0;
 `
 
 const HeaderNav = styled.div`
