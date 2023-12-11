@@ -16,11 +16,12 @@ export function Header() {
         <HeaderContainer className="heading-container">
             <div className="heading-wrapper" style={{  margin: "0 auto"}}>
                 <HeaderNav>
-                    {/* ============================== header menu section ============================== */}
-                    {isMobile || isTablet ? <HeaderSlideMenu />: ""}
 
                     {/* ============================== logo section ==============================*/}
                     <LogoSection>
+                        {/* ============================== header menu section ============================== */}
+                        {isMobile || isTablet ? <HeaderSlideMenu />: ""}
+
                         <Link to="/" >
                             <div style={{whiteSpace: "nowrap"}}>CompanyLogo</div>
                         </Link>
@@ -53,7 +54,9 @@ const HeaderNav = styled.div`
 
 const LogoSection = styled.div`
   margin: auto 0;
-  width: 133px;
+  //width: 133px;
   height: 60px;
   background-color: antiquewhite;
+  display: flex;
+  justify-content: space-between;
 `
