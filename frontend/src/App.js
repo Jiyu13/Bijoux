@@ -23,6 +23,7 @@ import {Header} from "./global/header/Header";
 import {MenuSlide} from "./global/header/MenuSlide";
 import {ShopAllPage2} from "./pages/js/ShopAllPage2";
 import {Carousels} from "./carousels/js/Carousels";
+import {ShopByCollection} from "./categories/js/ShopByCollection";
 
 
 function App() {
@@ -189,7 +190,7 @@ function App() {
     const userContextValue = {
         setCurrentUser, currentUser, isLogin, setIsLogin,
         isMobile, isTablet, isSmallLaptop, isLargeScreen,
-        carousels, products, collections,
+        carousels, products, setProducts,collections,
         cart, setCart, setOpenCart, openCart, cartItems, setCartItems, addToCartQuantity, setAddToCartQuantity,
         totalCartQuantity, setTotalCartQuantity,
         shoppingCartItems, setShoppingCartItems, shoppingCartItemQuantity, setShoppingCartItemQuantity,
@@ -210,16 +211,22 @@ function App() {
                         <Route
                             exact
                             path='/products/:id'
-                            element={
-                                <ProductPage/>
-                            }
+                            element={<ProductPage/>}
                         >
                         </Route>
+
+                        <Route
+                            exact
+                            path='/shop/:collection'
+                            element={<ShopByCollection />}
+                        >
+                        </Route>
+
                         <Route
                             exact
                             path='/shop'
                             element={
-                                <ShopAllPage2 products={products}/>
+                                <ShopAllPage2 />
                             }
                         >
                         </Route>
