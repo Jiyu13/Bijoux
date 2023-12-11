@@ -35,7 +35,7 @@ urlpatterns = [
 
     path('carousels/', CarouselListView.as_view(), name="carousels"),
     path('collections/', CollectionListView.as_view(), name="collections"),
-    path('collections/<int:pk>/', CollectionDetailView.as_view(), name="collections-detail"),
+    path('collections/<str:collection_name>/', CollectionDetailView.as_view(), name="collections-detail"),
 
     path('materials/', MaterialListView.as_view(), name="materials"),
 
