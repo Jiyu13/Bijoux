@@ -11,7 +11,7 @@ export const SubmitInputButton = styled.input`
     cursor: pointer;
     transition: .3s ease;
     margin: 2rem 0 2rem;
-    border-radius: 4px;
+    //border-radius: 4px;
     width: 100%;
   
     //border-radius: 4px;
@@ -32,7 +32,7 @@ export const CancelButton = styled.button`
     cursor: pointer;
     transition: .3s ease;
     margin: 2rem 0;
-    border-radius: 4px;
+    //border-radius: 4px;
     box-sizing: border-box;
     
     &:hover {
