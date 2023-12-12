@@ -6,8 +6,9 @@ import {SocialMedia} from "../social-media/js/SocialMedia";
 export function Footer() {
     return (
         <SocialMediaContainer>
-            <SocialMedia/>
+
             <SubFooter/>
+            <SocialMedia/>
         </SocialMediaContainer>
     )
 }

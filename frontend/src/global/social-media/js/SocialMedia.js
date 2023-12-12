@@ -7,7 +7,7 @@ import ticktok_icon from '../icons/tiktok.svg'
 export function SocialMedia() {
     return (
         <SocialMediaWrapper>
-            <SocialMediaHeader>Follow Us On Social Media</SocialMediaHeader>
+            {/*<SocialMediaHeader>Follow Us On Social Media</SocialMediaHeader>*/}
             <SocialMediaIcons>
                 <Link href="">
                     <Image src={instagram_icon} alt="instagramicon"/>
@@ -30,15 +30,15 @@ const SocialMediaWrapper = styled.footer`
     width: 85%;
     padding: 0 15px;
     margin: 65px auto 65px;
-    border-top: 1px solid rgb(234, 234, 234);
-    border-bottom: 1px solid rgb(234, 234, 234);
+    //border-top: 1px solid rgb(234, 234, 234);
+    //border-bottom: 1px solid rgb(234, 234, 234);
 `
 
-const SocialMediaHeader = styled.h2`
-  color: #c1c1c1;
-  font-size: 1rem;
-  margin: 32px 0;
-`
+// const SocialMediaHeader = styled.h2`
+//   color: #c1c1c1;
+//   font-size: 1rem;
+//   margin: 32px 0;
+// `
 const SocialMediaIcons = styled.div`
   display: flex;
   justify-content: center;
@@ -49,6 +49,6 @@ const Link = styled.a`
   
 `
 const Image = styled.img`
-  width: 24px;
+  width: 20px;
 `
 
