@@ -39,7 +39,7 @@ export function SubFooter() {
 
 const SubFooterContainer = styled.div`
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   width: 100%;
 `
 
