@@ -10,7 +10,7 @@ export function SubFooter() {
             <SubFooterNav>
                 <NavWrapper>
                     <NavLinkItem>
-                        <NavLink href="">Contact</NavLink>
+                        <NavLink href="/contact">Contact</NavLink>
                     </NavLinkItem>
                     <NavLinkItem>
                         <NavLink href="">Shipping & Returns</NavLink>
@@ -19,16 +19,16 @@ export function SubFooter() {
                         <NavLink href="">Newsletter</NavLink>
                     </NavLinkItem>
                     <NavLinkItem>
-                        <NavLink href="">Earrings</NavLink>
+                        <NavLink href="/shop/earrings">Earrings</NavLink>
                     </NavLinkItem>
                     <NavLinkItem>
-                        <NavLink href="">Rings</NavLink>
+                        <NavLink href="/shop/rings">Rings</NavLink>
                     </NavLinkItem>
                     <NavLinkItem>
-                        <NavLink href="">Necklaces</NavLink>
+                        <NavLink href="/shop/necklaces">Necklaces</NavLink>
                     </NavLinkItem>
                     <NavLinkItem>
-                        <NavLink href="">Bracelets</NavLink>
+                        <NavLink href="/shop/bracelets">Bracelets</NavLink>
                     </NavLinkItem>
                 </NavWrapper>
             </SubFooterNav>
