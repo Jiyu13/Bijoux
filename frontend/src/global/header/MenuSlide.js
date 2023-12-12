@@ -66,9 +66,71 @@ export function MenuSlide() {
                                             }
                                             onClick={handleCloseMenu}
                                         >
-                                            Shop
+                                            Shop All
                                         </NavLink>
                                     </MenuLinkList>
+
+                                    <MenuLinkList>
+                                        <NavLink
+                                            to="/shop/earrings"
+                                            style={ ({ isActive}) =>
+                                                isActive ? activeStyles : normalStyles
+                                            }
+                                        >
+                                            Earrings
+                                        </NavLink>
+                                    </MenuLinkList>
+                                    <MenuLinkList>
+                                        <NavLink
+                                            to="/shop/rings"
+                                            style={ ({ isActive}) =>
+                                                isActive ? activeStyles : normalStyles
+                                            }
+                                        >
+                                            Rings
+                                        </NavLink>
+                                    </MenuLinkList>
+                                    <MenuLinkList>
+                                        <NavLink
+                                            to="/shop/necklaces"
+                                            style={ ({ isActive}) =>
+                                                isActive ? activeStyles : normalStyles
+                                            }
+                                        >
+                                            Necklaces
+                                        </NavLink>
+                                    </MenuLinkList>
+                                    <MenuLinkList>
+                                        <NavLink
+                                            to="/shop/bracelets"
+                                            style={ ({ isActive}) =>
+                                                isActive ? activeStyles : normalStyles
+                                            }
+                                        >
+                                            Bracelets
+                                        </NavLink>
+                                    </MenuLinkList>
+                                    <MenuLinkList>
+                                        <NavLink
+                                            to="/shop/new-arrivals"
+                                            style={ ({ isActive}) =>
+                                                isActive ? activeStyles : normalStyles
+                                            }
+                                        >
+                                            New Arrivals
+                                        </NavLink>
+                                    </MenuLinkList>
+                                    <MenuLinkList>
+                                        <NavLink
+                                            to="/shop/best-sellers"
+                                            style={ ({ isActive}) =>
+                                                isActive ? activeStyles : normalStyles
+                                            }
+                                        >
+                                            Best Sellers
+                                        </NavLink>
+                                    </MenuLinkList>
+
 
                                     <MenuLinkList>
                                         <NavLink
