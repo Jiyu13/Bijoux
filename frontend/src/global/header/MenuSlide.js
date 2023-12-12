@@ -3,18 +3,19 @@ import {UserContext} from "../user-context/UserContext";
 import {ModalBody, ModalContainer} from "../../components/popupStyles";
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
+import {OverlayBackground} from "../../cart/js/OverlayBackground";
 
 export function MenuSlide() {
 
 
-    const {isMenuOpen, setMenuOpen, isMobile, isTablet} = useContext(UserContext)
+    const {isMenuOpen, setMenuOpen, isMobile, isTablet, isSmallLaptop} = useContext(UserContext)
 
     useEffect(() => {
-        if (!isMobile && !isTablet)
+        if (!isMobile && !isTablet && !isSmallLaptop)
         setMenuOpen(false)
-    }, [isMobile, isTablet])
+    }, [isMobile, isTablet, isSmallLaptop])
 
-    const ModalDialogWidth = isMobile  ? "100%" : "25rem"
+    const ModalDialogWidth = isMobile  ? "100%" : "420px"
 
     const activeStyles = {
         textDecoration: "none",
@@ -36,7 +37,7 @@ export function MenuSlide() {
         <>
 
         {
-            isMenuOpen && (isMenuOpen || isTablet) ?
+            isMenuOpen && (isMobile || isTablet || isSmallLaptop) ?
 
                 <ModalContainer style={{zIndex: "1100", top:"100px"}}>
                     <MenuModalDialog style={{width: ModalDialogWidth}}>
@@ -149,6 +150,8 @@ export function MenuSlide() {
 
                         </div>
                     </MenuModalDialog>
+                    <OverlayBackground action="side-menu" setAction={setMenuOpen}/>
+
                 </ModalContainer>
 
                 :
@@ -170,7 +173,7 @@ const MenuModalDialog = styled.div`
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
-  z-index: 999;
+  //z-index: 999;
   overflow: hidden;
   
   // slide the popup from left to right
