@@ -86,7 +86,7 @@
 @media only screen and (min-width: 990px) {
     .category-container {
         padding: 0 2rem;
-        max-width: 90%;
+        /*max-width: 90%;*/
         grid-template-columns: repeat(8, 1fr);
         grid-template-rows: repeat(4, 8vw);
     }
@@ -130,7 +130,7 @@
 @media only screen and (min-width: 1280px) {
     .category-container {
         padding: 0 5rem;
-        max-width: 85%;
+        /*max-width: 85%;*/
         grid-template-columns: repeat(8, 1fr);
         grid-template-rows: repeat(4, 8vw);
     }

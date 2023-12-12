@@ -42,5 +42,6 @@ export function ShopAllPage2() {
 
 const ProductPageContainer = styled.div`
   margin: 10rem auto 0;
+  max-width: 1440px;
   box-sizing: border-box;
 `

@@ -59,6 +59,7 @@ export function BestSellers() {
 const BestSellerContainer = styled.div`
   text-align: center;
   margin: 0 auto;
+  max-width: 1440px;
   box-sizing: border-box;
 
 `

@@ -14,7 +14,7 @@ export function Header() {
 
     return (
         <HeaderContainer className="heading-container">
-            <div className="heading-wrapper" style={{  margin: "0 auto", boxSizing: "border-box"}}>
+            <div className="heading-wrapper" style={{  margin: "0 auto", boxSizing: "border-box", maxWidth: "1440px"}}>
                 {/*<HeaderNav>*/}
 
                     {/* ============================== logo section ==============================*/}
@@ -54,7 +54,6 @@ const HeaderContainer = styled.header`
 
 const LogoSection = styled.div`
   margin: auto 0;
-  //width: 133px;
   height: 60px;
   background-color: antiquewhite;
   display: flex;

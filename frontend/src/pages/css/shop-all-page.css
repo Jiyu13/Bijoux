@@ -11,14 +11,14 @@
 }
 @media only screen and (min-width: 990px) {
     .shop-all-page {
-        padding: 0 2rem;
-        max-width: 90%;
+        padding: 0 3.5rem;
+        /*max-width: 90%;*/
     }
 }
 
 @media only screen and (min-width: 1280px) {
     .shop-all-page {
         padding: 0 5rem;
-        max-width: 85%;
+        /*max-width: 85%;*/
     }
 }

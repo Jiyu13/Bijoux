@@ -46,10 +46,10 @@ const AccessibilityContainer = styled.ul`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-self: end;
+    //justify-self: end;
     justify-content: space-between;
-    grid-area: icons;
     margin: 0;
+    padding: 0;
 `
 
 const ContainerItem = styled.li`

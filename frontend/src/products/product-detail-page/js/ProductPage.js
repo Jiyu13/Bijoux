@@ -59,7 +59,7 @@ export function ProductPage() {
     )
 }
 
-const DetailPageContainer = styled.main`
+const DetailPageContainer = styled.div`
   box-sizing: border-box;
   margin: 0 auto;
   max-width: 1440px;

@@ -1,32 +1,28 @@
 @media only screen and (max-width: 768px) {
-    .heading-container {
+    .heading-wrapper {
         padding: 20px 1rem;
     }
 }
 
 /* ipads & tablets / smaller */
 @media only screen and (min-width: 769px) and (max-width: 989px){
-    .heading-container {
+    .heading-wrapper {
         padding: 20px 2rem;
     }
 }
 
  /*laptops*/
 @media only screen and (min-width: 990px) {
-    .heading-container {
-        padding: 20px 2rem;
-    }
     .heading-wrapper {
-        max-width: 90%;
+        /*max-width: 90%;*/
+        padding: 20px 3.5rem;
+
     }
 }
 
 /* desktops */
 @media only screen and (min-width: 1280px) {
-    .heading-container {
-        padding: 20px 5.5rem;
-    }
     .heading-wrapper {
-        max-width: 85%;
+        padding: 20px 5rem;
     }
 }

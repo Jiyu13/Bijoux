@@ -63,6 +63,7 @@ const CategoryContainer = styled.div`
   display: grid;
   grid-gap: 15px;
   margin: 0 auto;
+  max-width: 1440px;
   box-sizing: border-box;
 `
 const CategoryItem = styled.figure`
