@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import "../css/social-media.css"
+import "../../global/social-media/css/social-media.css"
 
-import instagram_icon from "../icons/instagram.svg"
-import facebook_icon from "../icons/square-facebook.svg"
-import ticktok_icon from '../icons/tiktok.svg'
-import {UserContext} from "../../user-context/UserContext";
+import instagram_icon from "../../global/social-media/icons/instagram.svg"
+import facebook_icon from "../../global/social-media/icons/square-facebook.svg"
+import ticktok_icon from '../../global/social-media/icons/tiktok.svg'
+import {UserContext} from "../../global/user-context/UserContext";
 
 
 export function SocialMediasBackup() {
