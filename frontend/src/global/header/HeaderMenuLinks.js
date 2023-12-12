@@ -18,11 +18,8 @@ export function HeaderMenuLinks() {
         <MenuContainer>
             <LinkItem>
                 <NavLink
-                    className="nav"
                     to="/"
-                    style={ ({ isActive}) =>
-                        isActive ? activeStyles : normalStyles
-                    }
+                    style={ ({ isActive}) => isActive ? activeStyles : normalStyles}
                 >
                     Home
                 </NavLink>
@@ -123,7 +120,7 @@ const MenuContainer = styled.ul`
   align-items: center;
   margin: 0;
   height: 40px;
-  gap: 10px;
+  //gap: 10px;
   justify-content: space-between;
   //flex-wrap: wrap;
 `

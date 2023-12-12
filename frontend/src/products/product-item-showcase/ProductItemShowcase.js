@@ -53,7 +53,7 @@ const ShowcaseContainer = styled.div`
     margin: 0 0 18px;
     box-sizing: border-box;
     float: left;
-    padding: 6px;
+    //padding: 6px;
     &:hover {
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }

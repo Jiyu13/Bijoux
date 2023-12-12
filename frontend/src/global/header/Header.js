@@ -14,20 +14,24 @@ export function Header() {
 
     return (
         <HeaderContainer className="heading-container">
-            <div className="heading-wrapper" style={{  margin: "0 auto"}}>
-                <HeaderNav>
+            <div className="heading-wrapper" style={{  margin: "0 auto", boxSizing: "border-box"}}>
+                {/*<HeaderNav>*/}
 
                     {/* ============================== logo section ==============================*/}
                     <LogoSection>
                         {/* ============================== header menu section ============================== */}
-                        {isMobile || isTablet ? <HeaderSlideMenu />: ""}
+                        <div style={{display: "flex"}}>
+                            {isMobile || isTablet ? <HeaderSlideMenu />: ""}
 
-                        <Link to="/" >
-                            <div style={{whiteSpace: "nowrap"}}>CompanyLogo</div>
-                        </Link>
+                            <Link to="/" >
+                                <div style={{whiteSpace: "nowrap"}}>CompanyLogo</div>
+                            </Link>
+                        </div>
+
+                        <Accessibility/>
                     </LogoSection>
-                    <Accessibility/>
-                </HeaderNav>
+
+                {/*</HeaderNav>*/}
 
                 {/* ============================== header menu links section ==============================*/}
                 {isMobile || isTablet ? " " : <HeaderMenuLinks />}
@@ -45,11 +49,7 @@ const HeaderContainer = styled.header`
   left: 0;
   background-color: #fff;
   box-sizing: border-box;
-`
-
-const HeaderNav = styled.div`
-  display: flex;
-  justify-content: space-between;
+  margin: 0 auto;
 `
 
 const LogoSection = styled.div`
