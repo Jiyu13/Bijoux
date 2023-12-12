@@ -10,7 +10,7 @@ import {HeaderSlideMenu} from "./HeaderSlideMenu";
 
 export function Header() {
 
-    const {isMobile, isTablet} = useContext(UserContext)
+    const {isMobile, isTablet, isSmallLaptop} = useContext(UserContext)
 
     return (
         <HeaderContainer className="heading-container">
@@ -21,7 +21,7 @@ export function Header() {
                     <LogoSection>
                         {/* ============================== header menu section ============================== */}
                         <div style={{display: "flex"}}>
-                            {isMobile || isTablet ? <HeaderSlideMenu />: ""}
+                            {isMobile || isTablet || isSmallLaptop? <HeaderSlideMenu />: ""}
 
                             <Link to="/" >
                                 <div style={{whiteSpace: "nowrap"}}>CompanyLogo</div>
@@ -34,7 +34,7 @@ export function Header() {
                 {/*</HeaderNav>*/}
 
                 {/* ============================== header menu links section ==============================*/}
-                {isMobile || isTablet ? " " : <HeaderMenuLinks />}
+                {isMobile || isTablet  || isSmallLaptop? " " : <HeaderMenuLinks />}
             </div>
         </HeaderContainer>
     )

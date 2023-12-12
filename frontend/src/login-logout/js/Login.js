@@ -76,7 +76,7 @@ export function Login() {
 
     return (
         <FormPageContainer>
-            <div style={{padding: "100px 0 35px"}}>
+            <div style={{padding: "50px 0 35px"}}>
                 <h1>Login</h1>
             </div>
 

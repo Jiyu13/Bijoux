@@ -33,7 +33,7 @@ export function CartPage() {
                 <ModalContainer style={{zIndex: "9999"}} >
                     {/**/}
                     {!isMobile && !isTablet && (
-                        <OverlayBackground />
+                        <OverlayBackground action="cart" setAction={setOpenCart}/>
                     )}
 
                     <CartModalDialog className='cart-page'>

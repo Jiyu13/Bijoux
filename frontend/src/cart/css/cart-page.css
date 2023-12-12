@@ -1,11 +1,11 @@
 /* ipads & tablets / smaller */
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 639px) {
     .cart-page {
         width: 100%;
     }
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 640px) {
     .cart-page {
         width: 420px;
     }
