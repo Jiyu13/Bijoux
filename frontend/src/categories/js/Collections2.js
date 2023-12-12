@@ -13,43 +13,43 @@ export function Collections2() {
         <CategoryContainer className='category-container'>
 
              {/* ============= Earrings =======================   */}
-            <CategoryItem className="earrings">
+            <CategoryItem className="earrings" href={'/shop/earrings'}>
                 <Img src={earrings} alt="earrings"/>
                 <ShopButton>
-                    <ShopButtonLink>Earrings</ShopButtonLink>
+                    <ShopButtonLink href={'/shop/earrings'}>Earrings</ShopButtonLink>
                 </ShopButton>
             </CategoryItem>
 
             {/* ============= Necklace =======================   */}
-            <CategoryItem className="necklace">
+            <CategoryItem className="necklace" href={'/shop/necklaces'}>
                 <Img src={necklace} alt="necklace"/>
                 <ShopButton>
-                    <ShopButtonLink>Necklaces</ShopButtonLink>
+                    <ShopButtonLink href={'/shop/necklaces'}>Necklaces</ShopButtonLink>
                 </ShopButton>
             </CategoryItem>
 
             {/* ============= Rings ==========================   */}
-            <CategoryItem className="rings">
+            <CategoryItem className="rings" href={'/shop/rings'}>
                 <Img src={rings} alt="rings"/>
                 <ShopButton>
-                    <ShopButtonLink>Rings</ShopButtonLink>
+                    <ShopButtonLink href={'/shop/rings'}>Rings</ShopButtonLink>
                 </ShopButton>
             </CategoryItem >
 
             {/* ============= Bracelets ======================   */}
-            <CategoryItem className="bracelet">
+            <CategoryItem className="bracelet" href={'/shop/bracelets'}>
                 <Img src={bracelet} alt="bracelet"/>
                 <ShopButton>
-                    <ShopButtonLink>Bracelets</ShopButtonLink>
+                    <ShopButtonLink href={'/shop/bracelets'}>Bracelets</ShopButtonLink>
                 </ShopButton>
             </CategoryItem>
 
 
             {/* ============= New Arrivals ===================  */}
-            <CategoryItem className="new_arrivals">
+            <CategoryItem className="new_arrivals" href={'/shop/new-arrivals'}>
                 <Img src={new_arrival} alt="new arrivals"/>
                 <ShopButton>
-                    <ShopButtonLink>New Arrivals</ShopButtonLink>
+                    <ShopButtonLink href={'/shop/new-arrivals'}>New Arrivals</ShopButtonLink>
                 </ShopButton>
 
             </CategoryItem>
@@ -66,13 +66,14 @@ const CategoryContainer = styled.div`
   max-width: 1440px;
   box-sizing: border-box;
 `
-const CategoryItem = styled.figure`
+const CategoryItem = styled.a`
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block; 
     margin: 0px;
     position: relative;
+    cursor: pointer;
 `
 
 const  ShopButton = styled.div`

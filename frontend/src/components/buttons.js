@@ -84,6 +84,7 @@ export const ShopButtonLink = styled.a`
     cursor: pointer;
     font-size: 0.9rem;
     text-align: center;
+    text-decoration: none;
   
     
     &:hover{
