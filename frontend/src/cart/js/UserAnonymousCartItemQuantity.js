@@ -71,7 +71,7 @@ export function UserAnonymousCartItemQuantity({item, setUpdatingItem}) {
                 <ControlInput
                     type="text"
                     // defaultValue={quantity}
-                    value={itemQuantity}
+                    value={item.quantity}
                     onChange={handleQuantityInputChange}
                 />
                 <ControlIncrease
