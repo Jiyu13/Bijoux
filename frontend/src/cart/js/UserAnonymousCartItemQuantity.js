@@ -68,12 +68,13 @@ export function UserAnonymousCartItemQuantity({item, setUpdatingItem}) {
                 >
                     -
                 </ControlDecrease>
-                <ControlInput
-                    type="text"
-                    // defaultValue={quantity}
-                    value={item.quantity}
-                    onChange={handleQuantityInputChange}
-                />
+                {/*<ControlInput*/}
+                {/*    type="text"*/}
+                {/*    // defaultValue={quantity}*/}
+                {/*    value={item.quantity}*/}
+                {/*    onChange={handleQuantityInputChange}*/}
+                {/*/>*/}
+                <QuantitySpan>{item.quantity}</QuantitySpan>
                 <ControlIncrease
                     type="button"
                     onClick={handleIncrease}
@@ -131,4 +132,14 @@ const ControlInput = styled.input`
     &:focus {
       border: none;
     }
+`
+
+const QuantitySpan = styled.span`
+    border: none;
+    width: 54px;
+    text-align: center;
+    flex: 1;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: auto 0;
 `
