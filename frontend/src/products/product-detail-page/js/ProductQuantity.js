@@ -1,19 +1,35 @@
 import styled from "styled-components";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {UserContext} from "../../../global/user-context/UserContext";
 
 export function ProductQuantity() {
 
     const {addToCartQuantity, setAddToCartQuantity} = useContext(UserContext)
 
+    const [inputValue, setInputValue] = useState(addToCartQuantity)
+
     function handleDecrease() {
+        setInputValue(prev => prev === 0 ? 1 : prev - 1)
         setAddToCartQuantity(prev => prev - 1)
     }
     function handleIncrease() {
+        setInputValue(prev => prev === 0 ? 1 : prev + 1)
         setAddToCartQuantity(prev => prev + 1)
     }
 
-    function handleQuantityInputChange() {}
+    function handleQuantityInputChange(e) {
+        if (isNaN(e.target.value)) {
+            // not a number, increased by 1
+            setInputValue(0)
+            setAddToCartQuantity(prev => prev + 1)
+        } else if (e.target.value.length === 0) {
+            setInputValue(0)
+        } else {
+            // is a number, increased by the input value
+            setInputValue(parseInt(e.target.value))
+            setAddToCartQuantity(parseInt(e.target.value))
+        }
+    }
 
     return(
          <QuantityContainer>
@@ -29,7 +45,7 @@ export function ProductQuantity() {
                 <ControlInput
                     type="text"
                     // defaultValue={quantity}
-                    value={addToCartQuantity}
+                    value={inputValue === 0 ? "" : inputValue}
                     onChange={handleQuantityInputChange}
                 />
                 <ControlIncrease
