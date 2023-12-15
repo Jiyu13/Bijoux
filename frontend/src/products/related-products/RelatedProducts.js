@@ -20,7 +20,7 @@ export function RelatedProducts({relatedProducts}) {
                 {relatedProducts?.map((rp, index) => {
                     return (
                          <RelatedProduct key={index} className='related-product-item-li'>
-                            <Link href={`/products/${rp.id}`}>
+                            <Link href={`/products/${rp.id}/${rp.title.split(" ").join("-").toLowerCase()}`}>
                                 <ImageWrapper>
                                     <Img src={rp?.image}/>
                                 </ImageWrapper>

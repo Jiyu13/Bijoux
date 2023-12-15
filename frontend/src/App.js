@@ -210,7 +210,7 @@ function App() {
                     <Routes>
                         <Route
                             exact
-                            path='/products/:id'
+                            path='/products/:id/:product_name'
                             element={<ProductPage/>}
                         >
                         </Route>

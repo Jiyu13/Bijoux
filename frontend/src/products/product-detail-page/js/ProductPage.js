@@ -15,17 +15,17 @@ export function ProductPage() {
 
     const [productDetail, setProductDetail] = useState(null)
 
-    const id = useParams()
+    const {id} = useParams()
 
     useEffect(() => {
-        fetchFromAPI(`/products/${id.id}/`, setProductDetail)
+        fetchFromAPI(`/products/${id}/`, setProductDetail)
     }, [])
 
     const [relatedProducts, setRelatedProducts] = useState(null)
 
     useEffect(() => {
         if (productDetail && productDetail?.collection.collection_name) {
-            fetchFromAPI(`/product/${id.id}/${productDetail?.collection.collection_name}/`, setRelatedProducts)
+            fetchFromAPI(`/product/${id}/${productDetail?.collection.collection_name}/`, setRelatedProducts)
         }
     }, [productDetail]);
 

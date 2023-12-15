@@ -20,12 +20,13 @@ export function ProductItemShowcase( {product} ) {
 
     // ======================= handle redirect to product detail page ====================================
     const navigate = useNavigate()
-    function handleProductDetail() {
-        navigate(`/products/${product.id}`)
+    const formattedProductName = product.title.split(" ").join("-").toLowerCase()
+    function handleGoToProductDetail() {
+        navigate(`/products/${product.id}/${formattedProductName}`)
     }
 
     return (
-        <ShowcaseContainer className="product-item" onClick={handleProductDetail} id={product.id}>
+        <ShowcaseContainer className="product-item" onClick={handleGoToProductDetail} id={product.id}>
             <ProductImage>
                 {/*<Circle></Circle>*/}
                 {/*<FavIcon*/}
