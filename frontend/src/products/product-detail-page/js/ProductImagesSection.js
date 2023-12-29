@@ -18,7 +18,7 @@ export function ProductImagesSection({coverImage,otherImages}) {
 
             {/*================= main image ==================================*/}
             <div>
-                <img src={showcaseImage} style={{width: "100%"}}/>
+                <img src={showcaseImage} style={{width: "100%"}} alt="product image"/>
             </div>
 
 
@@ -28,7 +28,7 @@ export function ProductImagesSection({coverImage,otherImages}) {
 
                 {otherImages?.length > 0 && (
                     <ImageItem data-custom-attribute={coverImage} onClick={handleClick}>
-                        <img src={coverImage} style={{width: "100%"}}/>
+                        <img src={coverImage} style={{width: "100%"}} alt="product image"/>
                     </ImageItem>
                 )}
 
@@ -37,6 +37,7 @@ export function ProductImagesSection({coverImage,otherImages}) {
                         <ImageItem key={image.product_image} data-custom-attribute={image.product_image} onClick={handleClick}>
                             <img
                                 src={image.product_image}
+                                alt="product image"
                                 style={{width: "100%"}}
                             />
                         </ImageItem>
