@@ -206,7 +206,7 @@ function App() {
                 <MenuSlide />
                 <Header/>
 
-                <Main style={{margin: isMobile || isTablet ? "100px auto 0" : "140px auto 0"}}>
+                <Main style={{margin: isMobile || isTablet || isSmallLaptop ? "100px auto 0" : "140px auto 0"}}>
                     <Routes>
                         <Route
                             exact
