@@ -2,7 +2,7 @@ import delete_icon from "../icons/delete.svg";
 import "../css/cart-page.css"
 
 import styled from "styled-components";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import {client} from "../../helper-functions/fetchFromAPI";
 import {UserCartItemQuantity} from "./UserCartItemQuantity";
