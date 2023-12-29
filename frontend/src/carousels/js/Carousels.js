@@ -10,13 +10,11 @@ import {API_URL} from "../../helper-functions/fetchFromAPI"
 
 export function Carousels() {
 
-    const {carousels} = useContext(UserContext)
+    const {carousels, isMobile} = useContext(UserContext)
     const [currentImg, setCurrentImg] = useState(0)
     const [itemStyleTransform, setItemStyleTransform] = useState(null)
 
-    // const setActiveDot = () => {
-    //
-    // }
+    const carouselHeight = isMobile ? "36rem" : "default"
 
     useEffect(() => {
         setItemStyleTransform(`translateX(${currentImg * -100}%)`)
@@ -34,12 +32,11 @@ export function Carousels() {
 
     return (
         <div>
-
-            <CarouselContainer1 className="carousel-container">
+            <CarouselContainer1 className="carousel-container" style={{minHeight: "clamp(350px, 100vh, 450px)"}}>
                 <CarouselInner1 className="carousel-viewport">
                     <CarouselItems
                         className="items"
-                        style={{transform: itemStyleTransform}}
+                        style={{transform: itemStyleTransform, minHeight: "clamp(350px, 100vh, 450px)"}}
                     >
                         {carousels?.map((carousel, index) => {
                             return (
@@ -101,16 +98,16 @@ const CarouselContainer1 = styled.div`
   place-items: center;
   place-content: center;
   overflow: hidden;
-  max-height: clamp(450px, 50vh, 700px);
+  //max-height: clamp(450px, 100vh, 700px);
   margin: 0 auto;
   width: 100%;
-  //height: 100%;
   //color: white;
 `
 const CarouselInner1 = styled.div`
   position: relative;
   margin: 0 auto;
   overflow: hidden;
+  
   //z-index: -1;
 `
 
@@ -122,6 +119,7 @@ const CarouselItems = styled.ul`
   list-style-type: none;
   padding: 0;
   margin: 0;
+  max-height: clamp(450px, 100vh, 700px);
 `
 
 const CarouselItem = styled.li`
