@@ -4,7 +4,7 @@ import {ProductQuantity} from "./ProductQuantity";
 import {ProductAddToCart} from "./ProductAddToCart";
 import {ProductDescription} from "./ProductDescription";
 import styled from "styled-components";
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import {UserContext} from "../../../global/user-context/UserContext";
 import {client} from "../../../helper-functions/fetchFromAPI";
 
@@ -14,7 +14,7 @@ export function ProductDetails({productDetail}) {
         isLogin, isMobile, cart,
         cartItems, setCartItems,setTotalCartQuantity,
         shoppingCartItems, setShoppingCartItems, setShoppingCartItemQuantity,
-        addToCartQuantity, openCart, setOpenCart
+        addToCartQuantity, setOpenCart
     } = useContext(UserContext)
 
     // =============== update cart items for anonymous user =============================
