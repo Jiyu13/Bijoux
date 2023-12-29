@@ -55,7 +55,7 @@ export function UserAnonymousCartItemQuantity({item, setUpdatingItem}) {
         handleUpdateItemQuantity(e.target.value)
     }
 
-    function handleQuantityInputChange() {}
+    // function handleQuantityInputChange() {}
 
     return(
          <QuantityContainer>
@@ -122,17 +122,17 @@ const ControlDecrease = styled.button`
     //padding: 0 12px;
 `
 
-const ControlInput = styled.input`
-    border: none;
-    width: 54px;
-    text-align: center;
-    flex: 1;
-    font-size: 1rem;  
-    
-    &:focus {
-      border: none;
-    }
-`
+// const ControlInput = styled.input`
+//     border: none;
+//     width: 54px;
+//     text-align: center;
+//     flex: 1;
+//     font-size: 1rem;
+//
+//     &:focus {
+//       border: none;
+//     }
+// `
 
 const QuantitySpan = styled.span`
     border: none;

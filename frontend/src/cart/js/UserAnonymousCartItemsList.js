@@ -9,7 +9,7 @@ import {CartItemLoadingOverlay} from "./CartItemLoadingOverlay";
 
 export function UserAnonymousCartItemsList() {
 
-    const {setTotalCartQuantity, shoppingCartItems, setShoppingCartItems, setShoppingCartItemQuantity} = useContext(UserContext)
+    const {shoppingCartItems, setShoppingCartItems, setShoppingCartItemQuantity} = useContext(UserContext)
 
     const [deletingItem, setDeletingItem] = useState(null)
     const [updatingItem, setUpdatingItem] = useState(null)
