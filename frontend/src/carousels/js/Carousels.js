@@ -43,7 +43,7 @@ export function Carousels() {
                                  <CarouselItem key={index} className="item">
                                     <Img src={`${API_URL}${carousel.image}`} alt={carousel.theme}/>
                                      <SloganText>
-                                         <Text>{carousel.caption}</Text>
+                                         {/*<Text>{carousel.caption}</Text>*/}
                                          <ShopButton>Shop Now</ShopButton>
                                     </SloganText>
                                 </CarouselItem>
@@ -139,7 +139,7 @@ const Img = styled.img`
 
 const SloganText = styled.div`
     position: absolute;
-    top: 50%;
+    top: 80%;
     left: 50%;
     transform: translate(-50%, -50%);
     //background-color: #282c34;
@@ -150,7 +150,7 @@ const SloganText = styled.div`
 `
 
 const Text = styled.div`
-    font-size: 1.5rem; /* You can customize this value */
+    font-size: 2rem; /* You can customize this value */
     font-weight: bolder;
     line-height: 1.5rem;
 `
@@ -160,7 +160,7 @@ const  ShopButton = styled.div`
     background-color: rgba(40,44,52, 0.6);
     //width: 30%;
     display: inline-block;
-    padding: 12px 20px;
+    padding: 12px 30px;
     margin: 32px auto 0;
     cursor: pointer;
     font-size: 0.9rem;
