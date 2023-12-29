@@ -1,6 +1,4 @@
-import {FormPageContainer} from "../components/formStyles";
-import {ModalContainer, ModalContent, ModalDialog, ModalFooter} from "../components/popupStyles";
-import {DarkButton} from "../components/buttons";
+import { ModalContent} from "../components/popupStyles";
 
 export function MessageSentSuccessfully() {
     return (
