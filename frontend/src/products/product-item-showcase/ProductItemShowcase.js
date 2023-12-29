@@ -5,7 +5,7 @@ import './product-item.css'
 // import favorite_border_black_24dp from "./icons/favorite_border_black_24dp.svg"
 // import favorite_white_24dp from "./icons/favorite_white_24dp.svg"
 
-import {useState} from "react";
+// import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 export function ProductItemShowcase( {product} ) {
