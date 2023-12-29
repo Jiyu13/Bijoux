@@ -29,7 +29,7 @@ export function BestSellers() {
 
                             return (
                                 <BestSellerItem key={index}>
-                                    <Link>
+                                    <Link href={`/products/${item.id}/${item.title.split(" ").join("-").toLowerCase()}`}>
                                         <Img src={`http://localhost:8000${item.image}`}/>
                                         <ProductContent>
                                             <ProductTitle>{item.title}</ProductTitle>
@@ -80,10 +80,14 @@ const BestSellerItems = styled.ul`
 
 const BestSellerItem = styled.li`
   width: 24%;
+  &:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 `
 
 const Link = styled.a`
   cursor: pointer;
+  text-decoration: none;
 `
 const Img = styled.img`
     position: relative;
