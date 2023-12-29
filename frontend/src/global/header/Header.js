@@ -20,11 +20,11 @@ export function Header() {
                     {/* ============================== logo section ==============================*/}
                     <LogoSection>
                         {/* ============================== header menu section ============================== */}
-                        <div style={{display: "flex"}}>
+                        <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                             {isMobile || isTablet || isSmallLaptop? <HeaderSlideMenu />: ""}
 
-                            <Link to="/" >
-                                <div style={{whiteSpace: "nowrap"}}>CompanyLogo</div>
+                            <Link to="/" style={{textDecoration: "none", color: "#525252"}}>
+                                <h1 style={{whiteSpace: "nowrap" }}>Ralena</h1>
                             </Link>
                         </div>
 
@@ -55,7 +55,7 @@ const HeaderContainer = styled.header`
 const LogoSection = styled.div`
   margin: auto 0;
   height: 60px;
-  background-color: antiquewhite;
+  //background-color: antiquewhite;
   display: flex;
   justify-content: space-between;
 `
