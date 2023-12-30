@@ -59,7 +59,9 @@ export function ProductQuantity() {
     )
 }
 
-const QuantityContainer = styled.div``
+const QuantityContainer = styled.div`
+  margin: 20px 0;
+`
 const QuantityControl = styled.div`
     display: flex;
     border: solid 1px rgba(40,44,52, 0.9);
