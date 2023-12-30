@@ -109,16 +109,9 @@ export function AddressesPage() {
                     handleDeleteAddress={handleDeleteAddress}
                 />
             )}
-
-            <div
-                style={{
-                    margin: isMobile ? "0 16px" : "0 auto",
-                }}
-            >
-                <div style={{
-                    padding: "60px 0 35px",
-                    // borderBottom: "1px solid #dddddd"
-                }}>
+             {/*style={{margin: isMobile ? "0 16px" : "0 auto"}}  */}
+            <AddressPageContainer className='shop-all-page' s>
+                <div style={{padding: "60px 0 35px"}}>
                     <h1>Addresses</h1>
                     <BackToAccount onClick={handleBackToAccoutnPage}>
                         Back to account
@@ -160,10 +153,14 @@ export function AddressesPage() {
                 </section>
 
 
-            </div>
+            </AddressPageContainer>
         </>
     )
 }
 
-
+const AddressPageContainer = styled.div`
+      margin: 0 auto 3rem;
+    max-width: 1440px;
+    box-sizing: border-box;
+`
 const BackToAccount = styled(LogoutText)``
