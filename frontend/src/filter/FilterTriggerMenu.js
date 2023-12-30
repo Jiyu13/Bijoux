@@ -26,7 +26,7 @@ export function FilterTriggerMenu({products, handleSort}) {
                     {products?.length} results
                 </TotalResultNumber>
 
-                {isOpenSort && (<SortBox handleSort={handleSort}/>)}
+                {isOpenSort && (<SortBox handleSort={handleSort} setOpenSort={setOpenSort}/>)}
 
             </FilterTriggerContainer>
 

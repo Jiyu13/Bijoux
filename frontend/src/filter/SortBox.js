@@ -1,8 +1,24 @@
 import styled from "styled-components";
+import {useEffect, useRef} from "react";
 
-export function SortBox({handleSort}) {
+export function SortBox({handleSort, setOpenSort}) {
+
+    let sortBoxRef = useRef()
+    useEffect(() => {
+        let handler = (e) => {
+            if (!sortBoxRef.current.contains(e.target)) {
+                setOpenSort(false)
+            }
+        }
+        document.addEventListener("mousedown", handler)
+
+        return() =>{
+            document.removeEventListener("mousedown", handler);
+        }
+    });
+
     return (
-        <FilterBoxContainer>
+        <FilterBoxContainer ref={sortBoxRef}>
             {/*<CategoryList>*/}
             {/*    <CategoryItem id="New Arrivals" onClick={handleSort}>New Arrivals</CategoryItem>*/}
             {/*    <CategoryItem id="Best Sellers" onClick={handleSort}>Best Sellers</CategoryItem>*/}
