@@ -142,7 +142,7 @@ export function ProductDetails({productDetail}) {
 
                     {/*==================== material section =======================*/}
                     {/*=================== get from productDetail.material =========*/}
-                    <ProductMaterial/>
+                    {/*<ProductMaterial/>*/}
 
                     {/*==================== quantity buttons ===================*/}
                     <ProductQuantity />
