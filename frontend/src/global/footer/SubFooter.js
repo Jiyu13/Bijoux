@@ -6,7 +6,10 @@ export function SubFooter() {
     const {isMobile, isTablet} = useContext(UserContext)
 
     return (
-        <SubFooterContainer style={{margin: isMobile || isTablet ?  "0 auto 132px" : "32px auto"}}>
+        <SubFooterContainer
+            // style={{margin: "64px auto 0"}}
+        >
+            {/*//isMobile || isTablet ?  "0 auto 32px" : */}
             <SubFooterNav>
                 <NavWrapper>
                     <NavLinkItem>
@@ -41,6 +44,8 @@ const SubFooterContainer = styled.div`
   text-align: center;
   font-size: 14px;
   width: 100%;
+  box-sizing: border-box;
+  margin-top: 2rem;
 `
 
 const SubFooterNav = styled.nav`

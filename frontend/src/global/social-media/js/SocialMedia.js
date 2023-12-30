@@ -29,7 +29,7 @@ export function SocialMedia() {
 const SocialMediaWrapper = styled.footer`
     width: 85%;
     padding: 0 15px;
-    margin: 65px auto 65px;
+    margin: 32px auto 32px;
     //border-top: 1px solid rgb(234, 234, 234);
     //border-bottom: 1px solid rgb(234, 234, 234);
 `
