@@ -8,8 +8,12 @@ import {
     ModalDialog, ModalFooter,
     ModalHeader
 } from "../../components/popupStyles";
+import {useContext} from "react";
+import {UserContext} from "../../global/user-context/UserContext";
 
 export function DeleteAddressConfirmation({handleDeleteAddress, setDeletePopup}) {
+
+    const {isMobile, isTablet} = useContext(UserContext)
 
     function handleNo(){
         setDeletePopup(false)
@@ -18,23 +22,29 @@ export function DeleteAddressConfirmation({handleDeleteAddress, setDeletePopup})
     return (
         <ModalContainer>
 
-            <ModalDialog>
+            <DeleteAddressModalDialog style={{width: isMobile || isTablet ? "90%" : "50%"}}>
                 <ModalContent>
                     <ModalHeader>
                         <HeaderText>Delete address?</HeaderText>
                     </ModalHeader>
-                    <ModalBody>
+                    <ModalBody style={{textAlign: "center"}}>
                         <BodyText>Are you sure you want to delete this address?</BodyText>
                     </ModalBody>
-                    <ModalFooter>
+                    <ModalFooter style={{textAlign: "end"}}>
                         <NoButton onClick={handleNo}>No</NoButton>
                         <YesButton onClick={handleDeleteAddress}>Delete address</YesButton>
                     </ModalFooter>
                 </ModalContent>
-            </ModalDialog>
+            </DeleteAddressModalDialog>
         </ModalContainer>
     )
 }
+
+const DeleteAddressModalDialog = styled(ModalDialog)`
+  //height: 48px;
+  top: 50%;
+  height: 25%;
+`
 
 const buttons = styled.a`
   background-color: #fff;
