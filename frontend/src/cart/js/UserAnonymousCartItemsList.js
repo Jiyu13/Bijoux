@@ -6,6 +6,7 @@ import {useContext, useState} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import {UserAnonymousCartItemQuantity} from "./UserAnonymousCartItemQuantity";
 import {CartItemLoadingOverlay} from "./CartItemLoadingOverlay";
+import {cleanProductName} from "../../helper-functions/cleanProductName";
 
 export function UserAnonymousCartItemsList() {
 
@@ -69,7 +70,7 @@ export function UserAnonymousCartItemsList() {
 
                         <CartItemDetail>
                             <DetailRow >
-                                <a href={`/products/${item.product.product_id}`} className='cart-product-title-link'>
+                                <a href={`/products/${item.product.product_id}/${cleanProductName(item.product.product_title)}`} className='cart-product-title-link'>
                                     <RowLeft style={{fontSize: "1rem"}}>{item.product.product_title}</RowLeft>
                                 </a>
 

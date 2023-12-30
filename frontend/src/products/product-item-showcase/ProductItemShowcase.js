@@ -7,6 +7,7 @@ import './product-item.css'
 
 // import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {cleanProductName} from "../../helper-functions/cleanProductName";
 
 export function ProductItemShowcase( {product} ) {
     // const [isFav, setIsFav] = useState(false)
@@ -20,7 +21,7 @@ export function ProductItemShowcase( {product} ) {
 
     // ======================= handle redirect to product detail page ====================================
     const navigate = useNavigate()
-    const formattedProductName = product.title.split(" ").join("-").toLowerCase()
+    const formattedProductName = cleanProductName(product.title)
     function handleGoToProductDetail() {
         navigate(`/products/${product.id}/${formattedProductName}`)
     }

@@ -4,6 +4,7 @@ import {useContext} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 import {SliderTemplate} from "../../item-sliders-template/js/SliderTemplate";
 import {ShopButtonLink} from "../../components/buttons";
+import {cleanProductName} from "../../helper-functions/cleanProductName";
 
 export function BestSellers() {
 
@@ -29,7 +30,7 @@ export function BestSellers() {
 
                             return (
                                 <BestSellerItem key={index}>
-                                    <Link href={`/products/${item.id}/${item.title.split(" ").join("-").toLowerCase()}`}>
+                                    <Link href={`/products/${item.id}/${cleanProductName(item.title)}`}>
                                         <Img src={`http://localhost:8000${item.image}`}/>
                                         <ProductContent>
                                             <ProductTitle>{item.title}</ProductTitle>

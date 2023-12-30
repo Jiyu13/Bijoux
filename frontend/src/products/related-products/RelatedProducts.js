@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import './relative-products.css'
+import {cleanProductName} from "../../helper-functions/cleanProductName";
 
 export function RelatedProducts({relatedProducts}) {
 
@@ -20,7 +21,7 @@ export function RelatedProducts({relatedProducts}) {
                 {relatedProducts?.map((rp, index) => {
                     return (
                          <RelatedProduct key={index} className='related-product-item-li'>
-                            <Link href={`/products/${rp.id}/${rp.title.split(" ").join("-").toLowerCase()}`}>
+                            <Link href={`/products/${rp.id}/${cleanProductName(rp.title)}`}>
                                 <ImageWrapper>
                                     <Img src={rp?.image}/>
                                 </ImageWrapper>
