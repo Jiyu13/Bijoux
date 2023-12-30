@@ -14,7 +14,7 @@ export function ProductDetails({productDetail}) {
         isLogin, isMobile, cart,
         cartItems, setCartItems,setTotalCartQuantity,
         shoppingCartItems, setShoppingCartItems, setShoppingCartItemQuantity,
-        addToCartQuantity, setOpenCart
+        addToCartQuantity, setOpenCart, setAddToCartQuantity
     } = useContext(UserContext)
 
     // =============== update cart items for anonymous user =============================
@@ -123,6 +123,7 @@ export function ProductDetails({productDetail}) {
             .catch(error => console.log(error))
         }
         setOpenCart(true)
+        setAddToCartQuantity(1)
     }
 
 
