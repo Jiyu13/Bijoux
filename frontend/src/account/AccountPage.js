@@ -30,7 +30,7 @@ export function AccountPage() {
 
 
     return (
-        <AccountPageContainer style={{margin: isMobile ? "0 16px" : ""}}>
+        <AccountPageContainer style={{margin: isMobile ? "0 16px" : ""}} className='shop-all-page'>
             <div style={{
                 // display: "flex",
                 // justifyContent: "space-between",
@@ -72,7 +72,9 @@ export function AccountPage() {
 }
 
 const AccountPageContainer = styled.div`
-  //width: 85%;
+    margin: 0 auto 3rem;
+    max-width: 1440px;
+    box-sizing: border-box;
 `
 export const LogoutText = styled.div`
     margin: auto 0;
