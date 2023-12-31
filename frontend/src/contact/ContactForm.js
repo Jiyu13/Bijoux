@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {UserContext} from "../global/user-context/UserContext";
 import {client} from "../helper-functions/fetchFromAPI";
 import {MessageSentSuccessfully} from "./MessageSentSuccessfully";
@@ -95,6 +95,21 @@ export function ContactForm() {
     }
 
 
+    let errorRef = useRef()
+    useEffect(() => {
+        let handler = (e) => {
+            if (emailError && errorRef.current && !errorRef.current.contains(e.target)){
+                setEmailError(null)
+            }
+        }
+
+        document.addEventListener("mousedown", handler)
+        return () => {
+            document.removeEventListener("mousedown", handler)
+        }
+    }, [emailError]);
+
+
     const disabledButton = !formData.full_name || !formData.sender_email || !formData.subject || !formData.message
 
     const navigate = useNavigate()
@@ -116,6 +131,7 @@ export function ContactForm() {
                     color: "red",
                     fontWeight: "bold"
                     }}
+                    ref={errorRef}
                 >
                     {emailError}
                 </div>
