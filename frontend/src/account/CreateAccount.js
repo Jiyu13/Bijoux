@@ -180,7 +180,7 @@ export function CreateAccount() {
                         />
                         {emailExistError && (
                              <ErrorContainer>
-                                 <span>*{emailExistError}</span>
+                                 <li>{emailExistError}</li>
                              </ErrorContainer>
                          )}
                     </FieldBox>
@@ -230,7 +230,10 @@ const LoginLink = styled(CustomLink)`
 `
 
 
-const ErrorContainer = styled.div`
+const ErrorContainer = styled.ul`
   color: #e74c3c;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
+  padding-left: 15px;  
+  margin: 0;
+  margin-bottom: 1rem;
 `
