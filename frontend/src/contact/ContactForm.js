@@ -61,7 +61,7 @@ export function ContactForm() {
     function handleSubmitContactForm(e) {
         e.preventDefault()
         const formObject = {
-            sender: currentUser.user_id,
+            sender:  currentUser? currentUser?.user_id : null,
             full_name: formData.full_name,
             sender_email: formData.sender_email,
             subject: formData.subject,
@@ -83,7 +83,7 @@ export function ContactForm() {
         }
         postContactRequest()
         setFormData({
-            sender: currentUser? currentUser.user_id : null,
+            sender: currentUser? currentUser?.user_id : null,
             full_name: "",
             sender_email: "",
             subject: "",
