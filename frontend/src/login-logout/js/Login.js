@@ -50,7 +50,7 @@ export function Login() {
                 window.location.href = "/account"
             } catch (error) {
                 setIsLogin(false)
-                setLoginError(error.response.data)
+                setLoginError(error.response.data.email[0])
             }
         }
 
@@ -98,7 +98,7 @@ export function Login() {
                         <FormLabel>Email</FormLabel>
                         <FormInput
                             required
-                            text="text"
+                            type="text"
                             placeholder="your@email.com"
                             name="email"
                             value={formData.email}
@@ -110,7 +110,7 @@ export function Login() {
                         <FormLabel>Password</FormLabel>
                         <FormInput
                             required
-                            text="password"
+                            type="password"
                             placeholder=""
                             name="password"
                             value={formData.password}
