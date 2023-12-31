@@ -10,6 +10,7 @@ import {
     NameFieldBox, OptionBox, RequiredWarning, SelectBox,
 } from "../components/formStyles";
 import {CancelButton, SubmitInputButton} from "../components/buttons";
+import {useNavigate} from "react-router-dom";
 
 
 export function ContactForm() {
@@ -95,7 +96,11 @@ export function ContactForm() {
 
 
     const disabledButton = !formData.full_name || !formData.sender_email || !formData.subject || !formData.message
-    function handleCancel() {}
+
+    const navigate = useNavigate()
+    function handleCancel() {
+        navigate('/')
+    }
 
     return (
         <>
