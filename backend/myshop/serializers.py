@@ -81,7 +81,7 @@ class UserLoginSerializer(serializers.Serializer):
     def check_user(self, clean_data):
         user = authenticate(email=clean_data['email'], password=clean_data['password'])
         if not user:
-            raise serializers.ValidationError("Invalid email or password. Please try again.")  # Use DRF's ValidationError
+            raise serializers.ValidationError({"email": ["Invalid email or password. Please try again."]})  # Use DRF's ValidationError
         return user
 
 
