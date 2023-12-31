@@ -7,7 +7,7 @@ import {
     Form,
     FormInput,
     FormLabel, FormPageContainer,
-    NameFieldBox, OptionBox, SelectBox,
+    NameFieldBox, OptionBox, RequiredWarning, SelectBox,
 } from "../components/formStyles";
 import {CancelButton, SubmitInputButton} from "../components/buttons";
 
@@ -17,6 +17,7 @@ export function ContactForm() {
     const {isMobile, currentUser} = useContext(UserContext)
 
     const [isSent, setIsSent] = useState(false)
+    const [emailError, setEmailError] = useState(null)
 
     const flexDirection = isMobile ? "column" : "row"
     const gap = isMobile ? "0px" : "6px"
@@ -75,7 +76,8 @@ export function ContactForm() {
                 setIsSent(true)
 
             } catch (error) {
-                console.log(error)
+                setEmailError(error.response.data.sender_email[0])
+                // console.log(error)
             }
 
         }
@@ -102,6 +104,17 @@ export function ContactForm() {
                     <h1>Contact Us</h1>
                 </div>
 
+                <div
+                style={{
+                    display: emailError ? "" : "none",
+                    margin: "24px 0",
+                    color: "red",
+                    fontWeight: "bold"
+                    }}
+                >
+                    {emailError}
+                </div>
+
                 <Form
                     className='contact-form'
                     onSubmit={handleSubmitContactForm}
@@ -116,34 +129,37 @@ export function ContactForm() {
                         }}
                     >
                         <FieldBox style={{width: width}}>
-                            <FormLabel>Full Name</FormLabel>
+                            <FormLabel>Full Name <RequiredWarning>*</RequiredWarning></FormLabel>
                             <FormInput
                                 type="text"
                                 name='full_name'
                                 value={formData?.full_name}
                                 onChange={handleOnchange}
+                                required
                             />
 
                          </FieldBox>
 
                         <FieldBox style={{width: width}}>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel>Email <RequiredWarning>*</RequiredWarning></FormLabel>
                             <FormInput
                                 type="text"
                                 name='sender_email'
                                 value={formData?.sender_email}
                                 onChange={handleOnchange}
+                                required
                             />
                          </FieldBox>
                     </NameFieldBox>
 
                     <FieldBox>
-                        <FormLabel>Subject</FormLabel>
+                        <FormLabel>Subject <RequiredWarning>*</RequiredWarning></FormLabel>
                         <SelectBox
                           id="subject"
                           name="subject"
                           value={formData?.subject}
                           onChange={handleOnchange}
+                          required
                         >
                             <OptionBox value="" disabled>Select a subject</OptionBox>
                             <OptionBox value="Order issues">Order issues</OptionBox>
@@ -157,12 +173,13 @@ export function ContactForm() {
                         </SelectBox>
                     </FieldBox>
                     <FieldBox>
-                        <FormLabel>Message</FormLabel>
+                        <FormLabel>Message <RequiredWarning>*</RequiredWarning></FormLabel>
                         <FormInput
                             type="text"
                             name='message'
                             value={formData?.message}
                             onChange={handleOnchange}
+                            required
                         />
                     </FieldBox>
 
@@ -194,3 +211,4 @@ export function ContactForm() {
         </>
     )
 }
+

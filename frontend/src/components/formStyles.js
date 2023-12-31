@@ -68,3 +68,10 @@ export const SelectBox = styled.select`
 export const OptionBox = styled.option`
     font-size: 0.8rem;
 `
+
+// ================= required ================================
+export const RequiredWarning = styled.span`
+    //margin-left: 4px;
+    color: rgb(242, 79, 102);
+    font-size: 1rem;
+`
