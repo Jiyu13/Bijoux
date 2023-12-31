@@ -72,8 +72,6 @@ export function ContactForm() {
 
             try {
                 const res = await client.post('/contact-requests/create/', formObject, { withCredentials: true })
-                console.log(formObject)
-                console.log(res)
                 setIsSent(true)
 
             } catch (error) {
