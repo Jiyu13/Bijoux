@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {PasswordRestrictions} from "./PasswordRestrictions";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import {client} from "../helper-functions/fetchFromAPI";
 import {UserContext} from "../global/user-context/UserContext";
 import {
@@ -71,7 +71,6 @@ export function CreateAccount() {
             })
             .then(res => {
                 // ============== create cart successful & create cart items using localStorage shopping items================
-                // console.log(res.data)
                 handleAddLocalStorageToCart()
                 window.location.href = "/account"
             })
@@ -107,9 +106,6 @@ export function CreateAccount() {
             })
     }
 
-    // function handleCreateCartForNewUser() {
-    //     return client.post('/cart/')
-    // }
 
     function handleAddLocalStorageToCart(user) {
         for (const item of shoppingCartItems) {
@@ -234,6 +230,5 @@ const ErrorContainer = styled.ul`
   color: #e74c3c;
   font-size: 0.9rem;
   padding-left: 15px;  
-  margin: 0;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem;
 `

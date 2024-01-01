@@ -38,7 +38,6 @@ export function ContactForm() {
     }
 
     const [formData, setFormData] = useState(initialValue)
-    // console.log("formData", formData)
 
     // Use useEffect to set formData values when currentUser is available
     useEffect(() => {

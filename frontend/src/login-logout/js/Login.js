@@ -55,23 +55,6 @@ export function Login() {
         }
 
         postLogin()
-        // client.post(`/login/`, loginUser, { withCredentials: true })
-        //     .then(res => {
-        //         setIsLogin(true)
-        //         setLoginError(null)
-        //
-        //         const user = res.data
-        //         // console.log(user)
-        //         setCurrentUser(user)
-        //
-        //         window.location.href = "/account"
-        //         // navigate('/account') // doesn't refresh page
-        //         // return client.get('/user/', { withCredentials: true })
-        //     })
-        //     .catch(err => {
-        //         setIsLogin(false)
-        //         setLoginError(err.response.data)
-        //     })
     }
 
     return (

@@ -32,7 +32,6 @@ export const FormInput = styled.input`
     margin-bottom: 1rem;
     padding: 10px 12px;
     font-size: 1.2rem;
-    //border-radius: 4px;
     border-width: 1px;
 
 `
@@ -60,7 +59,6 @@ export const SelectBox = styled.select`
     margin-bottom: 1rem;
     padding: 12px 12px;
     font-size: 1.2rem;
-    //border-radius: 4px;
     border-width: 1px;
     font-size: 0.9rem;
 `
@@ -71,7 +69,6 @@ export const OptionBox = styled.option`
 
 // ================= required ================================
 export const RequiredWarning = styled.span`
-    //margin-left: 4px;
     color: rgb(242, 79, 102);
     font-size: 1rem;
 `

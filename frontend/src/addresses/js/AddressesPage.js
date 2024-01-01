@@ -109,7 +109,6 @@ export function AddressesPage() {
                     handleDeleteAddress={handleDeleteAddress}
                 />
             )}
-             {/*style={{margin: isMobile ? "0 16px" : "0 auto"}}  */}
             <AddressPageContainer className='shop-all-page' s>
                 <div style={{padding: "60px 0 35px"}}>
                     <h1>Addresses</h1>
