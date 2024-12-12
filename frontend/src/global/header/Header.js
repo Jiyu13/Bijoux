@@ -24,7 +24,7 @@ export function Header() {
                             {isMobile || isTablet || isSmallLaptop? <HeaderSlideMenu />: ""}
 
                             <Link to="/" style={{textDecoration: "none", color: "#525252"}}>
-                                <h1 style={{whiteSpace: "nowrap" }}>Ralena</h1>
+                                <h1 style={{whiteSpace: "nowrap" }}>Bijoux</h1>
                             </Link>
                         </div>
 
