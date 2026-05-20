@@ -1,5 +1,4 @@
 import "../css/product_detail.css"
-import {ProductMaterial} from "./ProductMaterial";
 import {ProductQuantity} from "./ProductQuantity";
 import {ProductAddToCart} from "./ProductAddToCart";
 import {ProductDescription} from "./ProductDescription";
