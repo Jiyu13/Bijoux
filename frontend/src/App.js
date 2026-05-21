@@ -24,6 +24,7 @@ import {MenuSlide} from "./global/header/MenuSlide";
 import {ShopAllPage2} from "./pages/js/ShopAllPage2";
 import {Carousels} from "./carousels/js/Carousels";
 import {ShopByCollection} from "./categories/js/ShopByCollection";
+import {CheckoutPage} from "./checkout/CheckoutPage";
 
 
 function App() {
@@ -269,6 +270,15 @@ function App() {
                             path='/register'
                             element={
                                 <CreateAccount />
+                            }
+                        >
+                        </Route>
+
+                        <Route
+                            exact
+                            path='/checkout'
+                            element={
+                                <CheckoutPage />
                             }
                         >
                         </Route>

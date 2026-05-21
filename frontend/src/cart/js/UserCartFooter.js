@@ -1,15 +1,20 @@
 import styled from "styled-components";
 import {DarkButton} from "../../components/buttons";
-import {redirectToCheckout} from "../../helper-functions/fetchFromAPI";
+import {useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import {UserContext} from "../../global/user-context/UserContext";
 
 export function UserCartFooter({cartItems}) {
+    const navigate = useNavigate()
+    const {setOpenCart} = useContext(UserContext)
 
     //  "cartItems = cart[0]"
     const cartItemCount = cartItems.total_quantity
     const totalCost = cartItems.total_cost
 
     function handleCheckout() {
-        redirectToCheckout()
+        setOpenCart(false)
+        navigate('/checkout')
     }
 
     return (

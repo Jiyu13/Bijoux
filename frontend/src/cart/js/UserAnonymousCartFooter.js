@@ -2,11 +2,12 @@ import styled from "styled-components";
 import {DarkButton} from "../../components/buttons";
 import {useContext} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
-import {redirectToCheckout} from "../../helper-functions/fetchFromAPI";
+import {useNavigate} from "react-router-dom";
 
 export function UserAnonymousCartFooter() {
+    const navigate = useNavigate()
 
-    const {shoppingCartItems} = useContext(UserContext)
+    const {shoppingCartItems, setOpenCart} = useContext(UserContext)
 
     const {totalQuantity, totalCost} = shoppingCartItems.reduce((accumulator, currentItem) => {
         // console.log(accumulator.totalQuantity, accumulator.totalCost)
@@ -17,7 +18,8 @@ export function UserAnonymousCartFooter() {
     }, { totalQuantity: 0, totalCost: 0 })
 
     function handleCheckout() {
-        redirectToCheckout(shoppingCartItems)
+        setOpenCart(false)
+        navigate('/checkout')
     }
 
 
