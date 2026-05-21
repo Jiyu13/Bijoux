@@ -1,4 +1,5 @@
 import os
+from decimal import Decimal
 
 from django.conf import settings
 from django.contrib.auth import password_validation
@@ -262,35 +263,57 @@ class CartItem(models.Model):
 
 
 # ============================== order ========================================================
-# class Order(models.Model):
-#     """ a user can place multiple orders over time, but each order is linked to only 1 user """
-#     user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='cart_items')
-#     # address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
-#     # on_delete=models.SET_NULL ensures that if the associated address is deleted, the reference in the order will be set to NULL instead of deleting the order itself.
-#     # null=True allows the address field to be empty, which could represent scenarios where an order has not yet been assigned a shipping address
-#     total = models.DecimalField(max_digits=10, decimal_places=2)
-#     status = models.CharField(
-#         choices=[
-#             ('processing', 'Processing'),
-#             ('shipped', 'Shipped'),
-#             ('cancelled', 'Cancelled')
-#         ],
-#         default='processing',
-#         max_length=10
-#     )
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#
-#     def __str__(self):
-#         return f'Order {self.id} for {self.user.first_name} {self.user.last_name}'
-#
-#
-# class OrderItem(models.Model):
-#     """ an individual item within an order """
-#     order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)  # related_name, create reverse relationship, allow access from 'order' model to its items with 'order_items' property
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#     quantity = models.PositiveIntegerField()
-#     price = models.DecimalField(max_digits=10, decimal_places=2)
-#
-#     def __str__(self):
-#         return f"{self.order.id} - {self.quantity} x {self.product.name}"
+class Order(models.Model):
+    """ a user can place multiple orders over time, but each order is linked to only 1 user """
+    STATUS_CHOICES = [
+        ('pending', 'Pending Payment'),
+        ('paid', 'Paid'),
+        ('failed', 'Failed'),
+        ('shipped', 'Shipped'),
+        ('refunded', 'Refunded'),
+        ('cancelled', 'Cancelled'),
+    ]
+
+    # on_delete=models.SET_NULL ensures that if the associated address is deleted, the reference in the order will be set to NULL instead of deleting the order itself.
+    # null=True allows the address field to be empty, which could represent scenarios where an order has not yet been assigned a shipping address
+    user = models.ForeignKey(AppUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
+    email = models.EmailField()
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    phone = models.CharField(max_length=50)
+
+    shipping_address_line_1 = models.CharField(max_length=500)
+    shipping_address_line_2 = models.CharField(max_length=500, blank=True)
+    shipping_city = models.CharField(max_length=255)
+    shipping_state = models.CharField(max_length=255)
+    shipping_zip_code = models.CharField(max_length=50)
+    shipping_country = models.CharField(max_length=255)
+
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    status = models.CharField(choices=STATUS_CHOICES, default='pending', max_length=20)
+
+    stripe_checkout_session_id = models.CharField(max_length=255, blank=True, null=True)
+    stripe_payment_intent_id = models.CharField(max_length=255, blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        customer = self.email or f'{self.first_name} {self.last_name}'
+        return f'Order {self.id} for {customer}'
+
+
+class OrderItem(models.Model):
+    """ an individual item within an order """
+    order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)  # related_name, create reverse relationship, allow access from 'order' model to its items with 'order_items' property
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
+    product_title = models.CharField(max_length=120)
+    product_image = models.URLField(blank=True)
+    quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def line_total(self):
+        return self.price * self.quantity
+
+    def __str__(self):
+        return f"{self.order.id} - {self.quantity} x {self.product_title}"
