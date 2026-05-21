@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {DarkButton} from "../../components/buttons";
 import {useContext} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
+import {redirectToCheckout} from "../../helper-functions/fetchFromAPI";
 
 export function UserAnonymousCartFooter() {
 
@@ -14,6 +15,10 @@ export function UserAnonymousCartFooter() {
             "totalCost": accumulator.totalCost + currentItem.total,
         }
     }, { totalQuantity: 0, totalCost: 0 })
+
+    function handleCheckout() {
+        redirectToCheckout(shoppingCartItems)
+    }
 
 
     return (
@@ -29,7 +34,7 @@ export function UserAnonymousCartFooter() {
             </SubtotalRow>
 
             <CheckOutRow>
-                <CheckoutButton>Go To Checkout</CheckoutButton>
+                <CheckoutButton onClick={handleCheckout}>Checkout</CheckoutButton>
             </CheckOutRow>
         </CartPaymentContainer>
     )

@@ -1,11 +1,16 @@
 import styled from "styled-components";
 import {DarkButton} from "../../components/buttons";
+import {redirectToCheckout} from "../../helper-functions/fetchFromAPI";
 
 export function UserCartFooter({cartItems}) {
 
     //  "cartItems = cart[0]"
     const cartItemCount = cartItems.total_quantity
     const totalCost = cartItems.total_cost
+
+    function handleCheckout() {
+        redirectToCheckout()
+    }
 
     return (
         <CartPaymentContainer>
@@ -24,7 +29,7 @@ export function UserCartFooter({cartItems}) {
             </SubtotalRow>
 
             <CheckOutRow>
-                <CheckoutButton>Go To Checkout</CheckoutButton>
+                <CheckoutButton onClick={handleCheckout}>Checkout</CheckoutButton>
             </CheckOutRow>
         </CartPaymentContainer>
     )

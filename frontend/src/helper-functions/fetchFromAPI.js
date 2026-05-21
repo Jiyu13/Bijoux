@@ -65,3 +65,22 @@ export function postFromAPI(endpoint, data, setter, errorSetter) {
     })
     .catch(error => errorSetter(error.response.data))
 }
+
+export async function redirectToCheckout(cartItems = [], errorSetter = console.error) {
+    try {
+        const checkoutItems = cartItems.map(item => ({
+            product_id: item.product.product_id,
+            quantity: item.quantity,
+        }))
+
+        const response = await client.post("/cart/create-checkout-session/", {
+            cart_items: checkoutItems,
+        })
+
+        if (response.data.checkout_url) {
+            window.location.href = response.data.checkout_url
+        }
+    } catch (error) {
+        errorSetter(error.response?.data || error.message)
+    }
+}
