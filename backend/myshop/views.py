@@ -1,6 +1,7 @@
 import json
 import random
 
+import stripe
 from django.contrib.auth import login, logout
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
@@ -503,6 +504,71 @@ class CartItemView(APIView):
         cart_item = self.get_object(pk)
         cart_item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# ============================ Checkout ==============================
+class CreateCheckoutSessionView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        line_items = []
+
+        if request.user.is_authenticated:
+            cart = Cart.objects.filter(user=request.user).first()
+            if not cart:
+                return Response(
+                    {'error': 'No cart found for this user.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            for cart_item in cart.cart_items.select_related('product'):
+                line_items.append({
+                    'price_data': {
+                        'currency': 'usd',
+                        'product_data': {'name': cart_item.product.title},
+                        'unit_amount': int(cart_item.product.price * 100),
+                    },
+                    'quantity': cart_item.quantity,
+                })
+        else:
+            cart_items = request.data.get('cart_items', [])
+            product_ids = [item.get('product_id') for item in cart_items]
+            products = Product.objects.in_bulk(product_ids)
+
+            for item in cart_items:
+                product = products.get(item.get('product_id'))
+                quantity = int(item.get('quantity', 0))
+
+                if product and quantity > 0:
+                    line_items.append({
+                        'price_data': {
+                            'currency': 'usd',
+                            'product_data': {'name': product.title},
+                            'unit_amount': int(product.price * 100),
+                        },
+                        'quantity': quantity,
+                    })
+
+        if not line_items:
+            return Response(
+                {'error': 'Your cart is empty.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        checkout_session = stripe.checkout.Session.create(
+            mode='payment',
+            payment_method_types=["card"],
+            line_items=line_items,
+            metadata={
+                'cart_id': cart.id if request.user.is_authenticated else "",
+                'user_id': request.user.user_id if request.user.is_authenticated else "",
+            },
+            success_url=f'{settings.FRONTEND_URL}/checkout/success?session_id={{CHECKOUT_SESSION_ID}}',
+            cancel_url=f'{settings.FRONTEND_URL}/cart',
+        )
+
+        return Response({'checkout_url': checkout_session.url}, status=status.HTTP_200_OK)
 
 
 # ============================= Carousel =============================
