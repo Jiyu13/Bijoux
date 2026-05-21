@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models import *
+
+
 # from django.contrib.auth.models import User
 
 
@@ -74,6 +76,28 @@ class CartItemAdmin(admin.ModelAdmin):
     list_display = ("id", 'cart', 'product', 'quantity',)
 
 
+class OrderItemInline(admin.TabularInline):
+    # OrderItemInline is only used inside OrderAdmin. It is not used with admin.site.register().
+    # it shows items inside the Order detail page.
+    model = OrderItem
+    extra = 0
+    readonly_fields = ('product', 'product_title', 'product_image', 'quantity', 'price',)
+
+
+class OrderAdmin(admin.ModelAdmin):
+    # Orders list page: Shows one row per order, with item count
+    # Order detail page: Shows the actual OrderItems inside that order
+    list_display = ('id', 'user', 'email', 'total', 'status', 'order_item_count', 'created_at',)
+
+    inlines = [OrderItemInline]
+
+    def order_item_count(self, obj):
+        return obj.order_items.count()
+
+
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ('id', 'order', 'product', 'product_title', 'quantity', 'price', )
+
 # admin.site.unregister(User)
 admin.site.register(AppUser, AppUserAdmin)
 admin.site.register(ContactRequest, ContactRequestAdmin)
@@ -86,3 +110,5 @@ admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Material, MaterialAdmin)
 admin.site.register(Cart, CartAdmin)
 admin.site.register(CartItem, CartAdmin)
+admin.site.register(Order, OrderAdmin)
+admin.site.register(OrderItem, OrderItemAdmin)
