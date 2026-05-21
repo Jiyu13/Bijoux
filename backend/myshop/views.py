@@ -1,5 +1,6 @@
 import json
 import random
+from decimal import Decimal
 
 import stripe
 from django.contrib.auth import login, logout
@@ -510,49 +511,31 @@ class CartItemView(APIView):
 class CreateCheckoutSessionView(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def post(self, request):
+    def post(self, request, order_id):
+        order = get_object_or_404(Order, id=order_id)
+
+        if order.user and order.user != request.user:
+            return Response(
+                {'error': 'You do not have permission to checkout this order.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         stripe.api_key = settings.STRIPE_SECRET_KEY
         line_items = []
 
-        if request.user.is_authenticated:
-            cart = Cart.objects.filter(user=request.user).first()
-            if not cart:
-                return Response(
-                    {'error': 'No cart found for this user.'},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-
-            for cart_item in cart.cart_items.select_related('product'):
-                line_items.append({
-                    'price_data': {
-                        'currency': 'usd',
-                        'product_data': {'name': cart_item.product.title},
-                        'unit_amount': int(cart_item.product.price * 100),
-                    },
-                    'quantity': cart_item.quantity,
-                })
-        else:
-            cart_items = request.data.get('cart_items', [])
-            product_ids = [item.get('product_id') for item in cart_items]
-            products = Product.objects.in_bulk(product_ids)
-
-            for item in cart_items:
-                product = products.get(item.get('product_id'))
-                quantity = int(item.get('quantity', 0))
-
-                if product and quantity > 0:
-                    line_items.append({
-                        'price_data': {
-                            'currency': 'usd',
-                            'product_data': {'name': product.title},
-                            'unit_amount': int(product.price * 100),
-                        },
-                        'quantity': quantity,
-                    })
+        for item in order.order_items.all():
+            line_items.append({
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {'name': item.product_title},
+                    'unit_amount': int(item.price * 100),
+                },
+                'quantity': item.quantity,
+            })
 
         if not line_items:
             return Response(
-                {'error': 'Your cart is empty.'},
+                {'error': 'This order has no items.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -561,15 +544,81 @@ class CreateCheckoutSessionView(APIView):
             payment_method_types=["card"],
             line_items=line_items,
             metadata={
-                'cart_id': cart.id if request.user.is_authenticated else "",
-                'user_id': request.user.user_id if request.user.is_authenticated else "",
+                'order_id': order.id,
+                'user_id': order.user.user_id if order.user else "",
             },
             success_url=f'{settings.FRONTEND_URL}/checkout/success?session_id={{CHECKOUT_SESSION_ID}}',
             cancel_url=f'{settings.FRONTEND_URL}/cart',
         )
 
+        order.stripe_checkout_session_id = checkout_session.id
+        order.save()
+
         return Response({'checkout_url': checkout_session.url}, status=status.HTTP_200_OK)
 
+
+class CreateOrderView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        cart_items = request.data.get('cart_items', [])
+        shipping_info = request.data.get('shipping_info', {})
+
+        if not cart_items:
+            return Response({'error': 'Cart is empty.'}, status=status.HTTP_400_BAD_REQUEST )
+
+        required_shipping_fields = ['email', 'first_name', 'last_name', 'address_line_1', 'city', 'state', 'zip_code', 'country', ]
+        missing_fields = [ field for field in required_shipping_fields  if not shipping_info.get(field)]
+        if missing_fields:
+            return Response(
+                {'error': 'Missing shipping information.', 'fields': missing_fields},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        product_ids = [item.get('product_id') for item in cart_items]
+        products = Product.objects.in_bulk(product_ids)
+
+        total = Decimal('0.00')
+        order = Order.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            email=shipping_info.get('email'),
+            first_name=shipping_info.get('first_name'),
+            last_name=shipping_info.get('last_name'),
+            phone=shipping_info.get('phone', ''),
+            shipping_address_line_1=shipping_info.get('address_line_1'),
+            shipping_address_line_2=shipping_info.get('address_line_2', ''),
+            shipping_city=shipping_info.get('city'),
+            shipping_state=shipping_info.get('state'),
+            shipping_zip_code=shipping_info.get('zip_code'),
+            shipping_country=shipping_info.get('country'),
+            total=Decimal('0.00'),
+            status='pending',
+        )
+
+        for item in cart_items:
+            product = products.get(item.get('product_id'))
+            quantity = int(item.get('quantity', 0))
+            if not product or quantity <= 0:
+                continue
+            price = Decimal(str(product.price))
+            total += price * quantity
+
+            OrderItem.objects.create(
+                order=order,
+                product=product,
+                product_title=product.title,
+                product_image=product.image.url if product.image else '',
+                quantity=quantity,
+                price=price,
+            )
+        if total == Decimal('0.00'):
+            order.delete()
+            return Response({'error': 'No valid cart items found.'}, status=status.HTTP_400_BAD_REQUEST)
+        order.total = total
+        order.save()
+
+        serializer = OrderSerializer(order)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 # ============================= Carousel =============================
 class CarouselListView(APIView):

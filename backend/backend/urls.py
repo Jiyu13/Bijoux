@@ -63,5 +63,9 @@ urlpatterns = [
     path('cart-item/<int:pk>/', CartItemView.as_view(), name='cart-item'),
     path('cart-item/add/', AddToCartView.as_view(), name='add-cart-item'),
 
-    path('cart/create-checkout-session/', CreateCheckoutSessionView.as_view(), name='create-checkout-session')
+    # path('cart/create-checkout-session/', CreateCheckoutSessionView.as_view(), name='create-checkout-session'),
+
+    path('orders/', CreateOrderView.as_view(), name='create-order'),
+    path('orders/<int:order_id>/checkout/', CreateCheckoutSessionView.as_view(), name='order-checkout')
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
