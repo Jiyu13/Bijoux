@@ -4,13 +4,9 @@ import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 
-export function UserCartFooter({cartItems}) {
+export function CartFooter({totalQuantity, totalCost}) {
     const navigate = useNavigate()
     const {setOpenCart} = useContext(UserContext)
-
-    //  "cartItems = cart[0]"
-    const cartItemCount = cartItems.total_quantity
-    const totalCost = cartItems.total_cost
 
     function handleCheckout() {
         setOpenCart(false)
@@ -26,7 +22,7 @@ export function UserCartFooter({cartItems}) {
 
             <SubtotalRow>
                 <div>
-                    Total ({cartItemCount} items):
+                    Total ({totalQuantity} items):
                 </div>
                 <div>
                     ${totalCost}
