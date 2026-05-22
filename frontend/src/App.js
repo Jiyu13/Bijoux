@@ -43,8 +43,8 @@ function App() {
     const [addToCartQuantity, setAddToCartQuantity] = useState(1)    // for updating quantity of specific item in the detail page
     const [isMenuOpen, setMenuOpen] = useState(false)
 
-    const storeIsLogin = localStorage.getItem("isLogin") === "true"
-    const [isLogin, setIsLogin] = useState(storeIsLogin)
+    const [isLogin, setIsLogin] = useState(false)
+    const [isAuthChecked, setIsAuthChecked] = useState(false)
 
     const [products, setProducts] = useState(null)
     const [carousels, setCarousels] = useState(null)
@@ -56,11 +56,24 @@ function App() {
     const isTablet = useMediaQuery({ maxWidth: DeviceSize.tablet })
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
-    // ========================== set "isLogin" localStorage =========================
+    // ========================== verify login session =========================
     useEffect(() => {
-        // stays at this top level
-        localStorage.setItem("isLogin", isLogin)
-    }, [isLogin]);
+        async function getUser() {
+            try {
+                const res = await client.get('/user/', {withCredentials: true})
+                const user = res.data.user
+                setCurrentUser(user)
+                setIsLogin(true)
+            } catch (error) {
+                setCurrentUser(null)
+                setIsLogin(false)
+            } finally {
+                setIsAuthChecked(true)
+            }
+        }
+
+        getUser()
+    }, [])
 
     // ========================== get "shopping_cart_items" localStorage =============
     useEffect(() => {
@@ -77,7 +90,7 @@ function App() {
 
     // ========================== get cart  ==========================
     useEffect(() => {
-        if (isLogin) {
+        if (isAuthChecked && isLogin) {
             async function getCart() {
                 try {
                     const res = await client.get('/cart/', {withCredentials: true})
@@ -92,23 +105,7 @@ function App() {
             }
             getCart()
         }
-    }, [isLogin, totalCartQuantity])  // update cart when adding / updating a product
-
-    // ========================== get user ==========================
-    useEffect(() => {
-        if (isLogin) {
-            async function getUser() {
-                try {
-                    const res = await client.get('/user/', {withCredentials: true})
-                    const user = res.data.user
-                    setCurrentUser(user)
-                } catch (error) {
-                    console.log(error.response)
-                }
-            }
-            getUser()
-        }
-    }, [isLogin])
+    }, [isAuthChecked, isLogin, totalCartQuantity])  // update cart when adding / updating a product
 
     // ========================== get products ==========================
     useEffect(() => {
@@ -164,7 +161,7 @@ function App() {
 
     // ========================== get cart items ==========================
     useEffect(() => {
-        if (isLogin) {
+        if (isAuthChecked && isLogin) {
             async function getCartItems() {
                 try {
                     const res = await client.get('/cart-items/')
@@ -177,7 +174,7 @@ function App() {
 
             getCartItems()
         }
-    }, [isLogin])
+    }, [isAuthChecked, isLogin])
 
     // ========== edit body overflow value when cart is open ==============
     useEffect(() => {
@@ -189,7 +186,7 @@ function App() {
     }, [openCart])
 
     const userContextValue = {
-        setCurrentUser, currentUser, isLogin, setIsLogin,
+        setCurrentUser, currentUser, isLogin, setIsLogin, isAuthChecked,
         isMobile, isTablet, isSmallLaptop, isLargeScreen,
         carousels, products, setProducts,collections,
         cart, setCart, setOpenCart, openCart, cartItems, setCartItems, addToCartQuantity, setAddToCartQuantity,
