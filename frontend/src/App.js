@@ -25,6 +25,8 @@ import {ShopAllPage2} from "./pages/js/ShopAllPage2";
 import {Carousels} from "./carousels/js/Carousels";
 import {ShopByCollection} from "./categories/js/ShopByCollection";
 import {CheckoutPage} from "./checkout/CheckoutPage";
+import {CheckoutSuccessPage} from "./checkout/CheckoutSuccessPage";
+import {CheckoutCancelPage} from "./checkout/CheckoutCancelPage";
 
 
 function App() {
@@ -276,6 +278,24 @@ function App() {
                             path='/checkout'
                             element={
                                 <CheckoutPage />
+                            }
+                        >
+                        </Route>
+
+                        <Route
+                            exact
+                            path='/checkout/success'
+                            element={
+                                <CheckoutSuccessPage />
+                            }
+                        >
+                        </Route>
+
+                        <Route
+                            exact
+                            path='/checkout/cancel'
+                            element={
+                                <CheckoutCancelPage />
                             }
                         >
                         </Route>

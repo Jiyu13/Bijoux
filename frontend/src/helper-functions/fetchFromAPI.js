@@ -78,6 +78,7 @@ export async function redirectToOrderCheckout(orderId, errorSetter = console.err
         const response = await client.post(`/orders/${orderId}/checkout/`, {})
 
         if (response.data.checkout_url) {
+            sessionStorage.setItem('pending_checkout_order_id', orderId)
             window.location.href = response.data.checkout_url
         }
     } catch (error) {

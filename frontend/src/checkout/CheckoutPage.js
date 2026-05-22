@@ -93,6 +93,28 @@ export function CheckoutPage() {
         prefillDefaultAddress()
     }, [isLogin, applyShippingPrefill])
 
+    useEffect(() => {
+        const pendingCheckoutOrderId = sessionStorage.getItem('pending_checkout_order_id')
+
+        if (!pendingCheckoutOrderId) {
+            return
+        }
+
+        async function cancelPendingCheckoutOrder() {
+            try {
+                await client.post('/orders/checkout-cancel/', {
+                    order_id: pendingCheckoutOrderId,
+                })
+            } catch (error) {
+                console.log(error.response || error)
+            } finally {
+                sessionStorage.removeItem('pending_checkout_order_id')
+            }
+        }
+
+        cancelPendingCheckoutOrder()
+    }, [])
+
     function handleChange(e) {
         const {name, value} = e.target
         touchedFieldsRef.current[name] = true

@@ -3,6 +3,7 @@ import random
 from decimal import Decimal
 
 import stripe
+from django.conf import settings
 from django.contrib.auth import login, logout
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
@@ -539,6 +540,8 @@ class CreateCheckoutSessionView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+        frontend_url = settings.FRONTEND_URL.rstrip('/')
+
         checkout_session = stripe.checkout.Session.create(
             mode='payment',
             payment_method_types=["card"],
@@ -547,14 +550,97 @@ class CreateCheckoutSessionView(APIView):
                 'order_id': order.id,
                 'user_id': order.user.user_id if order.user else "",
             },
-            success_url=f'{settings.FRONTEND_URL}/checkout/success?session_id={{CHECKOUT_SESSION_ID}}',
-            cancel_url=f'{settings.FRONTEND_URL}/cart',
+            success_url=f'{frontend_url}/checkout/success?session_id={{CHECKOUT_SESSION_ID}}',
+            cancel_url=f'{frontend_url}/checkout/cancel?order_id={order.id}',
         )
 
         order.stripe_checkout_session_id = checkout_session.id
         order.save()
 
         return Response({'checkout_url': checkout_session.url}, status=status.HTTP_200_OK)
+
+
+class ConfirmCheckoutSessionView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        session_id = request.query_params.get('session_id')
+        if not session_id:
+            return Response({'error': 'Missing Stripe checkout session id.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        try:
+            checkout_session = stripe.checkout.Session.retrieve(session_id)
+        except stripe.error.StripeError as error:
+            return Response({'error': str(error)}, status=status.HTTP_400_BAD_REQUEST)
+
+        metadata = checkout_session.metadata or {}
+        try:
+            order_id = metadata['order_id']
+        except KeyError:
+            return Response({'error': 'Missing order metadata.'}, status=status.HTTP_400_BAD_REQUEST)
+        order = get_object_or_404(Order, id=order_id, stripe_checkout_session_id=session_id)
+
+        if order.user and order.user != request.user:
+            return Response(
+                {'error': 'You do not have permission to view this order.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        if checkout_session.payment_status == 'paid':
+            order.status = 'paid'
+            order.stripe_payment_intent_id = checkout_session.payment_intent
+            order.save()
+        elif checkout_session.status == 'expired':
+            order.status = 'failed'
+            order.save()
+
+        serializer = OrderSerializer(order)
+        return Response({
+            'payment_status': checkout_session.payment_status,
+            'checkout_status': checkout_session.status,
+            'order': serializer.data,
+        })
+
+
+class CancelCheckoutSessionView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        order_id = request.data.get('order_id')
+        if not order_id:
+            return Response({'error': 'Missing order id.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        order = get_object_or_404(Order, id=order_id)
+
+        if order.user and order.user != request.user:
+            return Response(
+                {'error': 'You do not have permission to cancel this order.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        if order.status != 'pending':
+            serializer = OrderSerializer(order)
+            return Response({'deleted': False, 'order': serializer.data})
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        if order.stripe_checkout_session_id:
+            try:
+                checkout_session = stripe.checkout.Session.retrieve(order.stripe_checkout_session_id)
+            except stripe.error.StripeError as error:
+                return Response({'error': str(error)}, status=status.HTTP_400_BAD_REQUEST)
+
+            if checkout_session.payment_status == 'paid':
+                order.status = 'paid'
+                order.stripe_payment_intent_id = checkout_session.payment_intent
+                order.save()
+                serializer = OrderSerializer(order)
+                return Response({'deleted': False, 'order': serializer.data})
+
+        order.delete()
+        return Response({'deleted': True})
 
 
 class CreateOrderView(APIView):
