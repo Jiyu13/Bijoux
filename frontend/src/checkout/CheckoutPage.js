@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import {useCallback, useContext, useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import {DarkButton} from "../components/buttons";
@@ -20,8 +20,9 @@ const initialShippingInfo = {
 
 export function CheckoutPage() {
     const navigate = useNavigate()
-    const {isLogin, cart, shoppingCartItems} = useContext(UserContext)
+    const {isLogin, currentUser, cart, shoppingCartItems} = useContext(UserContext)
     const [shippingInfo, setShippingInfo] = useState(initialShippingInfo)
+    const touchedFieldsRef = useRef({})
     const [error, setError] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -31,8 +32,70 @@ export function CheckoutPage() {
     const requiredFields = ['email', 'first_name', 'last_name', 'address_line_1', 'city', 'state', 'zip_code', 'country']
     const isShippingComplete = requiredFields.every(field => shippingInfo[field])
 
+    const applyShippingPrefill = useCallback((prefillData) => {
+        setShippingInfo(prev => {
+            return Object.entries(prefillData).reduce((updatedShippingInfo, [field, value]) => {
+                if (!value || touchedFieldsRef.current[field]) {
+                    return updatedShippingInfo
+                }
+
+                return {
+                    ...updatedShippingInfo,
+                    [field]: value,
+                }
+            }, prev)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!isLogin || !currentUser) {
+            return
+        }
+
+        applyShippingPrefill({
+            email: currentUser.email,
+            first_name: currentUser.first_name,
+            last_name: currentUser.last_name,
+        })
+    }, [isLogin, currentUser, applyShippingPrefill])
+
+    useEffect(() => {
+        if (!isLogin) {
+            return
+        }
+
+        async function prefillDefaultAddress() {
+            try {
+                const response = await client.get('/addresses/')
+                const addresses = response.data || []
+                const defaultAddress = addresses.find(address => address.is_default) || addresses[0]
+
+                if (!defaultAddress) {
+                    return
+                }
+
+                applyShippingPrefill({
+                    first_name: defaultAddress.first_name,
+                    last_name: defaultAddress.last_name,
+                    phone: defaultAddress.phone,
+                    address_line_1: defaultAddress.address_line_1,
+                    address_line_2: defaultAddress.address_line_2,
+                    city: defaultAddress.city,
+                    state: defaultAddress.state,
+                    zip_code: defaultAddress.zip_code,
+                    country: defaultAddress.country,
+                })
+            } catch (error) {
+                console.log(error.response || error)
+            }
+        }
+
+        prefillDefaultAddress()
+    }, [isLogin, applyShippingPrefill])
+
     function handleChange(e) {
         const {name, value} = e.target
+        touchedFieldsRef.current[name] = true
         setShippingInfo(prev => ({
             ...prev,
             [name]: value,
