@@ -7,8 +7,13 @@ import {UserContext} from "../../global/user-context/UserContext";
 export function CartFooter({totalQuantity, totalCost}) {
     const navigate = useNavigate()
     const {setOpenCart} = useContext(UserContext)
+    const isCheckoutDisabled = totalQuantity <= 0
 
     function handleCheckout() {
+        if (isCheckoutDisabled) {
+            return
+        }
+
         setOpenCart(false)
         navigate('/checkout')
     }
@@ -30,7 +35,12 @@ export function CartFooter({totalQuantity, totalCost}) {
             </SubtotalRow>
 
             <CheckOutRow>
-                <CheckoutButton onClick={handleCheckout}>Checkout</CheckoutButton>
+                <CheckoutButton
+                    onClick={handleCheckout}
+                    disabled={isCheckoutDisabled}
+                >
+                    Checkout
+                </CheckoutButton>
             </CheckOutRow>
         </CartPaymentContainer>
     )
@@ -62,4 +72,9 @@ const CheckoutButton = styled(DarkButton)`
   &:hover {
       box-shadow: none;
     }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
 `

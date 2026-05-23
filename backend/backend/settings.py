@@ -187,6 +187,7 @@ EMAIL_HOST_PASSWORD = env.EMAIL_HOST_PASSWORD
 
 # Stripe
 STRIPE_SECRET_KEY = getattr(env, "STRIPE_SECRET_KEY", "")
+STRIPE_PUBLISHABLE_KEY = getattr(env, "STRIPE_PUBLISHABLE_KEY", "")
 FRONTEND_URL = getattr(env, "FRONTEND_URL", "http://localhost:3000")
 
 # print("After reading env.py file:")

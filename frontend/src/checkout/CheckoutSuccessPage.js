@@ -1,37 +1,73 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import styled from "styled-components";
 import {DarkButton} from "../components/buttons";
 import {client} from "../helper-functions/fetchFromAPI";
+import {UserContext} from "../global/user-context/UserContext";
 
 export function CheckoutSuccessPage() {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
+    const {
+        setCart,
+        setCartItems,
+        setTotalCartQuantity,
+        setShoppingCartItems,
+        setShoppingCartItemQuantity,
+    } = useContext(UserContext)
     const [confirmation, setConfirmation] = useState(null)
     const [error, setError] = useState("")
 
     useEffect(() => {
         const sessionId = searchParams.get('session_id')
+        const paymentIntentId = searchParams.get('payment_intent')
 
-        if (!sessionId) {
-            setError("Missing checkout session.")
+        if (!sessionId && !paymentIntentId) {
+            setError("Missing payment confirmation.")
             return
         }
 
-        async function confirmCheckoutSession() {
+        async function confirmPayment() {
             try {
-                const response = await client.get('/orders/checkout-success/', {
-                    params: {session_id: sessionId},
-                })
+                const response = sessionId ?
+                    await client.get('/orders/checkout-success/', {
+                        params: {session_id: sessionId},
+                    })
+                    :
+                    await client.get('/orders/payment-success/', {
+                        params: {payment_intent: paymentIntentId},
+                    })
                 sessionStorage.removeItem('pending_checkout_order_id')
+
+                if (response.data.order?.status === 'paid') {
+                    localStorage.setItem('shopping_cart_items', JSON.stringify([]))
+                    setShoppingCartItems([])
+                    setShoppingCartItemQuantity(0)
+                    setCartItems([])
+                    setTotalCartQuantity(0)
+                    setCart(prev => prev?.map(cart => ({
+                        ...cart,
+                        total_quantity: 0,
+                        total_cost: 0,
+                        cart_items: [],
+                    })) || prev)
+                }
+
                 setConfirmation(response.data)
             } catch (error) {
                 setError(error.response?.data?.error || "Unable to confirm payment.")
             }
         }
 
-        confirmCheckoutSession()
-    }, [searchParams])
+        confirmPayment()
+    }, [
+        searchParams,
+        setCart,
+        setCartItems,
+        setShoppingCartItems,
+        setShoppingCartItemQuantity,
+        setTotalCartQuantity,
+    ])
 
     const order = confirmation?.order
     const isPaid = order?.status === 'paid'

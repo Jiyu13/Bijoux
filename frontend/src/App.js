@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import {useMediaQuery} from "react-responsive";
 import {DeviceSize} from "./global/responsive";
@@ -30,6 +30,8 @@ import {CheckoutCancelPage} from "./checkout/CheckoutCancelPage";
 
 
 function App() {
+    const location = useLocation()
+    const isCheckoutRoute = location.pathname.startsWith('/checkout')
     const [currentUser, setCurrentUser] = useState(null)
 
     // ======================== anonymous user cart ===============================================
@@ -202,11 +204,17 @@ function App() {
             <Provider store={store}>
 
             {/*<div className="App">*/}
-                <CartPage />
-                <MenuSlide />
-                <Header/>
+                {!isCheckoutRoute && (
+                    <>
+                        <CartPage />
+                        <MenuSlide />
+                        <Header/>
+                    </>
+                )}
 
-                <Main style={{margin: isMobile || isTablet || isSmallLaptop ? "100px auto 0" : "140px auto 0"}}>
+                <Main style={{
+                    margin: isCheckoutRoute ? "0" : isMobile || isTablet || isSmallLaptop ? "100px auto 0" : "140px auto 0"
+                }}>
                     <Routes>
                         <Route
                             exact
@@ -323,7 +331,7 @@ function App() {
 
                 </Main>
 
-                <Footer/>
+                {!isCheckoutRoute && <Footer/>}
 
                 {/*{isMobile || isTablet  ? <MobileAccessibility /> : ""}*/}
             {/*</div>*/}
