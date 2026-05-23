@@ -81,9 +81,11 @@ export function CartPage() {
                             </CartBody>
 
                         </ModalBody>
-                        <ModalFooter>
-                            <CartFooter totalQuantity={totalQuantity} totalCost={totalCost}/>
-                        </ModalFooter>
+                        {!isCartEmpty && (
+                            <ModalFooter>
+                                <CartFooter totalQuantity={totalQuantity} totalCost={totalCost}/>
+                            </ModalFooter>
+                        )}
 
                     </CartModalDialog>
                 </ModalContainer>
