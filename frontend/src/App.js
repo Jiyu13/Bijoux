@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import {useMediaQuery} from "react-responsive";
 import {DeviceSize} from "./global/responsive";
@@ -24,9 +24,14 @@ import {MenuSlide} from "./global/header/MenuSlide";
 import {ShopAllPage2} from "./pages/js/ShopAllPage2";
 import {Carousels} from "./carousels/js/Carousels";
 import {ShopByCollection} from "./categories/js/ShopByCollection";
+import {CheckoutPage} from "./checkout/CheckoutPage";
+import {CheckoutSuccessPage} from "./checkout/CheckoutSuccessPage";
+import {CheckoutCancelPage} from "./checkout/CheckoutCancelPage";
 
 
 function App() {
+    const location = useLocation()
+    const isCheckoutRoute = location.pathname.startsWith('/checkout')
     const [currentUser, setCurrentUser] = useState(null)
 
     // ======================== anonymous user cart ===============================================
@@ -42,8 +47,8 @@ function App() {
     const [addToCartQuantity, setAddToCartQuantity] = useState(1)    // for updating quantity of specific item in the detail page
     const [isMenuOpen, setMenuOpen] = useState(false)
 
-    const storeIsLogin = localStorage.getItem("isLogin") === "true"
-    const [isLogin, setIsLogin] = useState(storeIsLogin)
+    const [isLogin, setIsLogin] = useState(false)
+    const [isAuthChecked, setIsAuthChecked] = useState(false)
 
     const [products, setProducts] = useState(null)
     const [carousels, setCarousels] = useState(null)
@@ -55,11 +60,24 @@ function App() {
     const isTablet = useMediaQuery({ maxWidth: DeviceSize.tablet })
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
-    // ========================== set "isLogin" localStorage =========================
+    // ========================== verify login session =========================
     useEffect(() => {
-        // stays at this top level
-        localStorage.setItem("isLogin", isLogin)
-    }, [isLogin]);
+        async function getUser() {
+            try {
+                const res = await client.get('/user/', {withCredentials: true})
+                const user = res.data.user
+                setCurrentUser(user)
+                setIsLogin(true)
+            } catch (error) {
+                setCurrentUser(null)
+                setIsLogin(false)
+            } finally {
+                setIsAuthChecked(true)
+            }
+        }
+
+        getUser()
+    }, [])
 
     // ========================== get "shopping_cart_items" localStorage =============
     useEffect(() => {
@@ -76,7 +94,7 @@ function App() {
 
     // ========================== get cart  ==========================
     useEffect(() => {
-        if (isLogin) {
+        if (isAuthChecked && isLogin) {
             async function getCart() {
                 try {
                     const res = await client.get('/cart/', {withCredentials: true})
@@ -91,23 +109,7 @@ function App() {
             }
             getCart()
         }
-    }, [isLogin, totalCartQuantity])  // update cart when adding / updating a product
-
-    // ========================== get user ==========================
-    useEffect(() => {
-        if (isLogin) {
-            async function getUser() {
-                try {
-                    const res = await client.get('/user/', {withCredentials: true})
-                    const user = res.data.user
-                    setCurrentUser(user)
-                } catch (error) {
-                    console.log(error.response)
-                }
-            }
-            getUser()
-        }
-    }, [isLogin])
+    }, [isAuthChecked, isLogin, totalCartQuantity])  // update cart when adding / updating a product
 
     // ========================== get products ==========================
     useEffect(() => {
@@ -163,7 +165,7 @@ function App() {
 
     // ========================== get cart items ==========================
     useEffect(() => {
-        if (isLogin) {
+        if (isAuthChecked && isLogin) {
             async function getCartItems() {
                 try {
                     const res = await client.get('/cart-items/')
@@ -176,7 +178,7 @@ function App() {
 
             getCartItems()
         }
-    }, [isLogin])
+    }, [isAuthChecked, isLogin])
 
     // ========== edit body overflow value when cart is open ==============
     useEffect(() => {
@@ -188,7 +190,7 @@ function App() {
     }, [openCart])
 
     const userContextValue = {
-        setCurrentUser, currentUser, isLogin, setIsLogin,
+        setCurrentUser, currentUser, isLogin, setIsLogin, isAuthChecked,
         isMobile, isTablet, isSmallLaptop, isLargeScreen,
         carousels, products, setProducts,collections,
         cart, setCart, setOpenCart, openCart, cartItems, setCartItems, addToCartQuantity, setAddToCartQuantity,
@@ -202,11 +204,17 @@ function App() {
             <Provider store={store}>
 
             {/*<div className="App">*/}
-                <CartPage />
-                <MenuSlide />
-                <Header/>
+                {!isCheckoutRoute && (
+                    <>
+                        <CartPage />
+                        <MenuSlide />
+                        <Header/>
+                    </>
+                )}
 
-                <Main style={{margin: isMobile || isTablet || isSmallLaptop ? "100px auto 0" : "140px auto 0"}}>
+                <Main style={{
+                    margin: isCheckoutRoute ? "0" : isMobile || isTablet || isSmallLaptop ? "100px auto 0" : "140px auto 0"
+                }}>
                     <Routes>
                         <Route
                             exact
@@ -273,6 +281,33 @@ function App() {
                         >
                         </Route>
 
+                        <Route
+                            exact
+                            path='/checkout'
+                            element={
+                                <CheckoutPage />
+                            }
+                        >
+                        </Route>
+
+                        <Route
+                            exact
+                            path='/checkout/success'
+                            element={
+                                <CheckoutSuccessPage />
+                            }
+                        >
+                        </Route>
+
+                        <Route
+                            exact
+                            path='/checkout/cancel'
+                            element={
+                                <CheckoutCancelPage />
+                            }
+                        >
+                        </Route>
+
                         {/*<Route*/}
                         {/*    exact*/}
                         {/*    path='/cart'*/}
@@ -296,7 +331,7 @@ function App() {
 
                 </Main>
 
-                <Footer/>
+                {!isCheckoutRoute && <Footer/>}
 
                 {/*{isMobile || isTablet  ? <MobileAccessibility /> : ""}*/}
             {/*</div>*/}

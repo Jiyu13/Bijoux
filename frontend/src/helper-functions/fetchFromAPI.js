@@ -65,3 +65,23 @@ export function postFromAPI(endpoint, data, setter, errorSetter) {
     })
     .catch(error => errorSetter(error.response.data))
 }
+
+export function formatCheckoutItems(cartItems = []) {
+    return cartItems.map(item => ({
+        product_id: item.product?.product_id || item.product_id,
+        quantity: item.quantity,
+    }))
+}
+
+export async function redirectToOrderCheckout(orderId, errorSetter = console.error) {
+    try {
+        const response = await client.post(`/orders/${orderId}/checkout/`, {})
+
+        if (response.data.checkout_url) {
+            sessionStorage.setItem('pending_checkout_order_id', orderId)
+            window.location.href = response.data.checkout_url
+        }
+    } catch (error) {
+        errorSetter(error.response?.data || error.message)
+    }
+}

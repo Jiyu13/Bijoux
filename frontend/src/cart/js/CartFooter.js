@@ -1,20 +1,22 @@
 import styled from "styled-components";
 import {DarkButton} from "../../components/buttons";
+import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import {UserContext} from "../../global/user-context/UserContext";
 
-export function UserAnonymousCartFooter() {
+export function CartFooter({totalQuantity, totalCost}) {
+    const navigate = useNavigate()
+    const {setOpenCart} = useContext(UserContext)
+    const isCheckoutDisabled = totalQuantity <= 0
 
-    const {shoppingCartItems} = useContext(UserContext)
-
-    const {totalQuantity, totalCost} = shoppingCartItems.reduce((accumulator, currentItem) => {
-        // console.log(accumulator.totalQuantity, accumulator.totalCost)
-        return {
-            "totalQuantity": accumulator.totalQuantity + currentItem.quantity,
-            "totalCost": accumulator.totalCost + currentItem.total,
+    function handleCheckout() {
+        if (isCheckoutDisabled) {
+            return
         }
-    }, { totalQuantity: 0, totalCost: 0 })
 
+        setOpenCart(false)
+        navigate('/checkout')
+    }
 
     return (
         <CartPaymentContainer>
@@ -24,12 +26,21 @@ export function UserAnonymousCartFooter() {
             {/*</SubtotalRow>*/}
 
             <SubtotalRow>
-                <div>Total ({totalQuantity} items):</div>
-                <div>${totalCost}</div>
+                <div>
+                    Total ({totalQuantity} items):
+                </div>
+                <div>
+                    ${totalCost}
+                </div>
             </SubtotalRow>
 
             <CheckOutRow>
-                <CheckoutButton>Go To Checkout</CheckoutButton>
+                <CheckoutButton
+                    onClick={handleCheckout}
+                    disabled={isCheckoutDisabled}
+                >
+                    Checkout
+                </CheckoutButton>
             </CheckOutRow>
         </CartPaymentContainer>
     )
@@ -61,4 +72,9 @@ const CheckoutButton = styled(DarkButton)`
   &:hover {
       box-shadow: none;
     }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
 `

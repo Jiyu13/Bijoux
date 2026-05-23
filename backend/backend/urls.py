@@ -63,5 +63,14 @@ urlpatterns = [
     path('cart-item/<int:pk>/', CartItemView.as_view(), name='cart-item'),
     path('cart-item/add/', AddToCartView.as_view(), name='add-cart-item'),
 
+    # path('cart/create-checkout-session/', CreateCheckoutSessionView.as_view(), name='create-checkout-session'),
+
+    path('orders/', CreateOrderView.as_view(), name='create-order'),
+    path('orders/<int:order_id>/checkout/', CreateCheckoutSessionView.as_view(), name='order-checkout'),
+    path('orders/<int:order_id>/payment-intent/', CreatePaymentIntentView.as_view(), name='order-payment-intent'),
+    path('orders/checkout-success/', ConfirmCheckoutSessionView.as_view(), name='checkout-success'),
+    path('orders/payment-success/', ConfirmPaymentIntentView.as_view(), name='payment-success'),
+    path('orders/checkout-cancel/', CancelCheckoutSessionView.as_view(), name='checkout-cancel'),
+    path('stripe/config/', StripeConfigView.as_view(), name='stripe-config'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

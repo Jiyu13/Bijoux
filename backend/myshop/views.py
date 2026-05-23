@@ -1,6 +1,9 @@
 import json
 import random
+from decimal import Decimal
 
+import stripe
+from django.conf import settings
 from django.contrib.auth import login, logout
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
@@ -504,6 +507,321 @@ class CartItemView(APIView):
         cart_item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+# ============================ Checkout ==============================
+class StripeConfigView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        return Response({'publishable_key': settings.STRIPE_PUBLISHABLE_KEY})
+
+
+class CreateCheckoutSessionView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, order_id):
+        order = get_object_or_404(Order, id=order_id)
+
+        if order.user and order.user != request.user:
+            return Response(
+                {'error': 'You do not have permission to checkout this order.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        line_items = []
+
+        for item in order.order_items.all():
+            line_items.append({
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {'name': item.product_title},
+                    'unit_amount': int(item.price * 100),
+                },
+                'quantity': item.quantity,
+            })
+
+        if not line_items:
+            return Response(
+                {'error': 'This order has no items.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        frontend_url = settings.FRONTEND_URL.rstrip('/')
+
+        checkout_session = stripe.checkout.Session.create(
+            mode='payment',
+            payment_method_types=["card"],
+            line_items=line_items,
+            metadata={
+                'order_id': order.id,
+                'user_id': order.user.user_id if order.user else "",
+            },
+            success_url=f'{frontend_url}/checkout/success?session_id={{CHECKOUT_SESSION_ID}}',
+            cancel_url=f'{frontend_url}/checkout/cancel?order_id={order.id}',
+        )
+
+        order.stripe_checkout_session_id = checkout_session.id
+        order.save()
+
+        return Response({'checkout_url': checkout_session.url}, status=status.HTTP_200_OK)
+
+
+class CreatePaymentIntentView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, order_id):
+        order = get_object_or_404(Order, id=order_id)
+
+        if order.user and order.user != request.user:
+            return Response(
+                {'error': 'You do not have permission to checkout this order.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        if order.status != 'pending':
+            return Response({'error': 'This order is not pending payment.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        amount = int(order.total * Decimal('100'))
+
+        if amount <= 0:
+            return Response({'error': 'This order total is invalid.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            payment_intent = stripe.PaymentIntent.create(
+                amount=amount,
+                currency='usd',
+                receipt_email=order.email,
+                automatic_payment_methods={'enabled': True},
+                metadata={
+                    'order_id': order.id,
+                    'user_id': order.user.user_id if order.user else "",
+                },
+            )
+        except stripe.error.StripeError as error:
+            return Response({'error': str(error)}, status=status.HTTP_400_BAD_REQUEST)
+
+        order.stripe_payment_intent_id = payment_intent.id
+        order.save()
+
+        return Response({'client_secret': payment_intent.client_secret}, status=status.HTTP_200_OK)
+
+
+class ConfirmCheckoutSessionView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        session_id = request.query_params.get('session_id')
+        if not session_id:
+            return Response({'error': 'Missing Stripe checkout session id.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        try:
+            checkout_session = stripe.checkout.Session.retrieve(session_id)
+        except stripe.error.StripeError as error:
+            return Response({'error': str(error)}, status=status.HTTP_400_BAD_REQUEST)
+
+        metadata = checkout_session.metadata or {}
+        try:
+            order_id = metadata['order_id']
+        except KeyError:
+            return Response({'error': 'Missing order metadata.'}, status=status.HTTP_400_BAD_REQUEST)
+        order = get_object_or_404(Order, id=order_id, stripe_checkout_session_id=session_id)
+
+        if order.user and order.user != request.user:
+            return Response(
+                {'error': 'You do not have permission to view this order.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        if checkout_session.payment_status == 'paid':
+            order.status = 'paid'
+            order.stripe_payment_intent_id = checkout_session.payment_intent
+            order.save()
+
+            if order.user:
+                cart = Cart.objects.filter(user=order.user).first()
+                if cart:
+                    cart.empty_cart()
+        elif checkout_session.status == 'expired':
+            order.status = 'failed'
+            order.save()
+
+        serializer = OrderSerializer(order)
+        return Response({
+            'payment_status': checkout_session.payment_status,
+            'checkout_status': checkout_session.status,
+            'order': serializer.data,
+        })
+
+
+class ConfirmPaymentIntentView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        payment_intent_id = request.query_params.get('payment_intent')
+        if not payment_intent_id:
+            return Response({'error': 'Missing Stripe payment intent id.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        try:
+            payment_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+        except stripe.error.StripeError as error:
+            return Response({'error': str(error)}, status=status.HTTP_400_BAD_REQUEST)
+
+        metadata = payment_intent.metadata or {}
+        try:
+            order_id = metadata['order_id']
+        except KeyError:
+            return Response({'error': 'Missing order metadata.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        order = get_object_or_404(Order, id=order_id, stripe_payment_intent_id=payment_intent_id)
+
+        if order.user and order.user != request.user:
+            return Response(
+                {'error': 'You do not have permission to view this order.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        if payment_intent.status == 'succeeded':
+            order.status = 'paid'
+            order.save()
+
+            if order.user:
+                cart = Cart.objects.filter(user=order.user).first()
+                if cart:
+                    cart.empty_cart()
+        elif payment_intent.status in ['canceled', 'requires_payment_method']:
+            order.status = 'failed'
+            order.save()
+
+        serializer = OrderSerializer(order)
+        return Response({
+            'payment_status': payment_intent.status,
+            'order': serializer.data,
+        })
+
+
+class CancelCheckoutSessionView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        order_id = request.data.get('order_id')
+        if not order_id:
+            return Response({'error': 'Missing order id.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        order = get_object_or_404(Order, id=order_id)
+
+        if order.user and order.user != request.user:
+            return Response(
+                {'error': 'You do not have permission to cancel this order.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        if order.status != 'pending':
+            serializer = OrderSerializer(order)
+            return Response({'deleted': False, 'order': serializer.data})
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        if order.stripe_checkout_session_id:
+            try:
+                checkout_session = stripe.checkout.Session.retrieve(order.stripe_checkout_session_id)
+            except stripe.error.StripeError as error:
+                return Response({'error': str(error)}, status=status.HTTP_400_BAD_REQUEST)
+
+            if checkout_session.payment_status == 'paid':
+                order.status = 'paid'
+                order.stripe_payment_intent_id = checkout_session.payment_intent
+                order.save()
+                serializer = OrderSerializer(order)
+                return Response({'deleted': False, 'order': serializer.data})
+
+        if order.stripe_payment_intent_id:
+            try:
+                payment_intent = stripe.PaymentIntent.retrieve(order.stripe_payment_intent_id)
+            except stripe.error.StripeError as error:
+                return Response({'error': str(error)}, status=status.HTTP_400_BAD_REQUEST)
+
+            if payment_intent.status == 'succeeded':
+                order.status = 'paid'
+                order.save()
+                serializer = OrderSerializer(order)
+                return Response({'deleted': False, 'order': serializer.data})
+
+            if payment_intent.status == 'processing':
+                serializer = OrderSerializer(order)
+                return Response({'deleted': False, 'order': serializer.data})
+
+        order.delete()
+        return Response({'deleted': True})
+
+
+class CreateOrderView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        cart_items = request.data.get('cart_items', [])
+        shipping_info = request.data.get('shipping_info', {})
+
+        if not cart_items:
+            return Response({'error': 'Cart is empty.'}, status=status.HTTP_400_BAD_REQUEST )
+
+        required_shipping_fields = ['email', 'first_name', 'last_name', 'address_line_1', 'city', 'state', 'zip_code', 'country', ]
+        missing_fields = [ field for field in required_shipping_fields  if not shipping_info.get(field)]
+        if missing_fields:
+            return Response(
+                {'error': 'Missing shipping information.', 'fields': missing_fields},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        product_ids = [item.get('product_id') for item in cart_items]
+        products = Product.objects.in_bulk(product_ids)
+
+        total = Decimal('0.00')
+        order = Order.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            email=shipping_info.get('email'),
+            first_name=shipping_info.get('first_name'),
+            last_name=shipping_info.get('last_name'),
+            phone=shipping_info.get('phone', ''),
+            shipping_address_line_1=shipping_info.get('address_line_1'),
+            shipping_address_line_2=shipping_info.get('address_line_2', ''),
+            shipping_city=shipping_info.get('city'),
+            shipping_state=shipping_info.get('state'),
+            shipping_zip_code=shipping_info.get('zip_code'),
+            shipping_country=shipping_info.get('country'),
+            total=Decimal('0.00'),
+            status='pending',
+        )
+
+        for item in cart_items:
+            product = products.get(item.get('product_id'))
+            quantity = int(item.get('quantity', 0))
+            if not product or quantity <= 0:
+                continue
+            price = Decimal(str(product.price))
+            total += price * quantity
+
+            OrderItem.objects.create(
+                order=order,
+                product=product,
+                product_title=product.title,
+                product_image=product.image.url if product.image else '',
+                quantity=quantity,
+                price=price,
+            )
+        if total == Decimal('0.00'):
+            order.delete()
+            return Response({'error': 'No valid cart items found.'}, status=status.HTTP_400_BAD_REQUEST)
+        order.total = total
+        order.save()
+
+        serializer = OrderSerializer(order)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 # ============================= Carousel =============================
 class CarouselListView(APIView):

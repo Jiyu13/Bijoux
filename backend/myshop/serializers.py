@@ -145,16 +145,16 @@ class CartSerializer(serializers.ModelSerializer):
 
 
 # ============================= Order =========================================
-# class OrderItemSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = OrderItem
-#         fields = '__all__'
-#
-#
-# class OrderSerializer(serializers.ModelSerializer):
-#     items = OrderItemSerializer(many=True)
-#
-#     class Meta:
-#         model = Order
-#         fields = '__all__'
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    order_items = OrderItemSerializer(many=True, read_only=True)  # name need to match related_name='order_items'
+
+    class Meta:
+        model = Order
+        fields = '__all__'
 

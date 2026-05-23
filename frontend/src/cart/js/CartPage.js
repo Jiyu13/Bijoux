@@ -8,17 +8,34 @@ import '../css/cart-page.css'
 
 import close_black_24dp from "../icons/close_black_24dp.svg"
 
-import {UserCartBody} from "./UserCartBody";
-import {UserCartFooter} from "./UserCartFooter";
-import {UserAnonymousCartFooter} from "./UserAnonymousCartFooter";
-import {UserAnonymousCartBody} from "./UserAnonymousCartBody";
+import {CartBody} from "./CartBody";
+import {CartFooter} from "./CartFooter";
 import {OverlayBackground} from "./OverlayBackground";
+import {UserCartItemsList} from "./UserCartItemsList";
+import {UserAnonymousCartItemsList} from "./UserAnonymousCartItemsList";
 
 
 
 export function CartPage() {
 
-    const {isLogin, cart, openCart, setOpenCart, isMobile, isTablet} = useContext(UserContext)
+    const {isLogin, cart, cartItems, shoppingCartItems, openCart, setOpenCart, isMobile, isTablet} = useContext(UserContext)
+    const userCart = cart?.[0]
+    const userCartItems = userCart?.cart_items || []
+    const anonymousCartItems = shoppingCartItems || []
+
+    const anonymousCartTotals = anonymousCartItems.reduce((accumulator, currentItem) => {
+        return {
+            totalQuantity: accumulator.totalQuantity + currentItem.quantity,
+            totalCost: accumulator.totalCost + currentItem.total,
+        }
+    }, {totalQuantity: 0, totalCost: 0})
+
+    const totalQuantity = isLogin ? userCart?.total_quantity || 0 : anonymousCartTotals.totalQuantity
+    const totalCost = isLogin ? userCart?.total_cost || 0 : anonymousCartTotals.totalCost
+    const isCartEmpty = isLogin ?
+        userCartItems.length === 0 || cartItems?.length === 0
+        :
+        anonymousCartItems.length === 0
 
     function handleCloseCart() {
         setOpenCart(!openCart)
@@ -55,20 +72,20 @@ export function CartPage() {
 
                         <ModalBody style={{height: "calc(100% - 200px)", overflowY: "scroll"}}>
 
-                            {isLogin ?
-                                <UserCartBody/>
-                                :
-                                <UserAnonymousCartBody/>
-                            }
+                            <CartBody isEmpty={isCartEmpty}>
+                                {isLogin ?
+                                    <UserCartItemsList/>
+                                    :
+                                    <UserAnonymousCartItemsList/>
+                                }
+                            </CartBody>
 
                         </ModalBody>
-                        <ModalFooter>
-                            {isLogin ?
-                                <UserCartFooter cartItems={cart[0]}/>
-                                :
-                                <UserAnonymousCartFooter/>
-                            }
-                        </ModalFooter>
+                        {!isCartEmpty && (
+                            <ModalFooter>
+                                <CartFooter totalQuantity={totalQuantity} totalCost={totalCost}/>
+                            </ModalFooter>
+                        )}
 
                     </CartModalDialog>
                 </ModalContainer>
